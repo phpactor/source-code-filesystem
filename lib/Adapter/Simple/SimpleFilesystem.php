@@ -19,10 +19,10 @@ class SimpleFilesystem implements Filesystem
 
     public function fileList(): FileList
     {
-        return new SimpleFileIterator($this->path);
+        return FileList::fromIterator(new SimpleFileIterator($this->path));
     }
 
-    public function chdir(FileLocation $location)
+    public function chdir(FileLocation $location): SimpleFileSystem
     {
         return new self($this->path->concatExistingLocation($location));
     }
