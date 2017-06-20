@@ -4,13 +4,14 @@ namespace DTL\Filesystem\Adapter\Simple;
 
 use DTL\Filesystem\Domain\Filesystem;
 use DTL\Filesystem\Domain\FileList;
-use DTL\Filesystem\Domain\FilePath;
+use DTL\Filesystem\Domain\FileLocation;
+use DTL\Filesystem\Domain\AbsoluteExistingPath;
 
 class SimpleFilesystem implements Filesystem
 {
     private $path;
 
-    public function __construct(FilePath $path)
+    public function __construct(AbsoluteExistingPath $path)
     {
         $this->path = $path;
     }
@@ -20,7 +21,17 @@ class SimpleFilesystem implements Filesystem
         return new SimpleFileList($this->path);
     }
 
-    public function move(FilePath $srcPath, FilePath $destPath)
+    public function remove(FileLocation $location)
     {
+        $absolutePath = $this->path->concatExistingLocation($location);
+        unlink($absolutePath);
+    }
+
+    public function move(FileLocation $srcPath, FileLocation $destPath)
+    {
+        rename(
+            $this->path->concatExistingLocation($srcPath),
+            $this->path->concatNonExistingLocation($destPath)
+        );
     }
 }
