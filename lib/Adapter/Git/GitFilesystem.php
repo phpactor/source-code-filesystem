@@ -10,6 +10,13 @@ use DTL\Filesystem\Adapter\Git\GitFileIterator;
 
 class GitFilesystem implements Filesystem
 {
+    private $path;
+
+    public function __construct(AbsoluteExistingPath $path)
+    {
+        $this->path = $path;
+    }
+
     public function fileList(): FileList
     {
         $gitFiles = $this->exec('ls-files');
@@ -47,7 +54,10 @@ class GitFilesystem implements Filesystem
 
     private function exec($command)
     {
+        $current = getcwd();
+        chdir($this->path->__toString());
         exec(sprintf('git %s 2>&1', $command), $output, $return);
+        chdir($current);
 
         if ($return !== 0) {
             throw new \InvalidArgumentException(sprintf(
