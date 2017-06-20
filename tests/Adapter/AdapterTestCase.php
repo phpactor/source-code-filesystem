@@ -53,5 +53,15 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->assertTrue(file_exists($this->basePath()->concatExistingLocation($destLocation)));
         $this->assertFalse(file_exists($this->basePath()->concatNonExistingLocation($srcLocation)));
     }
+
+    public function testCopy()
+    {
+        $srcLocation = FileLocation::fromString('src/Hello/Goodbye.php');
+        $destLocation = FileLocation::fromString('src/Hello/Hello.php');
+
+        $this->filesystem()->copy($srcLocation, $destLocation);
+        $this->assertTrue(file_exists($this->basePath()->concatExistingLocation($destLocation)));
+        $this->assertTrue(file_exists($this->basePath()->concatExistingLocation($srcLocation)));
+    }
 }
 

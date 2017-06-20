@@ -36,6 +36,15 @@ class GitFilesystem implements Filesystem
         ));
     }
 
+    public function copy(FileLocation $srcLocation, FileLocation $destLocation)
+    {
+        copy(
+            $srcLocation->__toString(),
+            $destLocation->__toString()
+        );
+        $this->exec(sprintf('add %s', $destLocation->__toString()));
+    }
+
     private function exec($command)
     {
         exec(sprintf('git %s 2>&1', $command), $output, $return);

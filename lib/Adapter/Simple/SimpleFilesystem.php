@@ -33,11 +33,19 @@ class SimpleFilesystem implements Filesystem
         unlink($absolutePath);
     }
 
-    public function move(FileLocation $srcPath, FileLocation $destPath)
+    public function move(FileLocation $srcLocation, FileLocation $destLocation)
     {
         rename(
-            $this->path->concatExistingLocation($srcPath),
-            $this->path->concatNonExistingLocation($destPath)
+            $this->path->concatExistingLocation($srcLocation),
+            $this->path->concatNonExistingLocation($destLocation)
+        );
+    }
+
+    public function copy(FileLocation $srcLocation, FileLocation $destLocation)
+    {
+        copy(
+            $this->path->concatExistingLocation($srcLocation),
+            $this->path->concatNonExistingLocation($destLocation)
         );
     }
 }
