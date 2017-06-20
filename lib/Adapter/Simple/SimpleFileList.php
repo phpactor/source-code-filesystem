@@ -17,12 +17,15 @@ class SimpleFileList implements FileList
 
     public function getIterator()
     {
-        $directoryIterator = new \RecursiveDirectoryIterator($this->path->__toString());
-        $iteratorIterator = new \RecursiveIteratorIterator($directoryIterator);
-        $files = new \RegexIterator($iteratorIterator, '/^.+\.php$/i', \RecursiveRegexIterator::GET_MATCH);
+        $files = new \RecursiveDirectoryIterator($this->path->__toString());
+        $files = new \RecursiveIteratorIterator($files);
 
         foreach ($files as $file) {
-            $path = AbsoluteExistingPath::fromString($file[0]);
+            if (false === $file->isFile()) {
+                continue;
+            }
+
+            $path = AbsoluteExistingPath::fromString((string) $file);
             yield $this->path->relativizeToLocation($path);
         }
     }

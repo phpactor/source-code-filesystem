@@ -1,6 +1,6 @@
 {
-    "name": "dantleech/filesystem",
-    "description": "Library for moving classes",
+    "name": "dantleech/source-code-filesystem",
+    "description": "Filesystem library for working with source code files",
     "license": "MIT",
     "authors": [
         {
