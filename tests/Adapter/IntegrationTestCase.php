@@ -1,6 +1,6 @@
 <?php
 
-namespace DTL\ClassMover\Tests\Integration;
+namespace DTL\Filesystem\Tests\Adapter;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;

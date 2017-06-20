@@ -1,8 +1,6 @@
 <?php
 
-namespace DTL\ClassMover\Domain;
-
-use DTL\ClassMover\Finder\FilePath;
+namespace DTL\Filesystem\Domain;
 
 interface FileFilter
 {

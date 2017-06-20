@@ -1,27 +1,19 @@
 <?php
 
-namespace DTL\ClassMover\Finder;
+namespace DTL\Filesystem\Domain;
 
 final class FilePath
 {
-    const PATH_NONE = '_|__<transient>__|_';
-
     private $path;
+
+    private function __construct(string $path)
+    {
+        $this->path = $path;
+    }
 
     public static function fromString(string $path)
     {
-        $new = new self();
-        $real = realpath($path);
-
-        if (!$real) {
-            throw new \RuntimeException(sprintf(
-                'Could not determine realpath for "%s"', $path
-            ));
-        }
-
-        $new->path = $real;
-
-        return $new;
+        return new self($path);
     }
 
     public function __toString()

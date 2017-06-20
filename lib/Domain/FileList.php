@@ -1,8 +1,7 @@
 <?php
 
-namespace DTL\ClassMover\Finder;
+namespace DTL\Filesystem\Domain;
 
-interface FileList extends \Iterator
+interface FileList extends \IteratorAggregate
 {
-    public function filter(FileFilter $filter);
 }

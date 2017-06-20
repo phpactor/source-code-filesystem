@@ -1,16 +1,26 @@
 <?php
 
-namespace DTL\Filesystem\SimpleFilesystem;
+namespace DTL\Filesystem\Adapter\Simple;
 
-use DTL\ClassMover\Finder\SearchPath;
-use DTL\ClassMover\Finder\FileList;
-use DTL\ClassMover\Finder\Finder;
-use DTL\ClassMover\Domain\Filesystem;
+use DTL\Filesystem\Domain\Filesystem;
+use DTL\Filesystem\Domain\FileList;
+use DTL\Filesystem\Domain\FilePath;
 
 class SimpleFilesystem implements Filesystem
 {
-    public function findAll(): FileList
+    private $path;
+
+    public function __construct(FilePath $path)
+    {
+        $this->path = $path;
+    }
+
+    public function fileList(): FileList
     {
         return new SimpleFileList($this->path);
+    }
+
+    public function move(FilePath $srcPath, FilePath $destPath)
+    {
     }
 }

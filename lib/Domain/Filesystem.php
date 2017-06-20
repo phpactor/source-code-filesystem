@@ -1,12 +1,10 @@
 <?php
 
-namespace DTL\ClassMover\Domain;
+namespace DTL\Filesystem\Domain;
 
 interface Filesystem
 {
     public function fileList(): FileList;
 
-    public function exists(string $srcPath);
-
-    public function move(string $srcPath, string $destPath);
+    public function move(FilePath $srcPath, FilePath $destPath);
 }
