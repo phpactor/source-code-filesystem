@@ -6,7 +6,7 @@ use DTL\Filesystem\Domain\FileList;
 use DTL\Filesystem\Domain\FileLocation;
 use DTL\Filesystem\Domain\AbsoluteExistingPath;
 
-class SimpleFileList implements FileList
+class SimpleFileIterator implements FileList
 {
     private $path;
 

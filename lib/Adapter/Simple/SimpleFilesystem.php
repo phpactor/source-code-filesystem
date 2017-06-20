@@ -6,6 +6,7 @@ use DTL\Filesystem\Domain\Filesystem;
 use DTL\Filesystem\Domain\FileList;
 use DTL\Filesystem\Domain\FileLocation;
 use DTL\Filesystem\Domain\AbsoluteExistingPath;
+use DTL\Filesystem\Adapter\Simple\SimpleFileIterator;
 
 class SimpleFilesystem implements Filesystem
 {
@@ -18,7 +19,7 @@ class SimpleFilesystem implements Filesystem
 
     public function fileList(): FileList
     {
-        return new SimpleFileList($this->path);
+        return new SimpleFileIterator($this->path);
     }
 
     public function chdir(FileLocation $location)
