@@ -21,6 +21,11 @@ class SimpleFilesystem implements Filesystem
         return new SimpleFileList($this->path);
     }
 
+    public function chdir(FileLocation $location)
+    {
+        return new self($this->path->concatExistingLocation($location));
+    }
+
     public function remove(FileLocation $location)
     {
         $absolutePath = $this->path->concatExistingLocation($location);
