@@ -16,8 +16,40 @@ class FileList implements \IteratorAggregate
         return new self($iterator);
     }
 
+    public static function fromFilePaths(array $filePaths)
+    {
+        return new self(new \ArrayIterator($filePaths));
+    }
+
     public function getIterator()
     {
         return $this->iterator;
+    }
+
+    public function phpFiles(): FileList
+    {
+        return new self($this->phpFileGenerator());
+    }
+
+    public function contains(FileLocation $path)
+    {
+        foreach ($this->iterator as $filePath) {
+            if ($path == $filePath) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function phpFileGenerator(): \Iterator
+    {
+        foreach ($this->iterator as $filePath) {
+            if ($filePath->extension() !== 'php') {
+                continue;
+            }
+
+            yield($filePath);
+        }
     }
 }

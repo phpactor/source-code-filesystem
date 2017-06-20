@@ -27,13 +27,12 @@ abstract class AdapterTestCase extends IntegrationTestCase
 
     public function testFind()
     {
-        $fileList = $this->filesystem()->chdir(FileLocation::fromString('src'))->fileList();
-        $files = iterator_to_array($fileList);
+        $fileList = $this->filesystem()->fileList();
 
-        $this->assertEquals([
-            FileLocation::fromString('Hello/Goodbye.php'),
-            FileLocation::fromString('Foobar.php'),
-        ], $files);
+        $location = FileLocation::fromString('src/Hello/Goodbye.php');
+        $foo = $fileList->contains($location);
+        $this->assertTrue($fileList->contains(FileLocation::fromString('src/Foobar.php')));
+        $this->assertTrue($foo);
     }
 
     public function testRemove()

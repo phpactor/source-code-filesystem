@@ -16,6 +16,12 @@ final class FileLocation
         return new self($path);
     }
 
+    public function extension()
+    {
+        $info = pathinfo($this->path);
+        return $info['extension'];
+    }
+
     public function __toString()
     {
         return $this->path;
