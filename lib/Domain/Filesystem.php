@@ -13,4 +13,6 @@ interface Filesystem
     public function remove(FilePath $location);
 
     public function copy(FilePath $srcLocation, FilePath $destLocation);
+
+    public function createPath(string $path): FilePath;
 }

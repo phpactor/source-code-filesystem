@@ -22,9 +22,9 @@ class SimpleFilesystem implements Filesystem
         return FileList::fromIterator(new SimpleFileIterator($this->path));
     }
 
-    public function remove(FilePath $location)
+    public function remove(FilePath $path)
     {
-        unlink($location->absolutePath());
+        unlink($path->absolutePath());
     }
 
     public function move(FilePath $srcLocation, FilePath $destLocation)
@@ -41,5 +41,10 @@ class SimpleFilesystem implements Filesystem
             $srcLocation->absolutePath(),
             $destLocation->absolutePath()
         );
+    }
+
+    public function createPath(string $path): FilePath
+    {
+        return FilePath::fromCwdAndPath($this->cwd, $path);
     }
 }

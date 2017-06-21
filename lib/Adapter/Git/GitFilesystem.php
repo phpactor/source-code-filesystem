@@ -17,11 +17,6 @@ class GitFilesystem implements Filesystem
         $this->cwd = $cwd;
     }
 
-    public static function fromRootPath(string $path)
-    {
-        return new self($path);
-    }
-
     public function fileList(): FileList
     {
         $gitFiles = $this->exec('ls-files');
@@ -36,25 +31,30 @@ class GitFilesystem implements Filesystem
 
     public function remove(FilePath $path)
     {
-        $this->exec(sprintf('rm -f %s', $path->__toString()));
+        $this->exec(sprintf('rm -f %s', $path->relativePath()));
     }
 
     public function move(FilePath $srcPath, FilePath $destPath)
     {
         $this->exec(sprintf(
             'mv %s %s',
-            $srcPath->__toString(),
-            $destPath->__toString()
+            $srcPath->relativePath(),
+            $destPath->relativePath()
         ));
     }
 
     public function copy(FilePath $srcPath, FilePath $destPath)
     {
         copy(
-            $srcPath->__toString(),
-            $destPath->__toString()
+            $srcPath->relativePath(),
+            $destPath->relativePath()
         );
         $this->exec(sprintf('add %s', $destPath->__toString()));
+    }
+
+    public function createPath(string $path): FilePath
+    {
+        return FilePath::fromCwdAndPath($this->cwd, $path);
     }
 
     private function exec($command)

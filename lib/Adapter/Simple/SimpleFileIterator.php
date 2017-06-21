@@ -8,16 +8,16 @@ use DTL\Filesystem\Domain\Cwd;
 
 class SimpleFileIterator implements \IteratorAggregate
 {
-    private $path;
+    private $cwd;
 
-    public function __construct(Cwd $path)
+    public function __construct(Cwd $cwd)
     {
-        $this->path = $path;
+        $this->cwd = $cwd;
     }
 
     public function getIterator()
     {
-        $files = new \RecursiveDirectoryIterator($this->path->__toString());
+        $files = new \RecursiveDirectoryIterator($this->cwd->__toString());
         $files = new \RecursiveIteratorIterator($files);
 
         foreach ($files as $file) {
@@ -25,8 +25,7 @@ class SimpleFileIterator implements \IteratorAggregate
                 continue;
             }
 
-            $path = FilePath::fromCwdAndPath($this->path, (string) $file);
-            yield $this->path->relativize($path);
+            yield $this->cwd->createPathWith((string) $file);
         }
     }
 }

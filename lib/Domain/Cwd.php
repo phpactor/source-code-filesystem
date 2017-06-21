@@ -10,6 +10,13 @@ class Cwd
 
     private function __construct(string $cwd)
     {
+        if (false === Path::isAbsolute($cwd)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Cwd must be absolute, got "%s"',
+                $cwd
+            ));
+        }
+
         $this->cwd = $cwd;
     }
 
@@ -23,9 +30,9 @@ class Cwd
         return new self(getcwd());
     }
 
-    public function relativize(FilePath $path)
+    public function createPathWith(string $path)
     {
-        return FilePath::fromCwdAndPath($this, Path::makeRelative((string) $path, $this->cwd));
+        return FilePath::fromCwdAndPath($this, $path);
     }
 
     public function __toString()
