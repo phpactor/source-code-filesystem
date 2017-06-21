@@ -4,7 +4,7 @@ namespace DTL\Filesystem\Adapter\Simple;
 
 use DTL\Filesystem\Domain\Filesystem;
 use DTL\Filesystem\Domain\FileList;
-use DTL\Filesystem\Domain\FileLocation;
+use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Domain\AbsoluteExistingPath;
 use DTL\Filesystem\Adapter\Simple\SimpleFileIterator;
 
@@ -22,18 +22,18 @@ class SimpleFilesystem implements Filesystem
         return FileList::fromIterator(new SimpleFileIterator($this->path));
     }
 
-    public function chdir(FileLocation $location): SimpleFileSystem
+    public function chdir(FilePath $location): SimpleFileSystem
     {
         return new self($this->path->concatExistingLocation($location));
     }
 
-    public function remove(FileLocation $location)
+    public function remove(FilePath $location)
     {
         $absolutePath = $this->path->concatExistingLocation($location);
         unlink($absolutePath);
     }
 
-    public function move(FileLocation $srcLocation, FileLocation $destLocation)
+    public function move(FilePath $srcLocation, FilePath $destLocation)
     {
         rename(
             $this->path->concatExistingLocation($srcLocation),
@@ -41,7 +41,7 @@ class SimpleFilesystem implements Filesystem
         );
     }
 
-    public function copy(FileLocation $srcLocation, FileLocation $destLocation)
+    public function copy(FilePath $srcLocation, FilePath $destLocation)
     {
         copy(
             $this->path->concatExistingLocation($srcLocation),
@@ -49,7 +49,7 @@ class SimpleFilesystem implements Filesystem
         );
     }
 
-    public function absolutePath(FileLocation $location)
+    public function absolutePath(FilePath $location)
     {
         return $this->path->concatLocation($location);
     }

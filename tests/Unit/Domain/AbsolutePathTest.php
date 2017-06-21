@@ -4,7 +4,7 @@ namespace DTL\Filesystem\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
 use DTL\Filesystem\Domain\AbsolutePath;
-use DTL\Filesystem\Domain\FileLocation;
+use DTL\Filesystem\Domain\FilePath;
 
 class AbsolutePathTest extends TestCase
 {
@@ -47,7 +47,7 @@ class AbsolutePathTest extends TestCase
         $file = AbsolutePath::fromString(__FILE__);
 
         $location = $base->relativizeToLocation($file);
-        $this->assertInstanceOf(FileLocation::class, $location);
+        $this->assertInstanceOf(FilePath::class, $location);
         $this->assertEquals('Unit/Domain/AbsolutePathTest.php', $location->__toString());
     }
 }

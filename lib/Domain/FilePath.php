@@ -2,7 +2,7 @@
 
 namespace DTL\Filesystem\Domain;
 
-final class FileLocation
+final class FilePath
 {
     private $path;
 

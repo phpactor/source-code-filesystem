@@ -2,6 +2,8 @@
 
 namespace DTL\Filesystem\Domain;
 
+use DTL\Filesystem\Domain\FilePath;
+
 class FileList implements \IteratorAggregate
 {
     private $iterator;
@@ -31,7 +33,7 @@ class FileList implements \IteratorAggregate
         return new self($this->phpFileGenerator());
     }
 
-    public function contains(FileLocation $path)
+    public function contains(FilePath $path)
     {
         foreach ($this->iterator as $filePath) {
             if ($path == $filePath) {

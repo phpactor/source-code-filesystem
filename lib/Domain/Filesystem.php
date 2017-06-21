@@ -2,17 +2,17 @@
 
 namespace DTL\Filesystem\Domain;
 
-use DTL\Filesystem\Domain\FileLocation;
+use DTL\Filesystem\Domain\FilePath;
 
 interface Filesystem
 {
     public function fileList(): FileList;
 
-    public function move(FileLocation $srcLocation, FileLocation $destLocation);
+    public function move(FilePath $srcLocation, FilePath $destLocation);
 
-    public function remove(FileLocation $location);
+    public function remove(FilePath $location);
 
-    public function copy(FileLocation $srcLocation, FileLocation $destLocation);
+    public function copy(FilePath $srcLocation, FilePath $destLocation);
 
-    public function absolutePath(FileLocation $location);
+    public function absolutePath(FilePath $location);
 }

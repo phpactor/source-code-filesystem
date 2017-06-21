@@ -4,7 +4,7 @@ namespace DTL\Filesystem\Adapter\Git;
 
 use DTL\Filesystem\Domain\Filesystem;
 use DTL\Filesystem\Domain\FileList;
-use DTL\Filesystem\Domain\FileLocation;
+use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Domain\AbsoluteExistingPath;
 use DTL\Filesystem\Adapter\Git\GitFileIterator;
 
@@ -28,18 +28,18 @@ class GitFilesystem implements Filesystem
         $files = [];
 
         foreach ($gitFiles as $gitFile) {
-            $files[] = FileLocation::fromString($gitFile);
+            $files[] = FilePath::fromString($gitFile);
         }
 
         return FileList::fromIterator(new \ArrayIterator($files));
     }
 
-    public function remove(FileLocation $location)
+    public function remove(FilePath $location)
     {
         $this->exec(sprintf('rm -f %s', $location->__toString()));
     }
 
-    public function move(FileLocation $srcPath, FileLocation $destPath)
+    public function move(FilePath $srcPath, FilePath $destPath)
     {
         $this->exec(sprintf(
             'mv %s %s',
@@ -48,7 +48,7 @@ class GitFilesystem implements Filesystem
         ));
     }
 
-    public function copy(FileLocation $srcLocation, FileLocation $destLocation)
+    public function copy(FilePath $srcLocation, FilePath $destLocation)
     {
         copy(
             $srcLocation->__toString(),
@@ -57,7 +57,7 @@ class GitFilesystem implements Filesystem
         $this->exec(sprintf('add %s', $destLocation->__toString()));
     }
 
-    public function absolutePath(FileLocation $location)
+    public function absolutePath(FilePath $location)
     {
         return $this->path->concatLocation($location);
     }

@@ -4,7 +4,7 @@ namespace DTL\Filesystem\Tests\Adapter\Git;
 
 use DTL\Filesystem\Tests\Adapter\IntegrationTestCase;
 use DTL\Filesystem\Adapter\Git\GitFilesystem;
-use DTL\Filesystem\Domain\FileLocation;
+use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Domain\AbsoluteExistingPath;
 use DTL\Filesystem\Tests\Adapter\AdapterTestCase;
 use DTL\Filesystem\Domain\Filesystem;

@@ -3,7 +3,7 @@
 namespace DTL\Filesystem\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
-use DTL\Filesystem\Domain\FileLocation;
+use DTL\Filesystem\Domain\FilePath;
 
 class FileLocationTest extends TestCase
 {
@@ -12,6 +12,6 @@ class FileLocationTest extends TestCase
      */
     public function testExtension()
     {
-        $this->assertEquals('php', FileLocation::fromString('foo/bar.inc.php')->extension());
+        $this->assertEquals('php', FilePath::fromString('foo/bar.inc.php')->extension());
     }
 }

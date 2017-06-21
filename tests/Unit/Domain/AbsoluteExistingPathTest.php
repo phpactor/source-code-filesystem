@@ -4,7 +4,7 @@ namespace DTL\Filesystem\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
 use DTL\Filesystem\Domain\AbsoluteExistingPath;
-use DTL\Filesystem\Domain\FileLocation;
+use DTL\Filesystem\Domain\FilePath;
 
 class AbsoluteExistingPathTest extends AbsolutePathTest
 {

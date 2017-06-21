@@ -3,7 +3,7 @@
 namespace DTL\Filesystem\Adapter\Simple;
 
 use DTL\Filesystem\Domain\FileList;
-use DTL\Filesystem\Domain\FileLocation;
+use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Domain\AbsoluteExistingPath;
 
 class SimpleFileIterator implements \IteratorAggregate

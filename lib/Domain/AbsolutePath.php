@@ -2,6 +2,8 @@
 
 namespace DTL\Filesystem\Domain;
 
+use DTL\Filesystem\Domain\FilePath;
+
 class AbsolutePath
 {
     protected $path;
@@ -36,7 +38,7 @@ class AbsolutePath
             ));
         }
 
-        return FileLocation::fromString(substr($path, strlen($this) + 1));
+        return FilePath::fromString(substr($path, strlen($this) + 1));
     }
 
     public function __toString()
@@ -49,7 +51,7 @@ class AbsolutePath
         return 0 === strpos($this->__toString(), $path->__toString());
     }
 
-    public function concatLocation(FileLocation $location)
+    public function concatLocation(FilePath $location)
     {
         return AbsolutePath::fromString($this->__toString() . '/'. $location->__toString());
     }

@@ -4,7 +4,7 @@ namespace DTL\Filesystem\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
 use DTL\Filesystem\Domain\FileList;
-use DTL\Filesystem\Domain\FileLocation;
+use DTL\Filesystem\Domain\FilePath;
 
 class FileListTest extends TestCase
 {
@@ -14,10 +14,10 @@ class FileListTest extends TestCase
     public function testContains()
     {
         $list = FileList::fromFilePaths([
-            FileLocation::fromString('Foo/Bar.php'),
-            FileLocation::fromString('Foo/Foo.php'),
+            FilePath::fromString('Foo/Bar.php'),
+            FilePath::fromString('Foo/Foo.php'),
         ]);
 
-        $this->assertTrue($list->contains(FileLocation::fromString('Foo/Bar.php')));
+        $this->assertTrue($list->contains(FilePath::fromString('Foo/Bar.php')));
     }
 }
