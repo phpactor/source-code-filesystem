@@ -17,6 +17,11 @@ class GitFilesystem implements Filesystem
         $this->path = $path;
     }
 
+    public static function fromRootPath(string $path)
+    {
+        return new self(AbsoluteExistingPath::fromString($path));
+    }
+
     public function fileList(): FileList
     {
         $gitFiles = $this->exec('ls-files');

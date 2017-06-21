@@ -19,7 +19,7 @@ final class FileLocation
     public function extension()
     {
         $info = pathinfo($this->path);
-        return $info['extension'];
+        return $info['extension'] ?? '';
     }
 
     public function __toString()
