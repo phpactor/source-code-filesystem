@@ -2,51 +2,56 @@
 
 namespace DTL\Filesystem\Domain;
 
+use Webmozart\PathUtil\Path;
+
 final class FilePath
 {
+    private $cwd;
     private $path;
 
-    private function __construct(string $path)
+    private function __construct(Cwd $cwd, string $path)
     {
+        $this->cwd = $cwd;
         $this->path = $path;
     }
 
-    public static function fromString(string $path)
+    public static function fromCwdAndPath(Cwd $cwd, string $path)
     {
-        return new self($path);
+        return new self($cwd, $path);
     }
 
-    public function extension()
+    public static function fromPathInCurrentCwd(string $path)
     {
-        $info = pathinfo($this->path);
-        return $info['extension'] ?? '';
+        return new self(Cwd::fromCurrent(), $path);
+    }
+
+    public function extension(): string
+    {
+        return Path::getExtension($this->path);
     }
 
     public function concatPath(FilePath $path)
     {
-        return new self($this->path . '/' . $path);
+        return new self($this->cwd, Path::join($this->path, $path));
+    }
+
+    public function absolutePath()
+    {
+        if ($this->isAbsolute()) {
+            return $this->path;
+        }
+
+        return Path::join($this->cwd->__toString(), $this->path);
     }
 
     public function isAbsolute()
     {
-        return substr($this->path, 0, 1) == '/';
+        return Path::isAbsolute($this->path);
     }
 
     public function relativize(FilePath $path)
     {
-        // path is already relative
-        if (false === $path->isAbsolute()) {
-            return;
-        }
-
-        if (0 !== strpos($path, $this->path)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Path "%s" is not an extension of "%s". Cannot relativize.',
-                $path, $this->path
-            ));
-        }
-
-        return substr($path, strlen($this->path) + 1);
+        return new self($this->cwd, Path::makeRelative($path, $this->path));
     }
 
     public function __toString()

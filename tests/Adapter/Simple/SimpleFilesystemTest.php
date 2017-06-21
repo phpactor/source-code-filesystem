@@ -7,12 +7,12 @@ use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
 use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Tests\Adapter\AdapterTestCase;
 use DTL\Filesystem\Domain\Filesystem;
+use DTL\Filesystem\Domain\Cwd;
 
 class SimpleFilesystemTest extends AdapterTestCase
 {
     protected function filesystem(): Filesystem
     {
-        $basePath = FilePath::fromString($this->workspacePath());
-        return new SimpleFilesystem($basePath);
+        return new SimpleFilesystem(Cwd::fromCwd($this->workspacePath()));
     }
 }

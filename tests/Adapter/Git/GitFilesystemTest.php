@@ -7,6 +7,7 @@ use DTL\Filesystem\Adapter\Git\GitFilesystem;
 use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Tests\Adapter\AdapterTestCase;
 use DTL\Filesystem\Domain\Filesystem;
+use DTL\Filesystem\Domain\Cwd;
 
 class GitFilesystemTest extends AdapterTestCase
 {
@@ -19,7 +20,6 @@ class GitFilesystemTest extends AdapterTestCase
     }
     protected function filesystem(): Filesystem
     {
-        $basePath = FilePath::fromString($this->workspacePath());
-        return new GitFilesystem($basePath);
+        return new GitFilesystem(Cwd::fromCwd($this->workspacePath()));
     }
 }

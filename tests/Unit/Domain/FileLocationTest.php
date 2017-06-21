@@ -12,6 +12,6 @@ class FileLocationTest extends TestCase
      */
     public function testExtension()
     {
-        $this->assertEquals('php', FilePath::fromString('foo/bar.inc.php')->extension());
+        $this->assertEquals('php', FilePath::fromPathInCurrentCwd('foo/bar.inc.php')->extension());
     }
 }

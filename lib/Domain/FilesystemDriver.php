@@ -1,10 +1,11 @@
 <?php
+    ;
 
 namespace DTL\Filesystem\Domain;
 
 use DTL\Filesystem\Domain\FilePath;
 
-interface Filesystem
+interface FilesystemDriver
 {
     public function fileList(): FileList;
 
@@ -13,4 +14,6 @@ interface Filesystem
     public function remove(FilePath $location);
 
     public function copy(FilePath $srcLocation, FilePath $destLocation);
+
+    public function absolutePath(FilePath $location);
 }

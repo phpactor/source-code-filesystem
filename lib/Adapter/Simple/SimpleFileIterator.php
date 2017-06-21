@@ -4,12 +4,13 @@ namespace DTL\Filesystem\Adapter\Simple;
 
 use DTL\Filesystem\Domain\FileList;
 use DTL\Filesystem\Domain\FilePath;
+use DTL\Filesystem\Domain\Cwd;
 
 class SimpleFileIterator implements \IteratorAggregate
 {
     private $path;
 
-    public function __construct(FilePath $path)
+    public function __construct(Cwd $path)
     {
         $this->path = $path;
     }
@@ -24,7 +25,7 @@ class SimpleFileIterator implements \IteratorAggregate
                 continue;
             }
 
-            $path = FilePath::fromString((string) $file);
+            $path = FilePath::fromCwdAndPath($this->path, (string) $file);
             yield $this->path->relativize($path);
         }
     }

@@ -14,10 +14,10 @@ class FileListTest extends TestCase
     public function testContains()
     {
         $list = FileList::fromFilePaths([
-            FilePath::fromString('Foo/Bar.php'),
-            FilePath::fromString('Foo/Foo.php'),
+            FilePath::fromPathInCurrentCwd('Foo/Bar.php'),
+            FilePath::fromPathInCurrentCwd('Foo/Foo.php'),
         ]);
 
-        $this->assertTrue($list->contains(FilePath::fromString('Foo/Bar.php')));
+        $this->assertTrue($list->contains(FilePath::fromPathInCurrentCwd('Foo/Bar.php')));
     }
 }
