@@ -48,4 +48,9 @@ class AbsolutePath
     {
         return 0 === strpos($this->__toString(), $path->__toString());
     }
+
+    public function concatLocation(FileLocation $location)
+    {
+        return AbsolutePath::fromString($this->__toString() . '/'. $location->__toString());
+    }
 }

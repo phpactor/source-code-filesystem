@@ -13,4 +13,6 @@ interface Filesystem
     public function remove(FileLocation $location);
 
     public function copy(FileLocation $srcLocation, FileLocation $destLocation);
+
+    public function absolutePath(FileLocation $location);
 }

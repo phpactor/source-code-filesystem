@@ -48,4 +48,9 @@ class SimpleFilesystem implements Filesystem
             $this->path->concatNonExistingLocation($destLocation)
         );
     }
+
+    public function absolutePath(FileLocation $location)
+    {
+        return $this->path->concatLocation($location);
+    }
 }

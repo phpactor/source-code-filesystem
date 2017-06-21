@@ -63,5 +63,11 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->assertTrue(file_exists($this->basePath()->concatExistingLocation($destLocation)));
         $this->assertTrue(file_exists($this->basePath()->concatExistingLocation($srcLocation)));
     }
-}
 
+    public function testAbsolutePath()
+    {
+        $location = FileLocation::fromString('src/Hello/Goodbye.php');
+        $absolute = $this->filesystem()->absolutePath($location);
+        $this->assertTrue(file_exists($absolute));
+    }
+}

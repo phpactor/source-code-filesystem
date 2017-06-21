@@ -57,6 +57,11 @@ class GitFilesystem implements Filesystem
         $this->exec(sprintf('add %s', $destLocation->__toString()));
     }
 
+    public function absolutePath(FileLocation $location)
+    {
+        return $this->path->concatLocation($location);
+    }
+
     private function exec($command)
     {
         $current = getcwd();
