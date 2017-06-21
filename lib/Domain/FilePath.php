@@ -48,7 +48,7 @@ final class FilePath
 
     public function isWithin(FilePath $path)
     {
-        return 0 === strpos($path->absolutePath(), $this->absolutePath());
+        return 0 === strpos($this->absolutePath(), $path->absolutePath() . '/');
     }
 
     public function absolutePath()

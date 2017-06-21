@@ -44,7 +44,7 @@ class FilePathTest extends TestCase
         $path1 = FilePath::fromCwdAndPath(Cwd::fromCwd('/path/to/something'), 'else/yes');
         $path2 = FilePath::fromCwdAndPath(Cwd::fromCwd('/path/to/something'), 'else/yes/foobar');
 
-        $this->assertTrue($path1->isWithin($path2));
+        $this->assertTrue($path2->isWithin($path1));
 
     }
 }

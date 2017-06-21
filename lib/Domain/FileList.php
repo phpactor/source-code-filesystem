@@ -28,11 +28,6 @@ class FileList implements \IteratorAggregate
         return $this->iterator;
     }
 
-    public function phpFiles(): FileList
-    {
-        return new self($this->phpFileGenerator());
-    }
-
     public function contains(FilePath $path)
     {
         foreach ($this->iterator as $filePath) {
@@ -44,6 +39,11 @@ class FileList implements \IteratorAggregate
         return false;
     }
 
+    public function phpFiles(): FileList
+    {
+        return new self($this->phpFileGenerator());
+    }
+
     private function phpFileGenerator(): \Iterator
     {
         foreach ($this->iterator as $filePath) {
@@ -52,6 +52,20 @@ class FileList implements \IteratorAggregate
             }
 
             yield($filePath);
+        }
+    }
+
+    public function within(FilePath $path): FileList
+    {
+        return new self($this->withinGenerator($path));
+    }
+
+    private function withinGenerator(FilePath $path): \Iterator
+    {
+        foreach ($this->iterator as $filePath) {
+            if ($filePath->isWithin($path)) {
+                yield($filePath);
+            }
         }
     }
 }
