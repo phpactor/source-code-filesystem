@@ -5,14 +5,13 @@ namespace DTL\Filesystem\Adapter\Simple;
 use DTL\Filesystem\Domain\Filesystem;
 use DTL\Filesystem\Domain\FileList;
 use DTL\Filesystem\Domain\FilePath;
-use DTL\Filesystem\Domain\AbsoluteExistingPath;
 use DTL\Filesystem\Adapter\Simple\SimpleFileIterator;
 
 class SimpleFilesystem implements Filesystem
 {
     private $path;
 
-    public function __construct(AbsoluteExistingPath $path)
+    public function __construct(FilePath $path)
     {
         $this->path = $path;
     }
@@ -24,33 +23,33 @@ class SimpleFilesystem implements Filesystem
 
     public function chdir(FilePath $location): SimpleFileSystem
     {
-        return new self($this->path->concatExistingLocation($location));
+        return new self($this->path->concatPath($location));
     }
 
     public function remove(FilePath $location)
     {
-        $absolutePath = $this->path->concatExistingLocation($location);
+        $absolutePath = $this->path->concatPath($location);
         unlink($absolutePath);
     }
 
     public function move(FilePath $srcLocation, FilePath $destLocation)
     {
         rename(
-            $this->path->concatExistingLocation($srcLocation),
-            $this->path->concatNonExistingLocation($destLocation)
+            $this->path->concatPath($srcLocation),
+            $this->path->concatPath($destLocation)
         );
     }
 
     public function copy(FilePath $srcLocation, FilePath $destLocation)
     {
         copy(
-            $this->path->concatExistingLocation($srcLocation),
-            $this->path->concatNonExistingLocation($destLocation)
+            $this->path->concatPath($srcLocation),
+            $this->path->concatPath($destLocation)
         );
     }
 
     public function absolutePath(FilePath $location)
     {
-        return $this->path->concatLocation($location);
+        return $this->path->concatPath($location);
     }
 }

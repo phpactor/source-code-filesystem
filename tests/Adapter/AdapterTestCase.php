@@ -5,7 +5,6 @@ namespace DTL\Filesystem\Tests\Adapter;
 use DTL\Filesystem\Tests\Adapter\IntegrationTestCase;
 use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
 use DTL\Filesystem\Domain\FilePath;
-use DTL\Filesystem\Domain\AbsoluteExistingPath;
 use DTL\Filesystem\Domain\Filesystem;
 
 abstract class AdapterTestCase extends IntegrationTestCase
@@ -22,7 +21,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
 
     protected function basePath()
     {
-        return AbsoluteExistingPath::fromString($this->workspacePath());
+        return FilePath::fromString($this->workspacePath());
     }
 
     public function testFind()
@@ -38,7 +37,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
     public function testRemove()
     {
         $file = FilePath::fromString('src/Hello/Goodbye.php');
-        $absolutePath = $this->basePath()->concatExistingLocation($file);
+        $absolutePath = $this->basePath()->concatPath($file);
         $this->assertTrue(file_exists($absolutePath));
         $this->filesystem()->remove($file);
         $this->assertFalse(file_exists($absolutePath));
@@ -50,8 +49,8 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $destLocation = FilePath::fromString('src/Hello/Hello.php');
 
         $this->filesystem()->move($srcLocation, $destLocation);
-        $this->assertTrue(file_exists($this->basePath()->concatExistingLocation($destLocation)));
-        $this->assertFalse(file_exists($this->basePath()->concatNonExistingLocation($srcLocation)));
+        $this->assertTrue(file_exists($this->basePath()->concatPath($destLocation)));
+        $this->assertFalse(file_exists($this->basePath()->concatPath($srcLocation)));
     }
 
     public function testCopy()
@@ -60,14 +59,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $destLocation = FilePath::fromString('src/Hello/Hello.php');
 
         $this->filesystem()->copy($srcLocation, $destLocation);
-        $this->assertTrue(file_exists($this->basePath()->concatExistingLocation($destLocation)));
-        $this->assertTrue(file_exists($this->basePath()->concatExistingLocation($srcLocation)));
-    }
-
-    public function testAbsolutePath()
-    {
-        $location = FilePath::fromString('src/Hello/Goodbye.php');
-        $absolute = $this->filesystem()->absolutePath($location);
-        $this->assertTrue(file_exists($absolute));
+        $this->assertTrue(file_exists($this->basePath()->concatPath($destLocation)));
+        $this->assertTrue(file_exists($this->basePath()->concatPath($srcLocation)));
     }
 }

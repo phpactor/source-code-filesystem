@@ -5,21 +5,20 @@ namespace DTL\Filesystem\Adapter\Git;
 use DTL\Filesystem\Domain\Filesystem;
 use DTL\Filesystem\Domain\FileList;
 use DTL\Filesystem\Domain\FilePath;
-use DTL\Filesystem\Domain\AbsoluteExistingPath;
 use DTL\Filesystem\Adapter\Git\GitFileIterator;
 
 class GitFilesystem implements Filesystem
 {
     private $path;
 
-    public function __construct(AbsoluteExistingPath $path)
+    public function __construct(FilePath $path)
     {
         $this->path = $path;
     }
 
     public static function fromRootPath(string $path)
     {
-        return new self(AbsoluteExistingPath::fromString($path));
+        return new self(FilePath::fromString($path));
     }
 
     public function fileList(): FileList
@@ -59,7 +58,7 @@ class GitFilesystem implements Filesystem
 
     public function absolutePath(FilePath $location)
     {
-        return $this->path->concatLocation($location);
+        return $this->path->concatPath($location);
     }
 
     private function exec($command)
