@@ -57,6 +57,16 @@ class GitFilesystem implements Filesystem
         return FilePath::fromCwdAndPath($this->cwd, $path);
     }
 
+    public function getContents(FilePath $path): string
+    {
+        return file_get_contents($path->absolutePath());
+    }
+
+    public function writeContents(FilePath $path, string $contents)
+    {
+        file_put_contents($path->absolutePath(), $contents);
+    }
+
     private function exec($command)
     {
         $current = getcwd();

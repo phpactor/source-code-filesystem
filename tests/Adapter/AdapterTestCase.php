@@ -58,6 +58,14 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->assertTrue(file_exists($srcLocation->absolutePath()));
     }
 
+    public function testWriteGet()
+    {
+        $path = $this->createPath('src/Hello/Goodbye.php');
+
+        $this->filesystem()->writeContents($path, 'foo');
+        $this->assertEquals('foo', $this->filesystem()->getContents($path));
+    }
+
     private function createPath(string $path)
     {
         return FilePath::fromCwdAndPath(Cwd::fromCwd($this->workspacePath()), $path);
