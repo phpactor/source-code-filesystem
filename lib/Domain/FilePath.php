@@ -51,6 +51,11 @@ final class FilePath
         return 0 === strpos($this->absolutePath(), $path->absolutePath() . '/');
     }
 
+    public function isNamed(string $name): bool
+    {
+        return basename($this->absolutePath()) == $name;
+    }
+
     public function absolutePath()
     {
         return Path::join($this->cwd->__toString(), $this->path);

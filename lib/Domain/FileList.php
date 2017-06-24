@@ -41,31 +41,36 @@ class FileList implements \IteratorAggregate
 
     public function phpFiles(): FileList
     {
-        return new self($this->phpFileGenerator());
-    }
+        return new self(function () {
+            foreach ($this->iterator as $filePath) {
+                if ($filePath->extension() !== 'php') {
+                    continue;
+                }
 
-    private function phpFileGenerator(): \Iterator
-    {
-        foreach ($this->iterator as $filePath) {
-            if ($filePath->extension() !== 'php') {
-                continue;
+                yield($filePath);
             }
-
-            yield($filePath);
-        }
+        });
     }
 
     public function within(FilePath $path): FileList
     {
-        return new self($this->withinGenerator($path));
+        return new self((function () use ($path) {
+            foreach ($this->iterator as $filePath) {
+                if ($filePath->isWithin($path)) {
+                    yield($filePath);
+                }
+            }
+        })());
     }
 
-    private function withinGenerator(FilePath $path): \Iterator
+    public function named(string $name): FileList
     {
-        foreach ($this->iterator as $filePath) {
-            if ($filePath->isWithin($path)) {
-                yield($filePath);
+        return new self((function () use ($name) {
+            foreach ($this->iterator as $filePath) {
+                if ($filePath->isNamed($name)) {
+                    yield($filePath);
+                }
             }
-        }
+        })());
     }
 }

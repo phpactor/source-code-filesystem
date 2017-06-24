@@ -7,14 +7,21 @@ use DTL\Filesystem\Domain\FileList;
 use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Adapter\Git\GitFileIterator;
 use DTL\Filesystem\Domain\Cwd;
+use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
 
-class GitFilesystem implements Filesystem
+class GitFilesystem extends SimpleFilesystem
 {
     private $cwd;
 
     public function __construct(Cwd $cwd)
     {
         $this->cwd = $cwd;
+
+        if (false === file_exists($cwd->__toString() . '/.git')) {
+            throw new \RuntimeException(
+                'The cwd does not seem to be a git repository root (could not find .git folder)'
+            );
+        }
     }
 
     public function fileList(): FileList
@@ -55,16 +62,6 @@ class GitFilesystem implements Filesystem
     public function createPath(string $path): FilePath
     {
         return FilePath::fromCwdAndPath($this->cwd, $path);
-    }
-
-    public function getContents(FilePath $path): string
-    {
-        return file_get_contents($path->absolutePath());
-    }
-
-    public function writeContents(FilePath $path, string $contents)
-    {
-        file_put_contents($path->absolutePath(), $contents);
     }
 
     private function exec($command)

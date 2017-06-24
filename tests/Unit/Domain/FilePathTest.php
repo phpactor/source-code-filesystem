@@ -45,6 +45,19 @@ class FilePathTest extends TestCase
         $path2 = FilePath::fromCwdAndPath(Cwd::fromCwd('/path/to/something'), 'else/yes/foobar');
 
         $this->assertTrue($path2->isWithin($path1));
+    }
 
+    /**
+     * @testdox It returns true or false if it is named a given name.
+     */
+    public function testIsNamed()
+    {
+        $path1 = FilePath::fromCwdAndPath(Cwd::fromCwd('/path/to/something'), 'else/foobar');
+        $path2 = FilePath::fromCwdAndPath(Cwd::fromCwd('/path/to/foo'), 'else/yes/foobar');
+        $path3 = FilePath::fromCwdAndPath(Cwd::fromCwd('/path/to/barbar'), 'else/yes/brabar');
+
+        $this->assertTrue($path1->isNamed('foobar'));
+        $this->assertTrue($path2->isNamed('foobar'));
+        $this->assertFalse($path3->isNamed('foobar'));
     }
 }

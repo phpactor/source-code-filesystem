@@ -41,6 +41,27 @@ class FileListTest extends TestCase
             iterator_to_array($expected),
             iterator_to_array($list->within(FilePath::fromPathInCurrentCwd('Foo')))
         );
+    }
 
+    /**
+     * It returns all files with given name (including extension).
+     */
+    public function testNamed()
+    {
+        $list = FileList::fromFilePaths([
+            FilePath::fromPathInCurrentCwd('Foo/Bar.php'),
+            FilePath::fromPathInCurrentCwd('Foo/Foo.php'),
+            FilePath::fromPathInCurrentCwd('Boo/Bar.php'),
+            FilePath::fromPathInCurrentCwd('Foo.php'),
+        ]);
+        $expected = FileList::fromFilePaths([
+            FilePath::fromPathInCurrentCwd('Foo/Bar.php'),
+            FilePath::fromPathInCurrentCwd('Boo/Bar.php'),
+        ]);
+
+        $this->assertEquals(
+            iterator_to_array($expected),
+            iterator_to_array($list->named('Bar.php'))
+        );
     }
 }

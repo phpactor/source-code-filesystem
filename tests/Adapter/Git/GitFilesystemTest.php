@@ -18,8 +18,21 @@ class GitFilesystemTest extends AdapterTestCase
         exec('git init');
         exec('git add *');
     }
+
     protected function filesystem(): Filesystem
     {
         return new GitFilesystem(Cwd::fromCwd($this->workspacePath()));
     }
+
+    /**
+     * It sohuld throw an exception if the cwd does not have a .git folder.
+     *
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage The cwd does not seem to be
+     */
+    public function testNoGitFolder()
+    {
+        return new GitFilesystem(Cwd::fromCwd(__DIR__));
+    }
+
 }

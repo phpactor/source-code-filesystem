@@ -24,7 +24,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
     {
         $fileList = $this->filesystem()->fileList();
 
-        $location = $this->createPath('src/Hello/Goodbye.php');
+        $location = $this->filesystem()->createPath('src/Hello/Goodbye.php');
         $foo = $fileList->contains($location);
         $this->assertTrue($fileList->contains(FilePath::fromPathInCurrentCwd('src/Foobar.php')));
         $this->assertTrue($foo);
@@ -32,7 +32,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
 
     public function testRemove()
     {
-        $file = $this->createPath('src/Hello/Goodbye.php');
+        $file = $this->filesystem()->createPath('src/Hello/Goodbye.php');
         $this->assertTrue(file_exists($file->absolutePath()));
         $this->filesystem()->remove($file);
         $this->assertFalse(file_exists($file->absolutePath()));
@@ -40,8 +40,8 @@ abstract class AdapterTestCase extends IntegrationTestCase
 
     public function testMove()
     {
-        $srcLocation = $this->createPath('src/Hello/Goodbye.php');
-        $destLocation = $this->createPath('src/Hello/Hello.php');
+        $srcLocation = $this->filesystem()->createPath('src/Hello/Goodbye.php');
+        $destLocation = $this->filesystem()->createPath('src/Hello/Hello.php');
 
         $this->filesystem()->move($srcLocation, $destLocation);
         $this->assertTrue(file_exists($destLocation->absolutePath()));
@@ -50,8 +50,8 @@ abstract class AdapterTestCase extends IntegrationTestCase
 
     public function testCopy()
     {
-        $srcLocation = $this->createPath('src/Hello/Goodbye.php');
-        $destLocation = $this->createPath('src/Hello/Hello.php');
+        $srcLocation = $this->filesystem()->createPath('src/Hello/Goodbye.php');
+        $destLocation = $this->filesystem()->createPath('src/Hello/Hello.php');
 
         $this->filesystem()->copy($srcLocation, $destLocation);
         $this->assertTrue(file_exists($destLocation->absolutePath()));
@@ -60,14 +60,9 @@ abstract class AdapterTestCase extends IntegrationTestCase
 
     public function testWriteGet()
     {
-        $path = $this->createPath('src/Hello/Goodbye.php');
+        $path = $this->filesystem()->createPath('src/Hello/Goodbye.php');
 
         $this->filesystem()->writeContents($path, 'foo');
         $this->assertEquals('foo', $this->filesystem()->getContents($path));
-    }
-
-    private function createPath(string $path)
-    {
-        return FilePath::fromCwdAndPath(Cwd::fromCwd($this->workspacePath()), $path);
     }
 }
