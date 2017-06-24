@@ -23,10 +23,10 @@ abstract class AdapterTestCase extends IntegrationTestCase
     public function testFind()
     {
         $fileList = $this->filesystem()->fileList();
+        $this->assertTrue($fileList->contains(FilePath::fromPathInCurrentCwd('src/Foobar.php')));
 
         $location = $this->filesystem()->createPath('src/Hello/Goodbye.php');
         $foo = $fileList->contains($location);
-        $this->assertTrue($fileList->contains(FilePath::fromPathInCurrentCwd('src/Foobar.php')));
         $this->assertTrue($foo);
     }
 

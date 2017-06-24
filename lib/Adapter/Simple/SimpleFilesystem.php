@@ -19,7 +19,7 @@ class SimpleFilesystem implements Filesystem
 
     public function fileList(): FileList
     {
-        return FileList::fromIterator(new SimpleFileIterator($this->path));
+        return FileList::fromIterator(new SimpleFileIterator(FilePath::fromCwd($this->path)));
     }
 
     public function remove(FilePath $path)

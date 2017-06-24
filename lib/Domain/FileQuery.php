@@ -2,13 +2,15 @@
 
 namespace DTL\Filesystem\Domain;
 
-final class FileQueryBuilder
+final class FileQuery
 {
-    private $name;
+    private $pattern;
 
-    public function name(string $name)
+    public static function fromPattern(string $pattern)
     {
         $this->name = $name;
         return $this;
     }
+
+    public function create(): FileQuery
 }

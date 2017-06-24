@@ -32,6 +32,10 @@ class Cwd
 
     public function createPathWith(string $path)
     {
+        if (Path::isAbsolute($path)) {
+            $path = Path::makeRelative($path, $this->cwd);
+        }
+
         return FilePath::fromCwdAndPath($this, $path);
     }
 

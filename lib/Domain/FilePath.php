@@ -9,16 +9,16 @@ final class FilePath
     private $cwd;
     private $path;
 
-    private function __construct(Cwd $cwd, string $path)
+    private function __construct(Cwd $cwd, string $path = null)
     {
-        if (Path::isAbsolute($path) && 0 !== strpos($path, (string) $cwd)) {
+        if ($path && Path::isAbsolute($path) && 0 !== strpos($path, (string) $cwd)) {
             throw new \OutOfBoundsException(sprintf(
                 'Absolute path "%s" is not part of working directory "%s"',
                 $path, $cwd->__toString()
             ));
         }
 
-        if (Path::isAbsolute($path)) {
+        if ($path && Path::isAbsolute($path)) {
             $path = Path::makeRelative($path, (string) $cwd);
         }
 
@@ -31,6 +31,11 @@ final class FilePath
         return new self($cwd, $path);
     }
 
+    public static function fromCwd(Cwd $cwd)
+    {
+        return new self($cwd, '');
+    }
+
     public static function fromPathInCurrentCwd(string $path)
     {
         return new self(Cwd::fromCurrent(), $path);
@@ -41,9 +46,12 @@ final class FilePath
         return Path::getExtension($this->path);
     }
 
-    public function concatPath(FilePath $path)
+    public function concatPath(string $path)
     {
-        return new self($this->cwd, Path::join($this->path, $path));
+        if (Path::isAbsolute($path)) {
+            $path = Path::makeRelative($path, $this->absolutePath());
+        }
+        return new self($this->cwd, Path::join($this->absolutePath(), $path));
     }
 
     public function isWithin(FilePath $path)
