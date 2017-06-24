@@ -41,7 +41,7 @@ class FileList implements \IteratorAggregate
 
     public function phpFiles(): FileList
     {
-        return new self(function () {
+        return new self((function () {
             foreach ($this->iterator as $filePath) {
                 if ($filePath->extension() !== 'php') {
                     continue;
@@ -49,7 +49,7 @@ class FileList implements \IteratorAggregate
 
                 yield($filePath);
             }
-        });
+        })());
     }
 
     public function within(FilePath $path): FileList
