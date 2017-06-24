@@ -45,7 +45,7 @@ class SimpleFilesystem implements Filesystem
 
     public function createPath(string $path): FilePath
     {
-        return FilePath::fromCwdAndPath($this->cwd, $path);
+        return FilePath::fromCwdAndPath($this->path, $path);
     }
 
     public function getContents(FilePath $path): string
