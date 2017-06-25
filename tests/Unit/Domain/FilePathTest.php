@@ -9,22 +9,13 @@ use DTL\Filesystem\Domain\FilePath;
 class FilePathTest extends TestCase
 {
     /**
-     * @testdox It should throw an exception if the path is outside of the CWD
-     * @expectedException OutOfBoundsException
-     * @expectedExceptionMessage Absolute path "/foobar" is
+     * @testdox It should throw an exception if the path is not absolute
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage File path must be absolute
      */
-    public function testExceptionOutside()
+    public function testNotAbsolute()
     {
-        FilePath::fromCwdAndPath(Cwd::fromCwd('/path/to/something'), '/foobar');
-    }
-
-    /**
-     * @testdox It should provide the relative path for an absolute path.
-     */
-    public function testRelativeForAbsolute()
-    {
-        $relative = FilePath::fromCwdAndPath(Cwd::fromCwd('/path/to/something'), '/path/to/something/else/yes');
-        $this->assertEquals('else/yes', $relative->relativePath());
+        FilePath::fromString('foobar');
     }
 
     /**
@@ -32,8 +23,8 @@ class FilePathTest extends TestCase
      */
     public function testAbsolute()
     {
-        $relative = FilePath::fromCwdAndPath(Cwd::fromCwd('/path/to/something'), '/path/to/something/else/yes');
-        $this->assertEquals('/path/to/something/else/yes', $relative->absolutePath());
+        $path = FilePath::fromString('/path/to/something/else/yes');
+        $this->assertEquals('/path/to/something/else/yes', $path->asString());
     }
 
     /**
@@ -41,10 +32,19 @@ class FilePathTest extends TestCase
      */
     public function testWithin()
     {
-        $path1 = FilePath::fromCwdAndPath(Cwd::fromCwd('/path/to/something'), 'else/yes');
-        $path2 = FilePath::fromCwdAndPath(Cwd::fromCwd('/path/to/something'), 'else/yes/foobar');
+        $path1 = FilePath::fromString('/else/yes');
+        $path2 = FilePath::fromString('/else/yes/foobar');
 
         $this->assertTrue($path2->isWithin($path1));
+    }
+
+    /**
+     * @testdox It returns the files extension.
+     */
+    public function itReturnsTheExtension()
+    {
+        $path = FilePath::fromString('/foobar.php');
+        $this->assertEquals('php', $path->extension());
     }
 
     /**
@@ -52,9 +52,9 @@ class FilePathTest extends TestCase
      */
     public function testIsNamed()
     {
-        $path1 = FilePath::fromCwdAndPath(Cwd::fromCwd('/path/to/something'), 'else/foobar');
-        $path2 = FilePath::fromCwdAndPath(Cwd::fromCwd('/path/to/foo'), 'else/yes/foobar');
-        $path3 = FilePath::fromCwdAndPath(Cwd::fromCwd('/path/to/barbar'), 'else/yes/brabar');
+        $path1 = FilePath::fromString('/else/foobar');
+        $path2 = FilePath::fromString('/else/yes/foobar');
+        $path3 = FilePath::fromString('/else/yes/brabar');
 
         $this->assertTrue($path1->isNamed('foobar'));
         $this->assertTrue($path2->isNamed('foobar'));

@@ -3,42 +3,26 @@
 namespace DTL\Filesystem\Domain;
 
 use Webmozart\PathUtil\Path;
+use DTL\Filesystem\Domain\FilePath;
 
 final class FilePath
 {
-    private $cwd;
     private $path;
 
-    private function __construct(Cwd $cwd, string $path = null)
+    private function __construct(string $path = null)
     {
-        if ($path && Path::isAbsolute($path) && 0 !== strpos($path, (string) $cwd)) {
-            throw new \OutOfBoundsException(sprintf(
-                'Absolute path "%s" is not part of working directory "%s"',
-                $path, $cwd->__toString()
+        if (false === Path::isAbsolute($path)) {
+            throw new \InvalidArgumentException(sprintf(
+                'File path must be absolute'
             ));
         }
 
-        if ($path && Path::isAbsolute($path)) {
-            $path = Path::makeRelative($path, (string) $cwd);
-        }
-
-        $this->cwd = $cwd;
         $this->path = $path;
     }
 
-    public static function fromCwdAndPath(Cwd $cwd, string $path)
+    public static function fromString(string $path)
     {
-        return new self($cwd, $path);
-    }
-
-    public static function fromCwd(Cwd $cwd)
-    {
-        return new self($cwd, '');
-    }
-
-    public static function fromPathInCurrentCwd(string $path)
-    {
-        return new self(Cwd::fromCurrent(), $path);
+        return new self($path);
     }
 
     public function extension(): string
@@ -46,30 +30,22 @@ final class FilePath
         return Path::getExtension($this->path);
     }
 
-    public function concatPath(string $path)
+    public function concatPath(FilePath $path)
     {
-        if (Path::isAbsolute($path)) {
-            $path = Path::makeRelative($path, $this->absolutePath());
-        }
-        return new self($this->cwd, Path::join($this->absolutePath(), $path));
+        return new self(Path::join($this->path(), (string) $path));
     }
 
     public function isWithin(FilePath $path)
     {
-        return 0 === strpos($this->absolutePath(), $path->absolutePath() . '/');
+        return 0 === strpos($this->path(), $path->path() . '/');
     }
 
     public function isNamed(string $name): bool
     {
-        return basename($this->absolutePath()) == $name;
+        return basename($this->path()) == $name;
     }
 
-    public function absolutePath()
-    {
-        return Path::join($this->cwd->__toString(), $this->path);
-    }
-
-    public function relativePath()
+    public function path()
     {
         return $this->path;
     }
