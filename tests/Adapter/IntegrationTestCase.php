@@ -19,12 +19,12 @@ abstract class IntegrationTestCase extends TestCase
 
     protected function workspacePath()
     {
-        return __DIR__ . '/workspace';
+        return __DIR__.'/workspace';
     }
 
     protected function loadProject()
     {
-        $projectPath = __DIR__ . '/project';
+        $projectPath = __DIR__.'/project';
         $filesystem = new Filesystem();
         $filesystem->mirror($projectPath, $this->workspacePath());
         chdir($this->workspacePath());
@@ -33,7 +33,6 @@ abstract class IntegrationTestCase extends TestCase
 
     protected function getProjectAutoloader()
     {
-        return require(__DIR__ . '/project/vendor/autoload.php');
+        return require __DIR__.'/project/vendor/autoload.php';
     }
 }
-

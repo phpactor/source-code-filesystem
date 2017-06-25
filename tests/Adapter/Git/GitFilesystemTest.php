@@ -2,7 +2,6 @@
 
 namespace DTL\Filesystem\Tests\Adapter\Git;
 
-use DTL\Filesystem\Tests\Adapter\IntegrationTestCase;
 use DTL\Filesystem\Adapter\Git\GitFilesystem;
 use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Tests\Adapter\AdapterTestCase;
@@ -34,5 +33,4 @@ class GitFilesystemTest extends AdapterTestCase
     {
         return new GitFilesystem(FilePath::fromString(__DIR__));
     }
-
 }

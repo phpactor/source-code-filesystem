@@ -2,9 +2,7 @@
 
 namespace DTL\Filesystem\Tests\Adapter;
 
-use DTL\Filesystem\Tests\Adapter\IntegrationTestCase;
-use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
-use DTL\Filesystem\Domain\FilePath;
+
 use DTL\Filesystem\Domain\Filesystem;
 
 abstract class AdapterTestCase extends IntegrationTestCase

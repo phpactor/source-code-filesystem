@@ -4,9 +4,7 @@ namespace DTL\Filesystem\Adapter\Simple;
 
 use DTL\Filesystem\Domain\Filesystem;
 use DTL\Filesystem\Domain\FileList;
-use DTL\Filesystem\Domain\FilePath;
-use DTL\Filesystem\Adapter\Simple\SimpleFileIterator;
-use Webmozart\PathUtil\Path;
+use DTL\Filesystem\Domain\FilePath; use Webmozart\PathUtil\Path;
 
 class SimpleFilesystem implements Filesystem
 {

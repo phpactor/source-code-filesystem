@@ -2,7 +2,6 @@
 
 namespace DTL\Filesystem\Tests\Adapter\Simple;
 
-use DTL\Filesystem\Tests\Adapter\IntegrationTestCase;
 use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
 use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Tests\Adapter\AdapterTestCase;

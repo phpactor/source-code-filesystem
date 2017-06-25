@@ -2,12 +2,10 @@
 
 namespace DTL\Filesystem\Tests\Adapter\Composer;
 
-use DTL\Filesystem\Tests\Adapter\IntegrationTestCase;
 use DTL\Filesystem\Adapter\Composer\ComposerFilesystem;
 use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Tests\Adapter\AdapterTestCase;
 use DTL\Filesystem\Domain\Filesystem;
-use DTL\Filesystem\Domain\Cwd;
 
 class ComposerFilesystemTest extends AdapterTestCase
 {
@@ -23,7 +21,7 @@ class ComposerFilesystemTest extends AdapterTestCase
         static $classLoader;
 
         if (!$classLoader) {
-            $classLoader = require('vendor/autoload.php');
+            $classLoader = require 'vendor/autoload.php';
         }
 
         return new ComposerFilesystem(FilePath::fromString($this->workspacePath()), $classLoader);

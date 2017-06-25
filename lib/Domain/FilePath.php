@@ -3,7 +3,6 @@
 namespace DTL\Filesystem\Domain;
 
 use Webmozart\PathUtil\Path;
-use DTL\Filesystem\Domain\FilePath;
 
 final class FilePath
 {
@@ -48,7 +47,7 @@ final class FilePath
     public function makeAbsoluteFromString(string $path)
     {
         if (Path::isAbsolute($path)) {
-            $path = FilePath::fromString($path);
+            $path = self::fromString($path);
 
             if (!$path->isWithin($this)) {
                 throw new \RuntimeException(sprintf(
@@ -61,7 +60,7 @@ final class FilePath
             return $path;
         }
 
-        return FilePath::fromParts([(string) $this, $path]);
+        return self::fromParts([(string) $this, $path]);
     }
 
     public function extension(): string
@@ -76,7 +75,7 @@ final class FilePath
 
     public function isWithin(FilePath $path)
     {
-        return 0 === strpos($this->path(), $path->path() . '/');
+        return 0 === strpos($this->path(), $path->path().'/');
     }
 
     public function isNamed(string $name): bool

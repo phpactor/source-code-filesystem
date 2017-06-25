@@ -3,7 +3,6 @@
 namespace DTL\Filesystem\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
-use DTL\Filesystem\Domain\Cwd;
 use DTL\Filesystem\Domain\FilePath;
 
 class FilePathTest extends TestCase
@@ -56,7 +55,6 @@ class FilePathTest extends TestCase
         $path = $base->makeAbsoluteFromString('/path/to/something/yes');
         $this->assertEquals('/path/to/something/yes', (string) $path);
     }
-
 
     /**
      * @testdox It should provide the absolute path.

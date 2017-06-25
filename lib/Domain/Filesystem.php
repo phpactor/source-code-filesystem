@@ -2,8 +2,6 @@
 
 namespace DTL\Filesystem\Domain;
 
-use DTL\Filesystem\Domain\FilePath;
-
 interface Filesystem
 {
     public function fileList(): FileList;

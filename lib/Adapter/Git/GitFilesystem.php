@@ -2,11 +2,8 @@
 
 namespace DTL\Filesystem\Adapter\Git;
 
-use DTL\Filesystem\Domain\Filesystem;
 use DTL\Filesystem\Domain\FileList;
-use DTL\Filesystem\Domain\FilePath;
-use DTL\Filesystem\Adapter\Git\GitFileIterator;
-use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
+use DTL\Filesystem\Domain\FilePath; use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
 
 class GitFilesystem extends SimpleFilesystem
 {
@@ -16,7 +13,7 @@ class GitFilesystem extends SimpleFilesystem
     {
         $this->path = $path;
 
-        if (false === file_exists($path->__toString() . '/.git')) {
+        if (false === file_exists($path->__toString().'/.git')) {
             throw new \RuntimeException(
                 'The cwd does not seem to be a git repository root (could not find .git folder)'
             );
@@ -80,4 +77,3 @@ class GitFilesystem extends SimpleFilesystem
         return $output;
     }
 }
-

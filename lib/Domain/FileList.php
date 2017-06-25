@@ -2,8 +2,6 @@
 
 namespace DTL\Filesystem\Domain;
 
-use DTL\Filesystem\Domain\FilePath;
-
 class FileList implements \Iterator
 {
     private $iterator;
@@ -24,6 +22,7 @@ class FileList implements \Iterator
         foreach ($filePaths as $filePath) {
             $files[] = new \SplFileInfo($filePath);
         }
+
         return new self(new \ArrayIterator($files));
     }
 
@@ -51,7 +50,7 @@ class FileList implements \Iterator
                     continue;
                 }
 
-                yield($filePath->asSplFileInfo());
+                yield $filePath->asSplFileInfo();
             }
         })());
     }
@@ -70,28 +69,29 @@ class FileList implements \Iterator
         )));
     }
 
-    public function rewind() 
+    public function rewind()
     {
         $this->iterator->rewind();
     }
 
-    public function current() 
+    public function current()
     {
         $current = $this->iterator->current();
+
         return FilePath::fromSplFileInfo($current);
     }
 
-    public function key() 
+    public function key()
     {
         return $this->iterator->key();
     }
 
-    public function next() 
+    public function next()
     {
         $this->iterator->next();
     }
 
-    public function valid() 
+    public function valid()
     {
         return $this->iterator->valid();
     }
