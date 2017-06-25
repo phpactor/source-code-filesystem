@@ -19,12 +19,27 @@ class SimpleFilesystem implements Filesystem
 
     public function fileList(): FileList
     {
-        return FileList::fromIterator(new SimpleFileIterator($this->path));
+        return FileList::fromIterator(
+            $this->createFileIterator(
+                (string) $this->path
+            )
+        );
     }
 
     public function remove(FilePath $path)
     {
         unlink($path->path());
+    }
+
+    protected function createFileIterator(): \Iterator
+    {
+        $files = new \RecursiveDirectoryIterator($this->path->path());
+        $files = new \RecursiveIteratorIterator($files);
+        $files = new \CallbackFilterIterator($files, function ($file) {
+            return $file->isFile();
+        });
+
+        return $files;
     }
 
     public function move(FilePath $srcLocation, FilePath $destLocation)

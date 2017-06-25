@@ -6,7 +6,6 @@ use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Composer\Autoload\ClassLoader;
 use DTL\Filesystem\Domain\FileList;
 use DTL\Filesystem\Domain\Cwd;
-use DTL\Filesystem\Adapter\Simple\SimpleFileIterator;
 use DTL\Filesystem\Domain\FilePath;
 
 class ComposerFilesystem extends SimpleFilesystem
@@ -36,7 +35,7 @@ class ComposerFilesystem extends SimpleFilesystem
                     continue;
                 }
 
-                $iterator = new SimpleFileIterator(
+                $iterator = $this->createFileIterator(
                     $this->path->makeAbsoluteFromString($path)
                 );
 

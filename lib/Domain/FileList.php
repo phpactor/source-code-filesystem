@@ -4,7 +4,7 @@ namespace DTL\Filesystem\Domain;
 
 use DTL\Filesystem\Domain\FilePath;
 
-class FileList implements \IteratorAggregate
+class FileList implements \Iterator
 {
     private $iterator;
 
@@ -20,7 +20,11 @@ class FileList implements \IteratorAggregate
 
     public static function fromFilePaths(array $filePaths)
     {
-        return new self(new \ArrayIterator($filePaths));
+        $files = [];
+        foreach ($filePaths as $filePath) {
+            $files[] = new \SplFileInfo($filePath);
+        }
+        return new self(new \ArrayIterator($files));
     }
 
     public function getIterator()
@@ -30,7 +34,7 @@ class FileList implements \IteratorAggregate
 
     public function contains(FilePath $path)
     {
-        foreach ($this->iterator as $filePath) {
+        foreach ($this as $filePath) {
             if ($path == $filePath) {
                 return true;
             }
@@ -42,12 +46,12 @@ class FileList implements \IteratorAggregate
     public function phpFiles(): FileList
     {
         return new self((function () {
-            foreach ($this->iterator as $filePath) {
+            foreach ($this as $filePath) {
                 if ($filePath->extension() !== 'php') {
                     continue;
                 }
 
-                yield($filePath);
+                yield($filePath->asSplFileInfo());
             }
         })());
     }
@@ -55,9 +59,9 @@ class FileList implements \IteratorAggregate
     public function within(FilePath $path): FileList
     {
         return new self((function () use ($path) {
-            foreach ($this->iterator as $filePath) {
+            foreach ($this as $filePath) {
                 if ($filePath->isWithin($path)) {
-                    yield($filePath);
+                    yield($filePath->asSplFileInfo());
                 }
             }
         })());
@@ -66,11 +70,37 @@ class FileList implements \IteratorAggregate
     public function named(string $name): FileList
     {
         return new self((function () use ($name) {
-            foreach ($this->iterator as $filePath) {
+            foreach ($this as $filePath) {
                 if ($filePath->isNamed($name)) {
-                    yield($filePath);
+                    yield($filePath->asSplFileInfo());
                 }
             }
         })());
+    }
+
+    public function rewind() 
+    {
+        $this->iterator->rewind();
+    }
+
+    public function current() 
+    {
+        $current = $this->iterator->current();
+        return FilePath::fromSplFileInfo($current);
+    }
+
+    public function key() 
+    {
+        return $this->iterator->key();
+    }
+
+    public function next() 
+    {
+        $this->iterator->next();
+    }
+
+    public function valid() 
+    {
+        return $this->iterator->valid();
     }
 }

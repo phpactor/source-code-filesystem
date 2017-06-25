@@ -14,11 +14,11 @@ class FileListTest extends TestCase
     public function testContains()
     {
         $list = FileList::fromFilePaths([
-            FilePath::fromPathInCurrentCwd('Foo/Bar.php'),
-            FilePath::fromPathInCurrentCwd('Foo/Foo.php'),
+            FilePath::fromString('/Foo/Bar.php'),
+            FilePath::fromString('/Foo/Foo.php'),
         ]);
 
-        $this->assertTrue($list->contains(FilePath::fromPathInCurrentCwd('Foo/Bar.php')));
+        $this->assertTrue($list->contains(FilePath::fromString('/Foo/Bar.php')));
     }
 
     /**
@@ -27,19 +27,19 @@ class FileListTest extends TestCase
     public function testWithin()
     {
         $list = FileList::fromFilePaths([
-            FilePath::fromPathInCurrentCwd('Foo/Bar.php'),
-            FilePath::fromPathInCurrentCwd('Foo/Foo.php'),
-            FilePath::fromPathInCurrentCwd('Boo/Bar.php'),
-            FilePath::fromPathInCurrentCwd('Foo.php'),
+            FilePath::fromString('/Foo/Bar.php'),
+            FilePath::fromString('/Foo/Foo.php'),
+            FilePath::fromString('/Boo/Bar.php'),
+            FilePath::fromString('/Foo.php'),
         ]);
         $expected = FileList::fromFilePaths([
-            FilePath::fromPathInCurrentCwd('Foo/Bar.php'),
-            FilePath::fromPathInCurrentCwd('Foo/Foo.php'),
+            FilePath::fromString('/Foo/Bar.php'),
+            FilePath::fromString('/Foo/Foo.php'),
         ]);
 
         $this->assertEquals(
             iterator_to_array($expected),
-            iterator_to_array($list->within(FilePath::fromPathInCurrentCwd('Foo')))
+            iterator_to_array($list->within(FilePath::fromString('/Foo')))
         );
     }
 
@@ -49,14 +49,14 @@ class FileListTest extends TestCase
     public function testNamed()
     {
         $list = FileList::fromFilePaths([
-            FilePath::fromPathInCurrentCwd('Foo/Bar.php'),
-            FilePath::fromPathInCurrentCwd('Foo/Foo.php'),
-            FilePath::fromPathInCurrentCwd('Boo/Bar.php'),
-            FilePath::fromPathInCurrentCwd('Foo.php'),
+            FilePath::fromString('/Foo/Bar.php'),
+            FilePath::fromString('/Foo/Foo.php'),
+            FilePath::fromString('/Boo/Bar.php'),
+            FilePath::fromString('/Foo.php'),
         ]);
         $expected = FileList::fromFilePaths([
-            FilePath::fromPathInCurrentCwd('Foo/Bar.php'),
-            FilePath::fromPathInCurrentCwd('Boo/Bar.php'),
+            FilePath::fromString('/Foo/Bar.php'),
+            FilePath::fromString('/Boo/Bar.php'),
         ]);
 
         $this->assertEquals(

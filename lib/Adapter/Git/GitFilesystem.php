@@ -29,7 +29,7 @@ class GitFilesystem extends SimpleFilesystem
         $files = [];
 
         foreach ($gitFiles as $gitFile) {
-            $files[] = $this->path->makeAbsoluteFromString($gitFile);
+            $files[] = new \SplFileInfo((string) $this->path->makeAbsoluteFromString($gitFile));
         }
 
         return FileList::fromIterator(new \ArrayIterator($files));

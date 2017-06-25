@@ -35,6 +35,16 @@ final class FilePath
         return new self($path);
     }
 
+    public static function fromSplFileInfo(\SplFileInfo $fileInfo)
+    {
+        return new self((string) $fileInfo);
+    }
+
+    public function asSplFileInfo()
+    {
+        return new \SplFileInfo($this->path());
+    }
+
     public function makeAbsoluteFromString(string $path)
     {
         if (Path::isAbsolute($path)) {
