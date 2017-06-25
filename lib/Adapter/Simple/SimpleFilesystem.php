@@ -6,55 +6,59 @@ use DTL\Filesystem\Domain\Filesystem;
 use DTL\Filesystem\Domain\FileList;
 use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Adapter\Simple\SimpleFileIterator;
-use DTL\Filesystem\Domain\Cwd;
+use Webmozart\PathUtil\Path;
 
 class SimpleFilesystem implements Filesystem
 {
     private $path;
 
-    public function __construct(Cwd $path)
+    public function __construct(FilePath $path)
     {
         $this->path = $path;
     }
 
     public function fileList(): FileList
     {
-        return FileList::fromIterator(new SimpleFileIterator(FilePath::fromCwd($this->path)));
+        return FileList::fromIterator(new SimpleFileIterator($this->path));
     }
 
     public function remove(FilePath $path)
     {
-        unlink($path->absolutePath());
+        unlink($path->path());
     }
 
     public function move(FilePath $srcLocation, FilePath $destLocation)
     {
         rename(
-            $srcLocation->absolutePath(),
-            $destLocation->absolutePath()
+            $srcLocation->path(),
+            $destLocation->path()
         );
     }
 
     public function copy(FilePath $srcLocation, FilePath $destLocation)
     {
         copy(
-            $srcLocation->absolutePath(),
-            $destLocation->absolutePath()
+            $srcLocation->path(),
+            $destLocation->path()
         );
     }
 
     public function createPath(string $path): FilePath
     {
-        return FilePath::fromCwdAndPath($this->path, $path);
+        if (Path::isRelative($path)) {
+            return FilePath::fromParts([$this->path->path(), $path]);
+        }
+
+        return FilePath::fromString($path);
     }
 
     public function getContents(FilePath $path): string
     {
-        return file_get_contents($path->absolutePath());
+        return file_get_contents($path->path());
     }
 
     public function writeContents(FilePath $path, string $contents)
     {
-        file_put_contents($path->absolutePath(), $contents);
+        file_put_contents($path->path(), $contents);
     }
 }

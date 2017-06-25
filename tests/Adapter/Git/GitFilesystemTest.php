@@ -21,7 +21,7 @@ class GitFilesystemTest extends AdapterTestCase
 
     protected function filesystem(): Filesystem
     {
-        return new GitFilesystem(Cwd::fromCwd($this->workspacePath()));
+        return new GitFilesystem(FilePath::fromString($this->workspacePath()));
     }
 
     /**
@@ -32,7 +32,7 @@ class GitFilesystemTest extends AdapterTestCase
      */
     public function testNoGitFolder()
     {
-        return new GitFilesystem(Cwd::fromCwd(__DIR__));
+        return new GitFilesystem(FilePath::fromString(__DIR__));
     }
 
 }

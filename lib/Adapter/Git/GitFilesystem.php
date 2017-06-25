@@ -6,18 +6,17 @@ use DTL\Filesystem\Domain\Filesystem;
 use DTL\Filesystem\Domain\FileList;
 use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Adapter\Git\GitFileIterator;
-use DTL\Filesystem\Domain\Cwd;
 use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
 
 class GitFilesystem extends SimpleFilesystem
 {
-    private $cwd;
+    private $path;
 
-    public function __construct(Cwd $cwd)
+    public function __construct(FilePath $path)
     {
-        $this->cwd = $cwd;
+        $this->path = $path;
 
-        if (false === file_exists($cwd->__toString() . '/.git')) {
+        if (false === file_exists($path->__toString() . '/.git')) {
             throw new \RuntimeException(
                 'The cwd does not seem to be a git repository root (could not find .git folder)'
             );
@@ -30,7 +29,7 @@ class GitFilesystem extends SimpleFilesystem
         $files = [];
 
         foreach ($gitFiles as $gitFile) {
-            $files[] = FilePath::fromCwdAndPath($this->cwd, $gitFile);
+            $files[] = $this->path->makeAbsoluteFromString($gitFile);
         }
 
         return FileList::fromIterator(new \ArrayIterator($files));
@@ -38,36 +37,36 @@ class GitFilesystem extends SimpleFilesystem
 
     public function remove(FilePath $path)
     {
-        $this->exec(sprintf('rm -f %s', $path->relativePath()));
+        $this->exec(sprintf('rm -f %s', $path->path()));
     }
 
     public function move(FilePath $srcPath, FilePath $destPath)
     {
         $this->exec(sprintf(
             'mv %s %s',
-            $srcPath->relativePath(),
-            $destPath->relativePath()
+            $srcPath->path(),
+            $destPath->path()
         ));
     }
 
     public function copy(FilePath $srcPath, FilePath $destPath)
     {
         copy(
-            $srcPath->relativePath(),
-            $destPath->relativePath()
+            $srcPath->path(),
+            $destPath->path()
         );
         $this->exec(sprintf('add %s', $destPath->__toString()));
     }
 
     public function createPath(string $path): FilePath
     {
-        return FilePath::fromCwdAndPath($this->cwd, $path);
+        return $this->path->makeAbsoluteFromString($path);
     }
 
     private function exec($command)
     {
         $current = getcwd();
-        chdir((string) $this->cwd);
+        chdir((string) $this->path);
         exec(sprintf('git %s 2>&1', $command), $output, $return);
         chdir($current);
 

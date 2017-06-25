@@ -26,6 +26,6 @@ class ComposerFilesystemTest extends AdapterTestCase
             $classLoader = require('vendor/autoload.php');
         }
 
-        return new ComposerFilesystem(Cwd::fromCwd($this->workspacePath()), $classLoader);
+        return new ComposerFilesystem(FilePath::fromString($this->workspacePath()), $classLoader);
     }
 }

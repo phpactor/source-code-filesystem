@@ -6,7 +6,6 @@ use DTL\Filesystem\Tests\Adapter\IntegrationTestCase;
 use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
 use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Domain\Filesystem;
-use DTL\Filesystem\Domain\Cwd;
 
 abstract class AdapterTestCase extends IntegrationTestCase
 {
@@ -23,7 +22,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
     public function testFind()
     {
         $fileList = $this->filesystem()->fileList();
-        $this->assertTrue($fileList->contains(FilePath::fromPathInCurrentCwd('src/Foobar.php')));
+        $this->assertTrue($fileList->contains($this->filesystem()->createPath('src/Foobar.php')));
 
         $location = $this->filesystem()->createPath('src/Hello/Goodbye.php');
         $foo = $fileList->contains($location);
@@ -33,9 +32,9 @@ abstract class AdapterTestCase extends IntegrationTestCase
     public function testRemove()
     {
         $file = $this->filesystem()->createPath('src/Hello/Goodbye.php');
-        $this->assertTrue(file_exists($file->absolutePath()));
+        $this->assertTrue(file_exists($file->path()));
         $this->filesystem()->remove($file);
-        $this->assertFalse(file_exists($file->absolutePath()));
+        $this->assertFalse(file_exists($file->path()));
     }
 
     public function testMove()
@@ -44,8 +43,8 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $destLocation = $this->filesystem()->createPath('src/Hello/Hello.php');
 
         $this->filesystem()->move($srcLocation, $destLocation);
-        $this->assertTrue(file_exists($destLocation->absolutePath()));
-        $this->assertFalse(file_exists($srcLocation->absolutePath()));
+        $this->assertTrue(file_exists($destLocation->path()));
+        $this->assertFalse(file_exists($srcLocation->path()));
     }
 
     public function testCopy()
@@ -54,8 +53,8 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $destLocation = $this->filesystem()->createPath('src/Hello/Hello.php');
 
         $this->filesystem()->copy($srcLocation, $destLocation);
-        $this->assertTrue(file_exists($destLocation->absolutePath()));
-        $this->assertTrue(file_exists($srcLocation->absolutePath()));
+        $this->assertTrue(file_exists($destLocation->path()));
+        $this->assertTrue(file_exists($srcLocation->path()));
     }
 
     public function testWriteGet()

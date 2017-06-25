@@ -18,13 +18,53 @@ class FilePathTest extends TestCase
         FilePath::fromString('foobar');
     }
 
+    public function testFromParts()
+    {
+        $path = FilePath::fromParts(['Hello', 'Goodbye']);
+        $this->assertEquals('/Hello/Goodbye', $path->path());
+    }
+
+    /**
+     * @testdox It generates an absolute path from a relative.
+     */
+    public function testAbsoluteFromString()
+    {
+        $base = FilePath::fromString('/path/to/something');
+        $new = $base->makeAbsoluteFromString('else/yes');
+        $this->assertEquals('/path/to/something/else/yes', $new->path());
+    }
+
+    /**
+     * @testdox If creating a descendant file and the path is absolute and NOT in th
+     *          current branch, an exception should be thrown.
+     *
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Trying to create descendant
+     */
+    public function testDescendantOutsideOfBranchException()
+    {
+        $base = FilePath::fromString('/path/to/something');
+        $base->makeAbsoluteFromString('/else/yes');
+    }
+
+    /**
+     * @testdox If given an absolute path and it lies within the current branch, return new file path.
+     */
+    public function testDescendantInsideOfBranchException()
+    {
+        $base = FilePath::fromString('/path/to/something');
+        $path = $base->makeAbsoluteFromString('/path/to/something/yes');
+        $this->assertEquals('/path/to/something/yes', (string) $path);
+    }
+
+
     /**
      * @testdox It should provide the absolute path.
      */
     public function testAbsolute()
     {
         $path = FilePath::fromString('/path/to/something/else/yes');
-        $this->assertEquals('/path/to/something/else/yes', $path->asString());
+        $this->assertEquals('/path/to/something/else/yes', $path->path());
     }
 
     /**

@@ -25,6 +25,35 @@ final class FilePath
         return new self($path);
     }
 
+    public static function fromParts(array $parts)
+    {
+        $path = Path::join($parts);
+        if (substr($path, 0, 1) !== '/') {
+            $path = '/'.$path;
+        }
+
+        return new self($path);
+    }
+
+    public function makeAbsoluteFromString(string $path)
+    {
+        if (Path::isAbsolute($path)) {
+            $path = FilePath::fromString($path);
+
+            if (!$path->isWithin($this)) {
+                throw new \RuntimeException(sprintf(
+                    'Trying to create descendant from absolute path "%s" that does not lie within context path "%s"',
+                    (string) $path,
+                    (string) $this
+                ));
+            }
+
+            return $path;
+        }
+
+        return FilePath::fromParts([(string) $this, $path]);
+    }
+
     public function extension(): string
     {
         return Path::getExtension($this->path);
