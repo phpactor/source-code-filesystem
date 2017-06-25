@@ -28,8 +28,9 @@ class ComposerFilesystem extends SimpleFilesystem
             $this->classLoader->getClassMap()
         );
 
-        $multipleIterator = new \MultipleIterator();
+        $appendIterator = new \AppendIterator();
         foreach ($prefixes as $paths) {
+            $paths = (array) $paths;
             foreach ($paths as $path) {
                 if (!$path = realpath($path)) {
                     continue;
@@ -39,10 +40,10 @@ class ComposerFilesystem extends SimpleFilesystem
                     $this->path->makeAbsoluteFromString($path)
                 );
 
-                return FileList::fromIterator($iterator);
+                $appendIterator->append($iterator);
             }
         }
 
-        return FileList::fromIterator($multipleIterator);
+        return FileList::fromIterator($appendIterator);
     }
 }
