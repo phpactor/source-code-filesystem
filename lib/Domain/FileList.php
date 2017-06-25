@@ -58,24 +58,16 @@ class FileList implements \Iterator
 
     public function within(FilePath $path): FileList
     {
-        return new self((function () use ($path) {
-            foreach ($this as $filePath) {
-                if ($filePath->isWithin($path)) {
-                    yield($filePath->asSplFileInfo());
-                }
-            }
-        })());
+        return new self(new \RegexIterator($this->iterator, sprintf(
+            '{^%s/.*}', (string) $path
+        )));
     }
 
     public function named(string $name): FileList
     {
-        return new self((function () use ($name) {
-            foreach ($this as $filePath) {
-                if ($filePath->isNamed($name)) {
-                    yield($filePath->asSplFileInfo());
-                }
-            }
-        })());
+        return new self(new \RegexIterator($this->iterator, sprintf(
+            '{/%s.*$}', $name
+        )));
     }
 
     public function rewind() 

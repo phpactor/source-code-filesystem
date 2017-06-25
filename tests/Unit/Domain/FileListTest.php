@@ -60,8 +60,8 @@ class FileListTest extends TestCase
         ]);
 
         $this->assertEquals(
-            iterator_to_array($expected),
-            iterator_to_array($list->named('Bar.php'))
+            array_values(iterator_to_array($expected)),
+            array_values(iterator_to_array($list->named('Bar.php')))
         );
     }
 }
