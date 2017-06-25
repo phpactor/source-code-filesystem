@@ -28,10 +28,16 @@ class ComposerFilesystem extends SimpleFilesystem
         );
 
         $appendIterator = new \AppendIterator();
+        $files = [];
         foreach ($prefixes as $paths) {
             $paths = (array) $paths;
             foreach ($paths as $path) {
                 if (!$path = realpath($path)) {
+                    continue;
+                }
+
+                if (is_file($path)) {
+                    $files[] = $path;
                     continue;
                 }
 
@@ -41,6 +47,10 @@ class ComposerFilesystem extends SimpleFilesystem
 
                 $appendIterator->append($iterator);
             }
+        }
+
+        if ($paths) {
+            $appendIterator->append(new \ArrayIterator($paths));
         }
 
         return FileList::fromIterator($appendIterator);
