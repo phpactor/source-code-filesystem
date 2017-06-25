@@ -31,13 +31,11 @@ class SimpleFilesystem implements Filesystem
         unlink($path->path());
     }
 
-    protected function createFileIterator(): \Iterator
+    protected function createFileIterator(string $path): \Iterator
     {
-        $files = new \RecursiveDirectoryIterator($this->path->path());
+        $path = $path ? $this->path->makeAbsoluteFromString($path) : $this->path->path();
+        $files = new \RecursiveDirectoryIterator($path);
         $files = new \RecursiveIteratorIterator($files);
-        $files = new \CallbackFilterIterator($files, function ($file) {
-            return $file->isFile();
-        });
 
         return $files;
     }
