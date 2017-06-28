@@ -5,37 +5,27 @@ namespace DTL\Filesystem\Adapter\Simple;
 use DTL\Filesystem\Domain\Filesystem;
 use DTL\Filesystem\Domain\FileList;
 use DTL\Filesystem\Domain\FilePath; use Webmozart\PathUtil\Path;
+use DTL\Filesystem\Domain\FileListProvider;
+use DTL\Filesystem\Adapter\Simple\SimpleFileListProvider;
 
 class SimpleFilesystem implements Filesystem
 {
     private $path;
 
-    public function __construct(FilePath $path)
+    public function __construct(FilePath $path, FileListProvider $fileListProvider = null)
     {
         $this->path = $path;
+        $this->fileListProvider = $fileListProvider ?: new SimpleFileListProvider($path);
     }
 
     public function fileList(): FileList
     {
-        return FileList::fromIterator(
-            $this->createFileIterator(
-                (string) $this->path
-            )
-        );
+        return $this->fileListProvider->fileList();
     }
 
     public function remove(FilePath $path)
     {
         unlink($path->path());
-    }
-
-    protected function createFileIterator(string $path): \Iterator
-    {
-        $path = $path ? $this->path->makeAbsoluteFromString($path) : $this->path->path();
-        $files = new \RecursiveDirectoryIterator($path);
-        $files = new \RecursiveIteratorIterator($files);
-
-        return $files;
     }
 
     public function move(FilePath $srcLocation, FilePath $destLocation)

@@ -49,7 +49,7 @@ final class FilePath
         if (Path::isAbsolute($path)) {
             $path = self::fromString($path);
 
-            if (!$path->isWithin($this)) {
+            if (false === $path->isWithinOrSame($this)) {
                 throw new \RuntimeException(sprintf(
                     'Trying to create descendant from absolute path "%s" that does not lie within context path "%s"',
                     (string) $path,
@@ -76,6 +76,15 @@ final class FilePath
     public function isWithin(FilePath $path)
     {
         return 0 === strpos($this->path(), $path->path().'/');
+    }
+
+    public function isWithinOrSame(FilePath $path)
+    {
+        if ($this->path() == $path->path()) {
+            return true;
+        }
+
+        return $this->isWithin($path);
     }
 
     public function isNamed(string $name): bool

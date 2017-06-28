@@ -5,13 +5,14 @@ namespace DTL\Filesystem\Domain;
 class FileList implements \Iterator
 {
     private $iterator;
+    private $key = 0;
 
-    private function __construct(\Traversable $iterator)
+    private function __construct(\Iterator $iterator)
     {
         $this->iterator = $iterator;
     }
 
-    public static function fromIterator(\Traversable $iterator)
+    public static function fromIterator(\Iterator $iterator)
     {
         return new self($iterator);
     }
@@ -83,7 +84,7 @@ class FileList implements \Iterator
 
     public function key()
     {
-        return $this->iterator->key();
+        return $this->key++;
     }
 
     public function next()
