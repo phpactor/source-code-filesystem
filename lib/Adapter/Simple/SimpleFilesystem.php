@@ -54,8 +54,11 @@ class SimpleFilesystem implements Filesystem
         foreach ($iterator as $file) {
             $destPath = $destLocation->path() . '/' . $iterator->getSubPathName();
             if ($file->isDir()) {
-                mkdir($destPath, 0777, true);
                 continue;
+            }
+
+            if (!file_exists(dirname($destPath))) {
+                mkdir(dirname($destPath), 0777, true);
             }
 
             copy($file, $destPath);
