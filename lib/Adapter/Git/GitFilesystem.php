@@ -4,6 +4,7 @@ namespace DTL\Filesystem\Adapter\Git;
 
 use DTL\Filesystem\Domain\FileList;
 use DTL\Filesystem\Domain\FilePath; use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
+use DTL\Filesystem\Domain\CopyReport;
 
 class GitFilesystem extends SimpleFilesystem
 {
@@ -46,7 +47,7 @@ class GitFilesystem extends SimpleFilesystem
         ));
     }
 
-    public function copy(FilePath $srcPath, FilePath $destPath): FileList
+    public function copy(FilePath $srcPath, FilePath $destPath): CopyReport
     {
         $list = parent::copy($srcPath, $destPath);
         $this->exec(sprintf('add %s', $destPath->__toString()));
