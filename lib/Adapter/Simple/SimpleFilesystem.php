@@ -38,10 +38,28 @@ class SimpleFilesystem implements Filesystem
 
     public function copy(FilePath $srcLocation, FilePath $destLocation)
     {
-        copy(
-            $srcLocation->path(),
-            $destLocation->path()
+        if (false === is_dir($srcLocation->path())) {
+            copy(
+                $srcLocation->path(),
+                $destLocation->path()
+            );
+            return;
+        }
+
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($srcLocation->path(), \RecursiveDirectoryIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::SELF_FIRST
         );
+
+        foreach ($iterator as $file) {
+            $destPath = $destLocation->path() . '/' . $iterator->getSubPathName();
+            if ($file->isDir()) {
+                mkdir($destPath, 0777, true);
+                continue;
+            }
+
+            copy($file, $destPath);
+        }
     }
 
     public function createPath(string $path): FilePath

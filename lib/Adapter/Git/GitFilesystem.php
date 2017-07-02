@@ -48,10 +48,7 @@ class GitFilesystem extends SimpleFilesystem
 
     public function copy(FilePath $srcPath, FilePath $destPath)
     {
-        copy(
-            $srcPath->path(),
-            $destPath->path()
-        );
+        parent::copy($srcPath, $destPath);
         $this->exec(sprintf('add %s', $destPath->__toString()));
     }
 
