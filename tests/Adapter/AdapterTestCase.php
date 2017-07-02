@@ -60,11 +60,12 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $srcLocation = $this->filesystem()->createPath('src');
         $destLocation = $this->filesystem()->createPath('src/AAAn');
 
-        $this->filesystem()->copy($srcLocation, $destLocation);
+        $list = $this->filesystem()->copy($srcLocation, $destLocation);
         $this->assertTrue(file_exists($destLocation->path()));
         $this->assertTrue(file_exists($srcLocation->path()));
         $this->assertTrue(file_exists($srcLocation->path() . '/AAAn/Foobar.php'));
         $this->assertTrue(file_exists($srcLocation->path() . '/AAAn/Hello/Goodbye.php'));
+        $this->assertCount(2, $list);
     }
 
     public function testWriteGet()

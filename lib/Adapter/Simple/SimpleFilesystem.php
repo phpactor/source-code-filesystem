@@ -4,7 +4,8 @@ namespace DTL\Filesystem\Adapter\Simple;
 
 use DTL\Filesystem\Domain\Filesystem;
 use DTL\Filesystem\Domain\FileList;
-use DTL\Filesystem\Domain\FilePath; use Webmozart\PathUtil\Path;
+use DTL\Filesystem\Domain\FilePath; 
+use Webmozart\PathUtil\Path;
 use DTL\Filesystem\Domain\FileListProvider;
 use DTL\Filesystem\Adapter\Simple\SimpleFileListProvider;
 
@@ -36,14 +37,14 @@ class SimpleFilesystem implements Filesystem
         );
     }
 
-    public function copy(FilePath $srcLocation, FilePath $destLocation)
+    public function copy(FilePath $srcLocation, FilePath $destLocation): FileList
     {
         if (false === is_dir($srcLocation->path())) {
             copy(
                 $srcLocation->path(),
                 $destLocation->path()
             );
-            return;
+            return FileList::fromFilePaths([ $destLocation ]);
         }
 
         $iterator = new \RecursiveIteratorIterator(
@@ -51,6 +52,7 @@ class SimpleFilesystem implements Filesystem
             \RecursiveIteratorIterator::SELF_FIRST
         );
 
+        $newFiles = [];
         foreach ($iterator as $file) {
             $destPath = $destLocation->path() . '/' . $iterator->getSubPathName();
             if ($file->isDir()) {
@@ -62,7 +64,10 @@ class SimpleFilesystem implements Filesystem
             }
 
             copy($file, $destPath);
+            $newFiles[] = FilePath::fromString($destPath);
         }
+
+        return FileList::fromFilePaths($newFiles);
     }
 
     public function createPath(string $path): FilePath
