@@ -41,6 +41,9 @@ class SimpleFilesystem implements Filesystem
     public function copy(FilePath $srcLocation, FilePath $destLocation): CopyReport
     {
         if (false === is_dir($srcLocation->path())) {
+            if (!file_exists(dirname($destLocation))) {
+                mkdir(dirname($destLocation), 0777, true);
+            }
             copy(
                 $srcLocation->path(),
                 $destLocation->path()
