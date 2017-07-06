@@ -1,5 +1,5 @@
 {
-    "name": "dantleech/source-code-filesystem",
+    "name": "phpactor/source-code-filesystem",
     "description": "Filesystem library for working with source code files",
     "license": "MIT",
     "authors": [
