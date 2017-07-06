@@ -1,10 +1,10 @@
 <?php
 
-namespace DTL\Filesystem\Adapter\Git;
+namespace Phpactor\Filesystem\Adapter\Git;
 
-use DTL\Filesystem\Domain\FileList;
-use DTL\Filesystem\Domain\FilePath; use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
-use DTL\Filesystem\Domain\CopyReport;
+use Phpactor\Filesystem\Domain\FileList;
+use Phpactor\Filesystem\Domain\FilePath; use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
+use Phpactor\Filesystem\Domain\CopyReport;
 
 class GitFilesystem extends SimpleFilesystem
 {

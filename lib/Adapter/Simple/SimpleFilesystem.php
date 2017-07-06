@@ -1,14 +1,14 @@
 <?php
 
-namespace DTL\Filesystem\Adapter\Simple;
+namespace Phpactor\Filesystem\Adapter\Simple;
 
-use DTL\Filesystem\Domain\Filesystem;
-use DTL\Filesystem\Domain\FileList;
-use DTL\Filesystem\Domain\FilePath; 
+use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\Filesystem\Domain\FileList;
+use Phpactor\Filesystem\Domain\FilePath; 
 use Webmozart\PathUtil\Path;
-use DTL\Filesystem\Domain\FileListProvider;
-use DTL\Filesystem\Adapter\Simple\SimpleFileListProvider;
-use DTL\Filesystem\Domain\CopyReport;
+use Phpactor\Filesystem\Domain\FileListProvider;
+use Phpactor\Filesystem\Adapter\Simple\SimpleFileListProvider;
+use Phpactor\Filesystem\Domain\CopyReport;
 
 class SimpleFilesystem implements Filesystem
 {

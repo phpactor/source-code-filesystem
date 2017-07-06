@@ -1,11 +1,11 @@
 <?php
 
-namespace DTL\Filesystem\Tests\Adapter\Composer;
+namespace Phpactor\Filesystem\Tests\Adapter\Composer;
 
-use DTL\Filesystem\Adapter\Composer\ComposerFilesystem;
-use DTL\Filesystem\Domain\FilePath;
-use DTL\Filesystem\Tests\Adapter\AdapterTestCase;
-use DTL\Filesystem\Domain\Filesystem;
+use Phpactor\Filesystem\Adapter\Composer\ComposerFilesystem;
+use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Tests\Adapter\AdapterTestCase;
+use Phpactor\Filesystem\Domain\Filesystem;
 
 class ComposerFilesystemTest extends AdapterTestCase
 {

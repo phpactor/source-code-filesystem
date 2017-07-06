@@ -1,6 +1,6 @@
 <?php
 
-namespace DTL\Filesystem\Domain;
+namespace Phpactor\Filesystem\Domain;
 
 class FileList implements \Iterator
 {

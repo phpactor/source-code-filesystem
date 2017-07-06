@@ -1,11 +1,11 @@
 <?php
 
-namespace DTL\Filesystem\Adapter\Composer;
+namespace Phpactor\Filesystem\Adapter\Composer;
 
-use DTL\Filesystem\Domain\FileList;
-use DTL\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Domain\FileList;
+use Phpactor\Filesystem\Domain\FilePath;
 use Composer\Autoload\ClassLoader;
-use DTL\Filesystem\Domain\FileListProvider;
+use Phpactor\Filesystem\Domain\FileListProvider;
 
 class ComposerFileListProvider implements FileListProvider
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace DTL\Filesystem\Tests\Unit\Domain;
+namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
-use DTL\Filesystem\Domain\FileList;
-use DTL\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Domain\FileList;
+use Phpactor\Filesystem\Domain\FilePath;
 
 class FileListTest extends TestCase
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace DTL\Filesystem\Tests\Unit\Domain;
+namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
-use DTL\Filesystem\Domain\FileListProvider;
-use DTL\Filesystem\Domain\ChainFileListProvider;
-use DTL\Filesystem\Domain\FilePath;
-use DTL\Filesystem\Domain\FileList;
+use Phpactor\Filesystem\Domain\FileListProvider;
+use Phpactor\Filesystem\Domain\ChainFileListProvider;
+use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Domain\FileList;
 
 class ChainFileListProviderTest extends TestCase
 {

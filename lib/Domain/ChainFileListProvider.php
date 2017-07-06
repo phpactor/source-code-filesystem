@@ -1,8 +1,8 @@
 <?php
 
-namespace DTL\Filesystem\Domain;
+namespace Phpactor\Filesystem\Domain;
 
-use DTL\Filesystem\Domain\FileList;
+use Phpactor\Filesystem\Domain\FileList;
 
 class ChainFileListProvider implements FileListProvider
 {

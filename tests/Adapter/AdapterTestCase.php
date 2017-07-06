@@ -1,9 +1,9 @@
 <?php
 
-namespace DTL\Filesystem\Tests\Adapter;
+namespace Phpactor\Filesystem\Tests\Adapter;
 
 
-use DTL\Filesystem\Domain\Filesystem;
+use Phpactor\Filesystem\Domain\Filesystem;
 
 abstract class AdapterTestCase extends IntegrationTestCase
 {

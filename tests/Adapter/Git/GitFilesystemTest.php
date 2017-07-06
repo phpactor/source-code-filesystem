@@ -1,12 +1,12 @@
 <?php
 
-namespace DTL\Filesystem\Tests\Adapter\Git;
+namespace Phpactor\Filesystem\Tests\Adapter\Git;
 
-use DTL\Filesystem\Adapter\Git\GitFilesystem;
-use DTL\Filesystem\Domain\FilePath;
-use DTL\Filesystem\Tests\Adapter\AdapterTestCase;
-use DTL\Filesystem\Domain\Filesystem;
-use DTL\Filesystem\Domain\Cwd;
+use Phpactor\Filesystem\Adapter\Git\GitFilesystem;
+use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Tests\Adapter\AdapterTestCase;
+use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\Filesystem\Domain\Cwd;
 
 class GitFilesystemTest extends AdapterTestCase
 {
@@ -32,5 +32,12 @@ class GitFilesystemTest extends AdapterTestCase
     public function testNoGitFolder()
     {
         return new GitFilesystem(FilePath::fromString(__DIR__));
+    }
+
+    /**
+     * It should fallback to simple filesystem if file is not under VC.
+     */
+    public function testMoveNonVersionedFile()
+    {
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace DTL\Filesystem\Tests\Adapter\Simple;
+namespace Phpactor\Filesystem\Tests\Adapter\Simple;
 
-use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
-use DTL\Filesystem\Domain\FilePath;
-use DTL\Filesystem\Tests\Adapter\AdapterTestCase;
-use DTL\Filesystem\Domain\Filesystem;
+use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
+use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Tests\Adapter\AdapterTestCase;
+use Phpactor\Filesystem\Domain\Filesystem;
 
 class SimpleFilesystemTest extends AdapterTestCase
 {

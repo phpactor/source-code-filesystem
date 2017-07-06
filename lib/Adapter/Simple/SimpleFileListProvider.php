@@ -1,10 +1,10 @@
 <?php
 
-namespace DTL\Filesystem\Adapter\Simple;
+namespace Phpactor\Filesystem\Adapter\Simple;
 
-use DTL\Filesystem\Domain\FileListProvider;
-use DTL\Filesystem\Domain\FileList;
-use DTL\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Domain\FileListProvider;
+use Phpactor\Filesystem\Domain\FileList;
+use Phpactor\Filesystem\Domain\FilePath;
 
 final class SimpleFileListProvider implements FileListProvider
 {
