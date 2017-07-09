@@ -35,11 +35,19 @@ class GitFilesystem extends SimpleFilesystem
 
     public function remove(FilePath $path)
     {
+        if (false === $this->trackedByGit($path)) {
+            return parent::remove($path);
+        }
+
         $this->exec(sprintf('rm -f %s', $path->path()));
     }
 
     public function move(FilePath $srcPath, FilePath $destPath)
     {
+        if (false === $this->trackedByGit($srcPath)) {
+            return parent::move($srcPath, $destPath);
+        }
+
         $this->exec(sprintf(
             'mv %s %s',
             $srcPath->path(),
@@ -75,5 +83,12 @@ class GitFilesystem extends SimpleFilesystem
         }
 
         return $output;
+    }
+
+    private function trackedByGit(FilePath $file)
+    {
+        $out = $this->exec(sprintf('ls-files %s', (string) $file));
+
+        return false === empty($out);
     }
 }

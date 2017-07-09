@@ -39,5 +39,16 @@ class GitFilesystemTest extends AdapterTestCase
      */
     public function testMoveNonVersionedFile()
     {
+        touch($this->workspacePath() . '/Test.php');
+        $this->filesystem()->move(FilePath::fromString($this->workspacePath() . '/Test.php'), FilePath::fromString($this->workspacePath() . '/Foobar.php'));
+    }
+
+    /**
+     * It should fallback to simple filesystem if file is not under VC.
+     */
+    public function testRemoveNonVersionedFile()
+    {
+        touch($this->workspacePath() . '/Test.php');
+        $this->filesystem()->remove(FilePath::fromString($this->workspacePath() . '/Test.php'));
     }
 }
