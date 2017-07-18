@@ -17,4 +17,6 @@ interface Filesystem
     public function writeContents(FilePath $path, string $contents);
 
     public function getContents(FilePath $path): string;
+
+    public function exists(FilePath $path): bool;
 }

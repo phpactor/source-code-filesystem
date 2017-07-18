@@ -97,4 +97,9 @@ class SimpleFilesystem implements Filesystem
     {
         file_put_contents($path->path(), $contents);
     }
+
+    public function exists(FilePath $path): bool
+    {
+        return file_exists($path);
+    }
 }
