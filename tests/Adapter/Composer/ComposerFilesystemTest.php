@@ -26,4 +26,16 @@ class ComposerFilesystemTest extends AdapterTestCase
 
         return new ComposerFilesystem(FilePath::fromString($this->workspacePath()), $classLoader);
     }
+
+    public function testClassmap()
+    {
+        $fileList = $this->filesystem()->fileList();
+        $location = $this->filesystem()->createPath('src/Hello/Goodbye.php');
+        $fileList = $fileList->named('DB.php');
+        $this->assertCount(1, $fileList);
+
+        foreach ($fileList as $file) {
+            $this->assertInstanceOf(FilePath::class, $file);
+        }
+    }
 }
