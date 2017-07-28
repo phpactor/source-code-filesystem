@@ -23,7 +23,9 @@ class ComposerFileListProvider implements FileListProvider
         $prefixes = array_merge(
             $this->classLoader->getPrefixes(),
             $this->classLoader->getPrefixesPsr4(),
-            $this->classLoader->getClassMap()
+            $this->classLoader->getClassMap(),
+            $this->classLoader->getFallbackDirs(),
+            $this->classLoader->getFallbackDirsPsr4()
         );
 
         $appendIterator = new \AppendIterator();
