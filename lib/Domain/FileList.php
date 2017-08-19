@@ -70,6 +70,11 @@ class FileList implements \Iterator
         )));
     }
 
+    public function filter(\Closure $closure)
+    {
+        return new self(new \CallbackFilterIterator($this->iterator, $closure));
+    }
+
     public function rewind()
     {
         $this->iterator->rewind();

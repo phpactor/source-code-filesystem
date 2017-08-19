@@ -64,4 +64,25 @@ class FileListTest extends TestCase
             array_values(iterator_to_array($list->named('Bar.php')))
         );
     }
+
+    public function testCallback()
+    {
+        $list = FileList::fromFilePaths([
+            FilePath::fromString('/Foo/Bar.php'),
+            FilePath::fromString('/Foo/Foo.php'),
+            FilePath::fromString('/Boo/Bar.php'),
+            FilePath::fromString('/Foo.php'),
+        ]);
+        $expected = FileList::fromFilePaths([
+            FilePath::fromString('/Foo/Bar.php'),
+            FilePath::fromString('/Boo/Bar.php'),
+        ]);
+
+        $this->assertEquals(
+            array_values(iterator_to_array($expected)),
+            array_values(iterator_to_array($list->filter(function (\SplFileInfo $file) {
+                return $file->getFileName() == 'Bar.php';
+            })))
+        );
+    }
 }
