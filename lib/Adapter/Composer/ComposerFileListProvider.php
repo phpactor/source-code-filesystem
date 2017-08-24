@@ -30,6 +30,7 @@ class ComposerFileListProvider implements FileListProvider
 
         $appendIterator = new \AppendIterator();
         $files = [];
+        $seenPaths = [];
         foreach ($prefixes as $paths) {
             $paths = (array) $paths;
             foreach ($paths as $path) {
@@ -42,11 +43,23 @@ class ComposerFileListProvider implements FileListProvider
                     continue;
                 }
 
+                // do not add a directory iterator if a parent directory
+                // has already been iterated.
+                //
+                // TODO: This could be more efficient.
+                foreach ($seenPaths as $seenPath) {
+                    if (0 === strpos($path, $seenPath)) {
+                        continue 2;
+                    }
+                }
+
                 $iterator = $this->createFileIterator(
                     $this->path->makeAbsoluteFromString($path)
                 );
 
                 $appendIterator->append($iterator);
+
+                $seenPaths[] = $path;
             }
         }
 

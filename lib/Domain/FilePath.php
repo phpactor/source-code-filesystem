@@ -19,7 +19,7 @@ final class FilePath
         $this->path = $path;
     }
 
-    public static function fromString(string $path)
+    public static function fromString(string $path): FilePath
     {
         return new self($path);
     }
