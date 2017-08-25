@@ -39,7 +39,11 @@ class ComposerFileListProvider implements FileListProvider
                 }
 
                 if (is_file($path)) {
-                    $files[] = new \SplFileInfo($path);
+                    if (isset($files[$path])) {
+                        continue;
+                    }
+
+                    $files[$path] = new \SplFileInfo($path);
                     continue;
                 }
 
@@ -59,12 +63,12 @@ class ComposerFileListProvider implements FileListProvider
 
                 $appendIterator->append($iterator);
 
-                $seenPaths[] = $path;
+                $seenPaths[$path] = $path;
             }
         }
 
         if ($files) {
-            $appendIterator->append(new \ArrayIterator($files));
+            $appendIterator->append(new \ArrayIterator(array_values($files)));
         }
 
         return FileList::fromIterator($appendIterator);
