@@ -6,6 +6,8 @@ use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath;
 use Composer\Autoload\ClassLoader;
 use Phpactor\Filesystem\Domain\FileListProvider;
+use Phpactor\Filesystem\Iterator\AppendIterator;
+
 
 class ComposerFileListProvider implements FileListProvider
 {
@@ -28,7 +30,7 @@ class ComposerFileListProvider implements FileListProvider
             $this->classLoader->getFallbackDirsPsr4()
         );
 
-        $appendIterator = new \AppendIterator();
+        $appendIterator = new AppendIterator();
         $files = [];
         $seenPaths = [];
         foreach ($prefixes as $paths) {

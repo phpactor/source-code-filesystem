@@ -3,6 +3,7 @@
 namespace Phpactor\Filesystem\Domain;
 
 use Phpactor\Filesystem\Domain\FileList;
+use Phpactor\Filesystem\Iterator\AppendIterator;
 
 class ChainFileListProvider implements FileListProvider
 {
@@ -17,17 +18,9 @@ class ChainFileListProvider implements FileListProvider
 
     public function fileList(): FileList
     {
-        $appendIterator = new \AppendIterator();
+        $iterator = new AppendIterator();
         foreach ($this->providers as $provider) {
-            $iterator = $provider->fileList()->getIterator();
-
-            if ($iterator instanceof AppendIterator) {
-                foreach ($iterator as $subIterator) {
-                    $appendIterator->append($subIterator);
-                }
-                continue;
-            }
-            $appendIterator->append($iterator);
+            $iterator->append($provider->fileList()->getIterator());
         }
 
         return FileList::fromIterator($iterator);
