@@ -17,9 +17,17 @@ class ChainFileListProvider implements FileListProvider
 
     public function fileList(): FileList
     {
-        $iterator = new \AppendIterator();
+        $appendIterator = new \AppendIterator();
         foreach ($this->providers as $provider) {
-            $iterator->append($provider->fileList()->getIterator());
+            $iterator = $provider->fileList()->getIterator();
+
+            if ($iterator instanceof AppendIterator) {
+                foreach ($iterator as $subIterator) {
+                    $appendIterator->append($subIterator);
+                }
+                continue;
+            }
+            $appendIterator->append($iterator);
         }
 
         return FileList::fromIterator($iterator);
