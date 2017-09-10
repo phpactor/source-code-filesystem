@@ -2,6 +2,12 @@
 
 namespace Phpactor\Filesystem\Iterator;
 
+/**
+ * Custom implementation of AppendIterator as a work-around for PHP bug in 7.1.0 / 7.2/BETA:
+ *
+ * https://bugs.php.net/bug.php?id=75155&edit=2
+ * https://3v4l.org/Hnti2
+ */
 class AppendIterator implements \Iterator
 {
     private $iterators = [];
