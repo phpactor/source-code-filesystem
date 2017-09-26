@@ -51,4 +51,14 @@ class GitFilesystemTest extends AdapterTestCase
         touch($this->workspacePath() . '/Test.php');
         $this->filesystem()->remove(FilePath::fromString($this->workspacePath() . '/Test.php'));
     }
+
+    /**
+     * It lists untracked files
+     */
+    public function testListUntracked()
+    {
+        $path = $this->workspacePath() . '/Test.php';
+        touch($path);
+        $this->assertTrue($this->filesystem()->fileList()->contains(FilePath::fromString($path)));
+    }
 }
