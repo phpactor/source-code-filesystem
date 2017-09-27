@@ -23,7 +23,7 @@ class GitFilesystem extends SimpleFilesystem
 
     public function fileList(): FileList
     {
-        $gitFiles = array_merge($this->exec('ls-files'), $this->exec('ls-files --others --exclude-standard'));
+        $gitFiles = $this->exec('ls-files --cached --others --exclude-standard');
         $files = [];
 
         foreach ($gitFiles as $gitFile) {
