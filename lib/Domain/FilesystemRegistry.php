@@ -2,7 +2,7 @@
 
 namespace Phpactor\Filesystem\Domain;
 
-final class FilesystemRegistry
+class FilesystemRegistry
 {
     private $filesystems = [];
 
@@ -23,6 +23,11 @@ final class FilesystemRegistry
         }
 
         return $this->filesystems[$name];
+    }
+
+    public function names(): array
+    {
+        return array_keys($this->filesystems);
     }
 
     private function add(string $name, Filesystem $filesystem)
