@@ -39,6 +39,11 @@ final class FilePath
         return new self((string) $fileInfo);
     }
 
+    public function isDirectory()
+    {
+        return is_dir($this->path);
+    }
+
     public function asSplFileInfo()
     {
         return new \SplFileInfo($this->path());
