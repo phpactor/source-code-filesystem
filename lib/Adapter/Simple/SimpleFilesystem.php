@@ -111,7 +111,7 @@ class SimpleFilesystem implements Filesystem
 
             copy($file, $filePath);
             $srcFiles[] = FilePath::fromString($file);
-            $destFiles[] = FilePath::fromString($destPath);
+            $destFiles[] = FilePath::fromString($filePath);
         }
 
         return CopyReport::fromSrcAndDestFiles(FileList::fromFilePaths($srcFiles), FileList::fromFilePaths($destFiles));
