@@ -23,6 +23,7 @@ class GitFilesystem extends SimpleFilesystem
 
     public function fileList(): FileList
     {
+        // list all files (tracked and non-tracked) but ignore those in .gitignore
         $gitFiles = $this->exec('ls-files --cached --others --exclude-standard');
         $files = [];
 
