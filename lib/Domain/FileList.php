@@ -2,6 +2,10 @@
 
 namespace Phpactor\Filesystem\Domain;
 
+use CallbackFilterIterator;
+use RegexIterator;
+use SplFileInfo;
+
 class FileList implements \Iterator
 {
     private $iterator;
@@ -58,21 +62,28 @@ class FileList implements \Iterator
 
     public function within(FilePath $path): FileList
     {
-        return new self(new \RegexIterator($this->iterator, sprintf(
+        return new self(new RegexIterator($this->iterator, sprintf(
             '{^%s/.*}', (string) $path
         )));
     }
 
     public function named(string $name): FileList
     {
-        return new self(new \RegexIterator($this->iterator, sprintf(
+        return new self(new RegexIterator($this->iterator, sprintf(
             '{/%s.*$}', $name
         )));
     }
 
     public function filter(\Closure $closure)
     {
-        return new self(new \CallbackFilterIterator($this->iterator, $closure));
+        return new self(new CallbackFilterIterator($this->iterator, $closure));
+    }
+
+    public function existing()
+    {
+        return new self(new CallbackFilterIterator($this->iterator, function (SplFileInfo $file) {
+            return file_exists($file->__toString());
+        }));
     }
 
     public function rewind()

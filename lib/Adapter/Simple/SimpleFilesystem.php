@@ -30,53 +30,33 @@ class SimpleFilesystem implements Filesystem
         unlink($path->path());
     }
 
-    public function move(FilePath $srcLocation, FilePath $destLocation)
+    public function move(FilePath $srcLocation, FilePath $destPath)
     {
+        $this->makeDirectoryIfNotExists((string) $destPath);
         rename(
             $srcLocation->path(),
-            $destLocation->path()
+            $destPath->path()
         );
     }
 
-    public function copy(FilePath $srcLocation, FilePath $destLocation): CopyReport
+    public function copy(FilePath $srcLocation, FilePath $destPath): CopyReport
     {
-        if (false === is_dir($srcLocation->path())) {
-            if (!file_exists(dirname($destLocation))) {
-                mkdir(dirname($destLocation), 0777, true);
-            }
-            copy(
-                $srcLocation->path(),
-                $destLocation->path()
-            );
-            return CopyReport::fromSrcAndDestFiles(
-                FileList::fromFilePaths([ $srcLocation ]),
-                FileList::fromFilePaths([ $destLocation ])
-            );
+        if ($srcLocation->isDirectory()) {
+            return $this->copyDirectory($srcLocation, $destPath);
         }
 
-        $iterator = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($srcLocation->path(), \RecursiveDirectoryIterator::SKIP_DOTS),
-            \RecursiveIteratorIterator::SELF_FIRST
+        $this->makeDirectoryIfNotExists((string) $destPath);
+
+        copy(
+            $srcLocation->path(),
+            $destPath->path()
         );
 
-        $destFiles = [];
-        $srcFiles = [];
-        foreach ($iterator as $file) {
-            $destPath = $destLocation->path() . '/' . $iterator->getSubPathName();
-            if ($file->isDir()) {
-                continue;
-            }
+        return CopyReport::fromSrcAndDestFiles(
+            FileList::fromFilePaths([ $srcLocation ]),
+            FileList::fromFilePaths([ $destPath ])
+        );
 
-            if (!file_exists(dirname($destPath))) {
-                mkdir(dirname($destPath), 0777, true);
-            }
-
-            copy($file, $destPath);
-            $srcFiles[] = FilePath::fromString($file);
-            $destFiles[] = FilePath::fromString($destPath);
-        }
-
-        return CopyReport::fromSrcAndDestFiles(FileList::fromFilePaths($srcFiles), FileList::fromFilePaths($destFiles));
     }
 
     public function createPath(string $path): FilePath
@@ -101,5 +81,39 @@ class SimpleFilesystem implements Filesystem
     public function exists(FilePath $path): bool
     {
         return file_exists($path);
+    }
+
+    private function makeDirectoryIfNotExists($destPath)
+    {
+        if (file_exists(dirname($destPath))) {
+            return;
+        }
+
+        mkdir(dirname($destPath), 0777, true);
+    }
+
+    private function copyDirectory(FilePath $srcLocation, FilePath $destPath): CopyReport
+    {
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($srcLocation->path(), \RecursiveDirectoryIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        $destFiles = [];
+        $srcFiles = [];
+        foreach ($iterator as $file) {
+            $filePath = $destPath->path() . '/' . $iterator->getSubPathName();
+            if ($file->isDir()) {
+                continue;
+            }
+
+            $this->makeDirectoryIfNotExists($filePath);
+
+            copy($file, $filePath);
+            $srcFiles[] = FilePath::fromString($file);
+            $destFiles[] = FilePath::fromString($destPath);
+        }
+
+        return CopyReport::fromSrcAndDestFiles(FileList::fromFilePaths($srcFiles), FileList::fromFilePaths($destFiles));
     }
 }

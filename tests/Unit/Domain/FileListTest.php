@@ -85,4 +85,20 @@ class FileListTest extends TestCase
             })))
         );
     }
+
+    public function testExisting()
+    {
+        $list = FileList::fromFilePaths([
+            FilePath::fromString(__FILE__),
+            FilePath::fromString('/Foo.php'),
+        ]);
+        $expected = FileList::fromFilePaths([
+            FilePath::fromString(__FILE__),
+        ]);
+
+        $this->assertEquals(
+            array_values(iterator_to_array($expected)),
+            array_values(iterator_to_array($list->existing()))
+        );
+    }
 }
