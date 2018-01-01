@@ -4,7 +4,7 @@ namespace Phpactor\Filesystem\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\Filesystem;
-use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
 
 class Domain extends TestCase
 {
@@ -29,6 +29,16 @@ class Domain extends TestCase
         $this->assertEquals($this->filesystem->reveal(), $filesystem);
     }
 
+    public function testHasFilesystem()
+    {
+        $registry = $this->createRegistry([
+            'foobar' => $this->filesystem->reveal()
+        ]);
+
+        $this->assertTrue($registry->has('foobar'));
+        $this->assertFalse($registry->has('barbar'));
+    }
+
     public function testExceptionOnNotFound()
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -42,7 +52,7 @@ class Domain extends TestCase
 
     private function createRegistry(array $filesystems)
     {
-        return new FilesystemRegistry($filesystems);
+        return new MappedFilesystemRegistry($filesystems);
     }
 }
 
