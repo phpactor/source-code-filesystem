@@ -5,6 +5,7 @@ namespace Phpactor\Filesystem\Adapter\Git;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath; use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Filesystem\Domain\CopyReport;
+use Phpactor\Filesystem\Domain\Exception\NotSupported;
 
 class GitFilesystem extends SimpleFilesystem
 {
@@ -15,7 +16,7 @@ class GitFilesystem extends SimpleFilesystem
         $this->path = $path;
 
         if (false === file_exists($path->__toString().'/.git')) {
-            throw new \RuntimeException(
+            throw new NotSupported(
                 'The cwd does not seem to be a git repository root (could not find .git folder)'
             );
         }
