@@ -24,6 +24,10 @@ class FallbackFilesystemRegistry implements FilesystemRegistry
 
     public function get(string $name): Filesystem
     {
+        if (false === $this->registry->has($name)) {
+            return $this->registry->get($this->fallback);
+        }
+
         return $this->registry->get($name);
     }
 
