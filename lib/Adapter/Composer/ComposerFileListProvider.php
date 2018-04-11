@@ -7,6 +7,7 @@ use Phpactor\Filesystem\Domain\FilePath;
 use Composer\Autoload\ClassLoader;
 use Phpactor\Filesystem\Domain\FileListProvider;
 use Phpactor\Filesystem\Iterator\AppendIterator;
+use Webmozart\PathUtil\Path;
 
 
 class ComposerFileListProvider implements FileListProvider
@@ -36,9 +37,7 @@ class ComposerFileListProvider implements FileListProvider
         foreach ($prefixes as $paths) {
             $paths = (array) $paths;
             foreach ($paths as $path) {
-                if (!$path = realpath($path)) {
-                    continue;
-                }
+                $path = Path::canonicalize($path);
 
                 if (is_file($path)) {
                     if (isset($files[$path])) {
