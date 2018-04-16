@@ -39,6 +39,10 @@ class ComposerFileListProvider implements FileListProvider
             foreach ($paths as $path) {
                 $path = Path::canonicalize($path);
 
+                if (false === file_exists($path)) {
+                    continue;
+                }
+
                 if (is_file($path)) {
                     if (isset($files[$path])) {
                         continue;
