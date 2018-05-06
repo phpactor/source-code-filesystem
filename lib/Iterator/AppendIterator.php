@@ -2,6 +2,9 @@
 
 namespace Phpactor\Filesystem\Iterator;
 
+use ArrayIterator;
+use Iterator;
+
 /**
  * Custom implementation of AppendIterator as a work-around for PHP bug in 7.1.0 / 7.2/BETA:
  *

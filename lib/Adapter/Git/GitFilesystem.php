@@ -3,6 +3,7 @@
 namespace Phpactor\Filesystem\Adapter\Git;
 
 use Phpactor\Filesystem\Domain\FileList;
+use Phpactor\Filesystem\Domain\FileListProvider;
 use Phpactor\Filesystem\Domain\FilePath; use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Filesystem\Domain\CopyReport;
 use Phpactor\Filesystem\Domain\Exception\NotSupported;
@@ -11,8 +12,10 @@ class GitFilesystem extends SimpleFilesystem
 {
     private $path;
 
-    public function __construct(FilePath $path)
+    public function __construct($path, FileListProvider $fileListProvider = null)
     {
+        $path = FilePath::fromUnknown($path);
+        parent::__construct($path, $fileListProvider);
         $this->path = $path;
 
         if (false === file_exists($path->__toString().'/.git')) {
@@ -35,8 +38,9 @@ class GitFilesystem extends SimpleFilesystem
         return FileList::fromIterator(new \ArrayIterator($files));
     }
 
-    public function remove(FilePath $path)
+    public function remove($path)
     {
+        $path = FilePath::fromUnknown($path);
         if (false === $this->trackedByGit($path)) {
             return parent::remove($path);
         }
@@ -44,8 +48,11 @@ class GitFilesystem extends SimpleFilesystem
         $this->exec(sprintf('rm -f %s', $path->path()));
     }
 
-    public function move(FilePath $srcPath, FilePath $destPath)
+    public function move($srcPath, $destPath)
     {
+        $srcPath = FilePath::fromUnknown($srcPath);
+        $destPath = FilePath::fromUnknown($destPath);
+
         if (false === $this->trackedByGit($srcPath)) {
             return parent::move($srcPath, $destPath);
         }
@@ -57,8 +64,10 @@ class GitFilesystem extends SimpleFilesystem
         ));
     }
 
-    public function copy(FilePath $srcPath, FilePath $destPath): CopyReport
+    public function copy($srcPath, $destPath): CopyReport
     {
+        $srcPath = FilePath::fromUnknown($srcPath);
+        $destPath = FilePath::fromUnknown($destPath);
         $list = parent::copy($srcPath, $destPath);
         $this->exec(sprintf('add %s', $destPath->__toString()));
 

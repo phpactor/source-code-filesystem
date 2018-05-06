@@ -14,8 +14,15 @@ class SimpleFilesystem implements Filesystem
 {
     private $path;
 
-    public function __construct(FilePath $path, FileListProvider $fileListProvider = null)
+    /**
+     * @var FileListProvider
+     */
+    private $fileListProvider;
+
+
+    public function __construct($path, FileListProvider $fileListProvider = null)
     {
+        $path = FilePath::fromUnknown($path);
         $this->path = $path;
         $this->fileListProvider = $fileListProvider ?: new SimpleFileListProvider($path);
     }
@@ -25,13 +32,17 @@ class SimpleFilesystem implements Filesystem
         return $this->fileListProvider->fileList();
     }
 
-    public function remove(FilePath $path)
+    public function remove($path)
     {
+        $path = FilePath::fromUnknown($path);
         unlink($path->path());
     }
 
-    public function move(FilePath $srcLocation, FilePath $destPath)
+    public function move($srcLocation, $destPath)
     {
+        $srcLocation = FilePath::fromUnknown($srcLocation);
+        $destPath = FilePath::fromUnknown($destPath);
+
         $this->makeDirectoryIfNotExists((string) $destPath);
         rename(
             $srcLocation->path(),
@@ -39,8 +50,11 @@ class SimpleFilesystem implements Filesystem
         );
     }
 
-    public function copy(FilePath $srcLocation, FilePath $destPath): CopyReport
+    public function copy($srcLocation, $destPath): CopyReport
     {
+        $srcLocation = FilePath::fromUnknown($srcLocation);
+        $destPath = FilePath::fromUnknown($destPath);
+
         if ($srcLocation->isDirectory()) {
             return $this->copyDirectory($srcLocation, $destPath);
         }
@@ -68,18 +82,21 @@ class SimpleFilesystem implements Filesystem
         return FilePath::fromString($path);
     }
 
-    public function getContents(FilePath $path): string
+    public function getContents($path): string
     {
+        $path = FilePath::fromUnknown($path);
         return file_get_contents($path->path());
     }
 
-    public function writeContents(FilePath $path, string $contents)
+    public function writeContents($path, string $contents)
     {
+        $path = FilePath::fromUnknown($path);
         file_put_contents($path->path(), $contents);
     }
 
-    public function exists(FilePath $path): bool
+    public function exists($path): bool
     {
+        $path = FilePath::fromUnknown($path);
         return file_exists($path);
     }
 
@@ -102,6 +119,7 @@ class SimpleFilesystem implements Filesystem
         $destFiles = [];
         $srcFiles = [];
         foreach ($iterator as $file) {
+
             $filePath = $destPath->path() . '/' . $iterator->getSubPathName();
             if ($file->isDir()) {
                 continue;

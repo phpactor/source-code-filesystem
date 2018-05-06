@@ -10,7 +10,7 @@ final class FilePath
 {
     private $path;
 
-    private function __construct(string $path = null)
+    private function __construct(string $path)
     {
         if (false === Path::isAbsolute($path)) {
             throw new \InvalidArgumentException(sprintf(
