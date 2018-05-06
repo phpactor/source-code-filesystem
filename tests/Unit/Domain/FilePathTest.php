@@ -4,6 +4,9 @@ namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\FilePath;
+use RuntimeException;
+use SplFileInfo;
+use stdClass;
 
 class FilePathTest extends TestCase
 {
@@ -21,6 +24,46 @@ class FilePathTest extends TestCase
     {
         $path = FilePath::fromParts(['Hello', 'Goodbye']);
         $this->assertEquals('/Hello/Goodbye', $path->path());
+    }
+
+    /**
+     * @dataProvider provideUnknown
+     */
+    public function testFromUnknownWith($path, string $expectedPath)
+    {
+        $filePath = FilePath::fromUnknown($path);
+        $this->assertInstanceOf(FilePath::class, $filePath);
+        $this->assertEquals($expectedPath, (string) $filePath);
+    }
+
+    public function provideUnknown()
+    {
+        yield 'FilePath instance' => [
+            FilePath::fromString('/foo.php'),
+            '/foo.php'
+        ];
+
+        yield 'string' => [
+            '/foo.php',
+            '/foo.php'
+        ];
+
+        yield 'array' => [
+            [ 'one', 'two' ],
+            '/one/two'
+        ];
+
+        yield 'SplFileInfo' => [
+            new SplFileInfo(__FILE__),
+            __FILE__
+        ];
+    }
+
+    public function testThrowExceptionOnUnknowableType()
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Do not know');
+        FilePath::fromUnknown(new stdClass());
     }
 
     /**

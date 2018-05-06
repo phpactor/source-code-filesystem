@@ -2,6 +2,8 @@
 
 namespace Phpactor\Filesystem\Domain;
 
+use RuntimeException;
+use SplFileInfo;
 use Webmozart\PathUtil\Path;
 
 final class FilePath
@@ -24,7 +26,7 @@ final class FilePath
         return new self($path);
     }
 
-    public static function fromParts(array $parts)
+    public static function fromParts(array $parts): FilePath
     {
         $path = Path::join($parts);
         if (substr($path, 0, 1) !== '/') {
@@ -34,9 +36,33 @@ final class FilePath
         return new self($path);
     }
 
-    public static function fromSplFileInfo(\SplFileInfo $fileInfo)
+    public static function fromSplFileInfo(SplFileInfo $fileInfo): FilePath
     {
         return new self((string) $fileInfo);
+    }
+
+    public static function fromUnknown($path): FilePath
+    {
+        if ($path instanceof FilePath) {
+            return $path;
+        }
+
+        if (is_string($path)) {
+            return self::fromString($path);
+        }
+
+        if (is_array($path)) {
+            return self::fromParts($path);
+        }
+
+        if ($path instanceof SplFileInfo) {
+            return self::fromSplFileInfo($path);
+        }
+
+        throw new RuntimeException(sprintf(
+            'Do not know how to create FilePath from "%s"',
+            is_object($path) ? get_class($path) : gettype($path)
+        ));
     }
 
     public function isDirectory()
