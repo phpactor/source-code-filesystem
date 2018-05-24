@@ -106,7 +106,7 @@ final class FilePath
 
     public function isWithin(FilePath $path)
     {
-        return 0 === strpos($this->path(), $path->path().'/');
+        return 0 === strpos($this->path(), $path->path());
     }
 
     public function isWithinOrSame(FilePath $path)
