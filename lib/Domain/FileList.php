@@ -63,14 +63,14 @@ class FileList implements \Iterator
     public function within(FilePath $path): FileList
     {
         return new self(new RegexIterator($this->iterator, sprintf(
-            '{^%s/.*}', (string) $path
+            '{^%s/.*}', (string) preg_quote($path)
         )));
     }
 
     public function named(string $name): FileList
     {
         return new self(new RegexIterator($this->iterator, sprintf(
-            '{/%s.*$}', $name
+            '{/%s.*$}', preg_quote($name)
         )));
     }
 
