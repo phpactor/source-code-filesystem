@@ -1,0 +1,10 @@
+includes:
+    - vendor/phpstan/phpstan/conf/config.level7.neon
+
+parameters:
+    inferPrivatePropertyTypeFromConstructor: true
+    ignoreErrors:
+        - '#Call to an undefined method RecursiveIteratorIterator..getSubPathName#'
+    paths:
+        - lib
+

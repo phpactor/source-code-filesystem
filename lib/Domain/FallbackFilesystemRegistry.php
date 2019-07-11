@@ -2,8 +2,6 @@
 
 namespace Phpactor\Filesystem\Domain;
 
-use Phpactor\Filesystem\Domain\FilesystemRegistry;
-
 class FallbackFilesystemRegistry implements FilesystemRegistry
 {
     /**

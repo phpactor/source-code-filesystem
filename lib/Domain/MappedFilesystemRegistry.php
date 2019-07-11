@@ -20,7 +20,8 @@ class MappedFilesystemRegistry implements FilesystemRegistry
         if (!isset($this->filesystems[$name])) {
             throw new FilesystemNotFound(sprintf(
                 'Unknown filesystem "%s", known filesystems "%s"',
-                $name, implode('", "', array_keys($this->filesystems))
+                $name,
+                implode('", "', array_keys($this->filesystems))
             ));
         }
 

@@ -4,9 +4,11 @@ namespace Phpactor\Filesystem\Adapter\Git;
 
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FileListProvider;
-use Phpactor\Filesystem\Domain\FilePath; use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
+use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Filesystem\Domain\CopyReport;
 use Phpactor\Filesystem\Domain\Exception\NotSupported;
+use RuntimeException;
 
 class GitFilesystem extends SimpleFilesystem
 {
@@ -82,6 +84,11 @@ class GitFilesystem extends SimpleFilesystem
     private function exec($command)
     {
         $current = getcwd();
+
+        if (false === $current) {
+            throw new RuntimeException('Could not determine cwd');
+        }
+
         chdir((string) $this->path);
         exec(sprintf('git %s 2>&1', $command), $output, $return);
         chdir($current);
@@ -89,7 +96,9 @@ class GitFilesystem extends SimpleFilesystem
         if ($return !== 0) {
             throw new \InvalidArgumentException(sprintf(
                 'Could not execute git command "git %s", exit code "%s", output "%s"',
-                $command, $return, implode(PHP_EOL, $output)
+                $command,
+                $return,
+                implode(PHP_EOL, $output)
             ));
         }
 

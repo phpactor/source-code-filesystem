@@ -55,4 +55,3 @@ class Domain extends TestCase
         return new MappedFilesystemRegistry($filesystems);
     }
 }
-

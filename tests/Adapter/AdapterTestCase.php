@@ -2,7 +2,6 @@
 
 namespace Phpactor\Filesystem\Tests\Adapter;
 
-
 use Phpactor\Filesystem\Domain\Filesystem;
 
 abstract class AdapterTestCase extends IntegrationTestCase

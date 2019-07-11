@@ -4,10 +4,10 @@ namespace Phpactor\Filesystem\Adapter\Simple;
 
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Filesystem\Domain\FileList;
-use Phpactor\Filesystem\Domain\FilePath; 
+use Phpactor\Filesystem\Domain\FilePath;
+use RuntimeException;
 use Webmozart\PathUtil\Path;
 use Phpactor\Filesystem\Domain\FileListProvider;
-use Phpactor\Filesystem\Adapter\Simple\SimpleFileListProvider;
 use Phpactor\Filesystem\Domain\CopyReport;
 
 class SimpleFilesystem implements Filesystem
@@ -70,7 +70,6 @@ class SimpleFilesystem implements Filesystem
             FileList::fromFilePaths([ $srcLocation ]),
             FileList::fromFilePaths([ $destPath ])
         );
-
     }
 
     public function createPath(string $path): FilePath
@@ -85,7 +84,13 @@ class SimpleFilesystem implements Filesystem
     public function getContents($path): string
     {
         $path = FilePath::fromUnknown($path);
-        return file_get_contents($path->path());
+        $contents = file_get_contents($path->path());
+
+        if (false === $contents) {
+            throw new RuntimeException('Could not file_get_contents');
+        }
+
+        return $contents;
     }
 
     public function writeContents($path, string $contents)
@@ -119,7 +124,6 @@ class SimpleFilesystem implements Filesystem
         $destFiles = [];
         $srcFiles = [];
         foreach ($iterator as $file) {
-
             $filePath = $destPath->path() . '/' . $iterator->getSubPathName();
             if ($file->isDir()) {
                 continue;

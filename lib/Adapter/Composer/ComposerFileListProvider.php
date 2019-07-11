@@ -9,7 +9,6 @@ use Phpactor\Filesystem\Domain\FileListProvider;
 use Phpactor\Filesystem\Iterator\AppendIterator;
 use Webmozart\PathUtil\Path;
 
-
 class ComposerFileListProvider implements FileListProvider
 {
     private $classLoader;

@@ -25,7 +25,7 @@ class AppendIterator implements \Iterator
      * @return void
      * @since 5.1.0
      */
-    public function append(\Iterator $iterator) 
+    public function append(\Iterator $iterator)
     {
         $this->iterators[] = $iterator;
     }
@@ -36,7 +36,7 @@ class AppendIterator implements \Iterator
      * @return void
      * @since 5.1.0
      */
-    public function rewind() 
+    public function rewind()
     {
         $this->index = 0;
         foreach ($this->iterators as $iterator) {
@@ -50,7 +50,7 @@ class AppendIterator implements \Iterator
      * @return bool true on success or false on failure.
      * @since 5.1.0
      */
-    public function valid() 
+    public function valid()
     {
         if (false === isset($this->iterators[$this->index])) {
             return false;
@@ -65,7 +65,7 @@ class AppendIterator implements \Iterator
      * @return mixed The current key if it is valid or null otherwise.
      * @since 5.1.0
      */
-    public function key() 
+    public function key()
     {
         return $this->iterators[$this->index]->key();
     }
@@ -76,7 +76,7 @@ class AppendIterator implements \Iterator
      * @return mixed The current value if it is valid or &null; otherwise.
      * @since 5.1.0
      */
-    public function current() 
+    public function current()
     {
         return $this->iterators[$this->index]->current();
     }
@@ -103,8 +103,8 @@ class AppendIterator implements \Iterator
      * @return Iterator the current inner Iterator.
      * @since 5.1.0
      */
-    public function getInnerIterator() 
-    { 
+    public function getInnerIterator()
+    {
         return $this->iterators[$this->index];
     }
 
@@ -114,8 +114,8 @@ class AppendIterator implements \Iterator
      * @return int The index of iterators.
      * @since 5.1.0
      */
-    public function getIteratorIndex() 
-    { 
+    public function getIteratorIndex()
+    {
         return $this->index;
     }
 
@@ -125,7 +125,7 @@ class AppendIterator implements \Iterator
      * @return ArrayIterator containing the appended iterators.
      * @since 5.1.0
      */
-    public function getArrayIterator() 
-    { 
+    public function getArrayIterator()
+    {
     }
 }
