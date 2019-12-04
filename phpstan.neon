@@ -4,7 +4,7 @@ includes:
 parameters:
     inferPrivatePropertyTypeFromConstructor: true
     ignoreErrors:
-        - '#Call to an undefined method RecursiveIteratorIterator..getSubPathName#'
+        - "#Call to an undefined method RecursiveIteratorIterator..getSubPathName#"
         
     paths:
         - lib
