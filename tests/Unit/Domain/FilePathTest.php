@@ -48,6 +48,11 @@ class FilePathTest extends TestCase
             '/foo.php'
         ];
 
+        yield 'URI string' => [
+            'file:///foo.php',
+            '/foo.php',
+        ];
+
         yield 'array' => [
             [ 'one', 'two' ],
             '/one/two'
@@ -59,11 +64,37 @@ class FilePathTest extends TestCase
         ];
     }
 
-    public function testThrowExceptionOnUnknowableType()
+    /**
+     * @dataProvider provideUnsupportedInput
+     */
+    public function testThrowExceptionOnUnknowableType($input, string $expectedExceptionMessage)
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Do not know');
-        FilePath::fromUnknown(new stdClass());
+        $this->expectExceptionMessage($expectedExceptionMessage);
+        FilePath::fromUnknown($input);
+    }
+
+    public function provideUnsupportedInput()
+    {
+        yield 'object' => [
+            new stdClass(),
+            'Do not know',
+        ];
+
+        yield 'unsupported scheme' => [
+            'ftp://host/foo.php',
+            'Unsupported scheme "ftp" for path "ftp://host/foo.php"',
+        ];
+
+        yield 'malformed string' => [
+            'bar:///foo.php',
+            'Cannot guess path from "bar:///foo.php"',
+        ];
+
+        yield 'URI without a path' => [
+            'http://.?x=1&n',
+            'No path info from URI "http://.?x=1&n"',
+        ];
     }
 
     /**
