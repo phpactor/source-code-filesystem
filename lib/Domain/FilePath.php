@@ -30,7 +30,7 @@ final class FilePath
             throw new RuntimeException(sprintf('Cannot guess path from "%s"', $string));
         }
 
-        $url = $url + ['scheme' => null, 'path' => null];
+        $url += ['scheme' => null, 'path' => null];
 
         ['scheme' => $scheme, 'path' => $path] = $url;
 
