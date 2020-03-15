@@ -5,6 +5,7 @@ namespace Phpactor\Filesystem\Domain;
 use RuntimeException;
 use SplFileInfo;
 use Webmozart\PathUtil\Path;
+use \sprintf;
 
 final class FilePath
 {
@@ -21,8 +22,26 @@ final class FilePath
         $this->path = $path;
     }
 
-    public static function fromString(string $path): FilePath
+    public static function fromString(string $string): FilePath
     {
+        $url = parse_url($string);
+
+        if (false === $url) {
+            throw new RuntimeException(sprintf('Cannot guess path from "%s"', $string));
+        }
+
+        $url += ['scheme' => null, 'path' => null];
+
+        ['scheme' => $scheme, 'path' => $path] = $url;
+
+        if (null === $path) {
+            throw new RuntimeException(sprintf('No path info from URI "%s"', $string));
+        }
+
+        if (null !== $scheme && 'file' !== $scheme) {
+            throw new RuntimeException(sprintf('Unsupported scheme "%s" for path "%s"', $scheme, $string));
+        }
+
         return new self($path);
     }
 
@@ -81,7 +100,7 @@ final class FilePath
             $path = self::fromString($path);
 
             if (false === $path->isWithinOrSame($this)) {
-                throw new \RuntimeException(sprintf(
+                throw new RuntimeException(sprintf(
                     'Trying to create descendant from absolute path "%s" that does not lie within context path "%s"',
                     (string) $path,
                     (string) $this
