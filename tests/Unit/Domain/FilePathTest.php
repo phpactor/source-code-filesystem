@@ -13,7 +13,7 @@ class FilePathTest extends TestCase
     /**
      * @testdox It should throw an exception if the path is not absolute
      * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage File path must be absolute
+     * @expectedExceptionMessage File path must be absolute, but foobar given
      */
     public function testNotAbsolute()
     {

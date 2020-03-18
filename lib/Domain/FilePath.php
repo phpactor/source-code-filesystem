@@ -15,7 +15,7 @@ final class FilePath
     {
         if (false === Path::isAbsolute($path)) {
             throw new \InvalidArgumentException(sprintf(
-                'File path must be absolute'
+                'File path must be absolute, but %s given'
             ));
         }
 
