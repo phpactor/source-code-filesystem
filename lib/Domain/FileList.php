@@ -83,6 +83,19 @@ class FileList implements \Iterator
         });
     }
 
+    public function includePatterns(array $globPatterns): self
+    {
+        return $this->filter(function (SplFileInfo $info) use ($globPatterns) {
+            foreach ($globPatterns as $pattern) {
+                if (Glob::match($info->getPathname(), $pattern)) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
+    }
+
     public function within(FilePath $path): self
     {
         return new self(new RegexIterator($this->iterator, sprintf(
