@@ -3,6 +3,7 @@
 namespace Phpactor\Filesystem\Domain;
 
 use CallbackFilterIterator;
+use Iterator;
 use RegexIterator;
 use SplFileInfo;
 use Webmozart\Glob\Glob;
