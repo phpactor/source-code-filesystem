@@ -101,4 +101,18 @@ class FileListTest extends TestCase
             array_values(iterator_to_array($list->existing()))
         );
     }
+
+    public function testExcludesFilesMatchingPatterns()
+    {
+        $list = FileList::fromFilePaths([
+            FilePath::fromString('/vendor/foo/bar/tests/bartest.php'),
+            FilePath::fromString('/vendor/foo/bar/tests/footest.php'),
+            FilePath::fromString('/vendor/foo/bar/src/bar.php'),
+            FilePath::fromString('/vendor/foo/bar/src/foo.php'),
+        ]);
+
+        self::assertCount(2, $list->excludePatterns([
+            '/vendor/**/tests/*',
+        ]));
+    }
 }

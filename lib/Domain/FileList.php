@@ -5,6 +5,7 @@ namespace Phpactor\Filesystem\Domain;
 use CallbackFilterIterator;
 use RegexIterator;
 use SplFileInfo;
+use Webmozart\Glob\Glob;
 
 class FileList implements \Iterator
 {
@@ -16,12 +17,18 @@ class FileList implements \Iterator
         $this->iterator = $iterator;
     }
 
-    public static function fromIterator(\Iterator $iterator)
+    /**
+     * @return FileList<SplFileInfo>
+     */
+    public static function fromIterator(\Iterator $iterator): self
     {
         return new self($iterator);
     }
 
-    public static function fromFilePaths(array $filePaths)
+    /**
+     * @return FileList<SplFileInfo>
+     */
+    public static function fromFilePaths(array $filePaths): self
     {
         $files = [];
         foreach ($filePaths as $filePath) {
@@ -31,12 +38,15 @@ class FileList implements \Iterator
         return new self(new \ArrayIterator($files));
     }
 
+    /**
+     * @return Iterator<SplFileInfo>
+     */
     public function getIterator()
     {
         return $this->iterator;
     }
 
-    public function contains(FilePath $path)
+    public function contains(FilePath $path): bool
     {
         foreach ($this as $filePath) {
             if ($path == $filePath) {
@@ -47,7 +57,7 @@ class FileList implements \Iterator
         return false;
     }
 
-    public function phpFiles(): FileList
+    public function phpFiles(): self
     {
         return new self((function () {
             foreach ($this as $filePath) {
@@ -60,7 +70,20 @@ class FileList implements \Iterator
         })());
     }
 
-    public function within(FilePath $path): FileList
+    public function excludePatterns(array $globPatterns): self
+    {
+        return $this->filter(function (SplFileInfo $info) use ($globPatterns) {
+            foreach ($globPatterns as $pattern) {
+                if (Glob::match($info->getPathname(), $pattern)) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+    }
+
+    public function within(FilePath $path): self
     {
         return new self(new RegexIterator($this->iterator, sprintf(
             '{^%s/.*}',
@@ -68,7 +91,7 @@ class FileList implements \Iterator
         )));
     }
 
-    public function named(string $name): FileList
+    public function named(string $name): self
     {
         return new self(new RegexIterator($this->iterator, sprintf(
             '{/%s.*$}',
@@ -76,12 +99,12 @@ class FileList implements \Iterator
         )));
     }
 
-    public function filter(\Closure $closure)
+    public function filter(\Closure $closure): self
     {
         return new self(new CallbackFilterIterator($this->iterator, $closure));
     }
 
-    public function existing()
+    public function existing(): self
     {
         return new self(new CallbackFilterIterator($this->iterator, function (SplFileInfo $file) {
             return file_exists($file->__toString());
