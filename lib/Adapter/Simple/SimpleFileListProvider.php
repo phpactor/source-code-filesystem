@@ -2,17 +2,27 @@
 
 namespace Phpactor\Filesystem\Adapter\Simple;
 
+use FilesystemIterator;
 use Phpactor\Filesystem\Domain\FileListProvider;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath;
 
 final class SimpleFileListProvider implements FileListProvider
 {
+    /**
+     * @var FilePath
+     */
     private $path;
 
-    public function __construct(FilePath $path)
+    /**
+     * @var bool
+     */
+    private $followSymlinks;
+
+    public function __construct(FilePath $path, bool $followSymlinks = false)
     {
         $this->path = $path;
+        $this->followSymlinks = $followSymlinks;
     }
 
     public function fileList(): FileList
@@ -27,7 +37,13 @@ final class SimpleFileListProvider implements FileListProvider
     private function createFileIterator(string $path): \Iterator
     {
         $path = $path ? $this->path->makeAbsoluteFromString($path) : $this->path->path();
-        $files = new \RecursiveDirectoryIterator($path);
+        $flags = FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS;
+
+        if ($this->followSymlinks) {
+            $flags = $flags | FilesystemIterator::FOLLOW_SYMLINKS;
+        }
+
+        $files = new \RecursiveDirectoryIterator($path, $flags);
         $files = new \RecursiveIteratorIterator($files);
 
         return $files;
