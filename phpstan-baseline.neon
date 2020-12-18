@@ -1,0 +1,402 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Composer\\\\ComposerFileListProvider\\:\\:fileList\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Adapter/Composer/ComposerFileListProvider.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Composer\\\\ComposerFileListProvider\\:\\:createFileIterator\\(\\) return type has no value type specified in iterable type Iterator\\.$#"
+			count: 1
+			path: lib/Adapter/Composer/ComposerFileListProvider.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Composer\\\\ComposerFilesystem\\:\\:__construct\\(\\) has parameter \\$path with no typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Composer/ComposerFilesystem.php
+
+		-
+			message: "#^Property Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:\\$path has no typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Git/GitFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:__construct\\(\\) has parameter \\$path with no typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Git/GitFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:fileList\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Adapter/Git/GitFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:remove\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Git/GitFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:move\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Git/GitFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:exec\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Git/GitFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:exec\\(\\) has parameter \\$command with no typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Git/GitFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:trackedByGit\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Git/GitFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFileListProvider\\:\\:fileList\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Adapter/Simple/SimpleFileListProvider.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFileListProvider\\:\\:createFileIterator\\(\\) return type has no value type specified in iterable type Iterator\\.$#"
+			count: 1
+			path: lib/Adapter/Simple/SimpleFileListProvider.php
+
+		-
+			message: "#^Property Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:\\$path has no typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Simple/SimpleFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:__construct\\(\\) has parameter \\$path with no typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Simple/SimpleFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:fileList\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Adapter/Simple/SimpleFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:remove\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Simple/SimpleFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:move\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Simple/SimpleFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:writeContents\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Simple/SimpleFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:makeDirectoryIfNotExists\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Simple/SimpleFilesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:makeDirectoryIfNotExists\\(\\) has parameter \\$destPath with no typehint specified\\.$#"
+			count: 1
+			path: lib/Adapter/Simple/SimpleFilesystem.php
+
+		-
+			message: "#^Property Phpactor\\\\Filesystem\\\\Domain\\\\ChainFileListProvider\\:\\:\\$providers has no typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/ChainFileListProvider.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\ChainFileListProvider\\:\\:__construct\\(\\) has parameter \\$providers with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Domain/ChainFileListProvider.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\ChainFileListProvider\\:\\:fileList\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/ChainFileListProvider.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\ChainFileListProvider\\:\\:add\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/ChainFileListProvider.php
+
+		-
+			message: "#^Property Phpactor\\\\Filesystem\\\\Domain\\\\CopyReport\\:\\:\\$srcFiles type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/CopyReport.php
+
+		-
+			message: "#^Property Phpactor\\\\Filesystem\\\\Domain\\\\CopyReport\\:\\:\\$destFiles type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/CopyReport.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\CopyReport\\:\\:__construct\\(\\) has parameter \\$destFiles with no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/CopyReport.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\CopyReport\\:\\:__construct\\(\\) has parameter \\$srcFiles with no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/CopyReport.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\CopyReport\\:\\:fromSrcAndDestFiles\\(\\) has parameter \\$destFiles with no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/CopyReport.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\CopyReport\\:\\:fromSrcAndDestFiles\\(\\) has parameter \\$srcFiles with no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/CopyReport.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\CopyReport\\:\\:srcFiles\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/CopyReport.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\CopyReport\\:\\:destFiles\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/CopyReport.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FallbackFilesystemRegistry\\:\\:has\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/FallbackFilesystemRegistry.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FallbackFilesystemRegistry\\:\\:names\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Domain/FallbackFilesystemRegistry.php
+
+		-
+			message: "#^Class Phpactor\\\\Filesystem\\\\Domain\\\\FileList implements generic interface Iterator but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Property Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:\\$iterator type has no value type specified in iterable type Iterator\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Property Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:\\$key has no typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:__construct\\(\\) has parameter \\$iterator with no value type specified in iterable type Iterator\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:fromIterator\\(\\) has parameter \\$iterator with no value type specified in iterable type Iterator\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:fromFilePaths\\(\\) has parameter \\$filePaths with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:phpFiles\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:excludePatterns\\(\\) has parameter \\$globPatterns with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:excludePatterns\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:includePatterns\\(\\) has parameter \\$globPatterns with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:includePatterns\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:within\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:named\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:filter\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:existing\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:current\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:key\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/FileList.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileListProvider\\:\\:fileList\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/FileListProvider.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:fromParts\\(\\) has parameter \\$parts with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Domain/FilePath.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:fromUnknown\\(\\) has parameter \\$path with no typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/FilePath.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:isDirectory\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/FilePath.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:asSplFileInfo\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/FilePath.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:makeAbsoluteFromString\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/FilePath.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:concatPath\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/FilePath.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:isWithin\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/FilePath.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:isWithinOrSame\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/FilePath.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:path\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/FilePath.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\Filesystem\\:\\:fileList\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
+			count: 1
+			path: lib/Domain/Filesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\Filesystem\\:\\:move\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/Filesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\Filesystem\\:\\:remove\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/Filesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\Filesystem\\:\\:writeContents\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/Filesystem.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilesystemRegistry\\:\\:has\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/FilesystemRegistry.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilesystemRegistry\\:\\:names\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Domain/FilesystemRegistry.php
+
+		-
+			message: "#^Property Phpactor\\\\Filesystem\\\\Domain\\\\MappedFilesystemRegistry\\:\\:\\$filesystems has no typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/MappedFilesystemRegistry.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\MappedFilesystemRegistry\\:\\:__construct\\(\\) has parameter \\$filesystemMap with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Domain/MappedFilesystemRegistry.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\MappedFilesystemRegistry\\:\\:has\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/MappedFilesystemRegistry.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\MappedFilesystemRegistry\\:\\:names\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Domain/MappedFilesystemRegistry.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\MappedFilesystemRegistry\\:\\:add\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Domain/MappedFilesystemRegistry.php
+
+		-
+			message: "#^Class Phpactor\\\\Filesystem\\\\Iterator\\\\AppendIterator implements generic interface Iterator but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: lib/Iterator/AppendIterator.php
+
+		-
+			message: "#^Property Phpactor\\\\Filesystem\\\\Iterator\\\\AppendIterator\\:\\:\\$iterators has no typehint specified\\.$#"
+			count: 1
+			path: lib/Iterator/AppendIterator.php
+
+		-
+			message: "#^Property Phpactor\\\\Filesystem\\\\Iterator\\\\AppendIterator\\:\\:\\$index has no typehint specified\\.$#"
+			count: 1
+			path: lib/Iterator/AppendIterator.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Iterator\\\\AppendIterator\\:\\:append\\(\\) has parameter \\$iterator with no value type specified in iterable type Iterator\\.$#"
+			count: 1
+			path: lib/Iterator/AppendIterator.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Iterator\\\\AppendIterator\\:\\:getInnerIterator\\(\\) return type has no value type specified in iterable type Iterator\\.$#"
+			count: 1
+			path: lib/Iterator/AppendIterator.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Iterator\\\\AppendIterator\\:\\:getArrayIterator\\(\\) return type with generic class ArrayIterator does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: lib/Iterator/AppendIterator.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Iterator\\\\AppendIterator\\:\\:getArrayIterator\\(\\) should return ArrayIterator but return statement is missing\\.$#"
+			count: 1
+			path: lib/Iterator/AppendIterator.php
+
