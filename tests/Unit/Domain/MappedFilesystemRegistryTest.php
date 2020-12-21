@@ -13,7 +13,7 @@ class Domain extends TestCase
      */
     private $filesystem;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->filesystem = $this->prophesize(Filesystem::class);
     }

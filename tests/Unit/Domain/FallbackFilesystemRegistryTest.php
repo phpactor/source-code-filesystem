@@ -19,7 +19,7 @@ class FallbackFilesystemRegistryTest extends TestCase
      */
     private $registry;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->innerRegistry = $this->prophesize(FilesystemRegistry::class);
         $this->registry = new FallbackFilesystemRegistry($this->innerRegistry->reveal(), 'bar');

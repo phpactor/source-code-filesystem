@@ -9,7 +9,7 @@ use Phpactor\Filesystem\Domain\Filesystem;
 
 class ComposerFilesystemTest extends AdapterTestCase
 {
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         chdir($this->workspacePath());

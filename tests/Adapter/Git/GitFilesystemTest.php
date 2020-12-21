@@ -10,7 +10,7 @@ use Phpactor\Filesystem\Domain\Cwd;
 
 class GitFilesystemTest extends AdapterTestCase
 {
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         chdir($this->workspacePath());

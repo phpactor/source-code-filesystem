@@ -8,7 +8,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
 {
     private $filesystem;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->initWorkspace();
         $this->loadProject();
