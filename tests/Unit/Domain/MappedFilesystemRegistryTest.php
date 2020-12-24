@@ -13,7 +13,7 @@ class MappedFilesystemRegistryTest extends TestCase
      */
     private $filesystem;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->filesystem = $this->prophesize(Filesystem::class);
     }

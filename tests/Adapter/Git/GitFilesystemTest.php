@@ -10,7 +10,7 @@ use Phpactor\Filesystem\Domain\Cwd;
 
 class GitFilesystemTest extends AdapterTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         chdir($this->workspacePath());
@@ -25,12 +25,11 @@ class GitFilesystemTest extends AdapterTestCase
 
     /**
      * It sohuld throw an exception if the cwd does not have a .git folder.
-     *
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage The cwd does not seem to be
      */
     public function testNoGitFolder()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('The cwd does not seem to be');
         return new GitFilesystem(FilePath::fromString(__DIR__));
     }
 
