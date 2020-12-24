@@ -12,11 +12,11 @@ class FilePathTest extends TestCase
 {
     /**
      * @testdox It should throw an exception if the path is not absolute
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage File path must be absolute, but foobar given
      */
     public function testNotAbsolute()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('File path must be absolute, but foobar given');
         FilePath::fromString('foobar');
     }
 
@@ -110,12 +110,11 @@ class FilePathTest extends TestCase
     /**
      * @testdox If creating a descendant file and the path is absolute and NOT in th
      *          current branch, an exception should be thrown.
-     *
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Trying to create descendant
      */
     public function testDescendantOutsideOfBranchException()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Trying to create descendant');
         $base = FilePath::fromString('/path/to/something');
         $base->makeAbsoluteFromString('/else/yes');
     }
