@@ -1,12 +1,12 @@
 <?php
 
-namespace Phpactor\Filesystem\Tests\Unit;
+namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
 
-class Domain extends TestCase
+class MappedFilesystemRegistryTest extends TestCase
 {
     /**
      * @var Filesystem
