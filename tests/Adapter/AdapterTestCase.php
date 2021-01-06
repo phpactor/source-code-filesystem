@@ -61,6 +61,9 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->filesystem()->move($srcLocation, $destLocation);
         $this->assertTrue(file_exists($destLocation->path()));
         $this->assertFalse(file_exists($srcLocation->path()));
+
+        $testFile = $this->filesystem()->createPath('src/Goodbye/Goodbye.php');
+        $this->assertTrue(file_exists($testFile->path()));
     }
 
     public function testCopy()
