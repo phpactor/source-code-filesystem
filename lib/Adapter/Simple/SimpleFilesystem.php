@@ -35,7 +35,25 @@ class SimpleFilesystem implements Filesystem
     public function remove($path)
     {
         $path = FilePath::fromUnknown($path);
-        unlink($path->path());
+
+        if (!$path->isDirectory()) {
+            unlink($path->path());
+
+            return;
+        }
+
+        $iterator = new \RecursiveDirectoryIterator($path->path(), \RecursiveDirectoryIterator::SKIP_DOTS);
+        $files = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::CHILD_FIRST);
+
+        foreach ($files as $file) {
+            if ($file->isDir()) {
+                rmdir($file->getRealPath());
+            } else {
+                unlink($file->getRealPath());
+            }
+        }
+
+        rmdir($path->path());
     }
 
     public function move($srcLocation, $destPath)
@@ -44,6 +62,14 @@ class SimpleFilesystem implements Filesystem
         $destPath = FilePath::fromUnknown($destPath);
 
         $this->makeDirectoryIfNotExists((string) $destPath);
+
+        if ($srcLocation->isDirectory()) {
+            $this->copyDirectory($srcLocation, $destPath);
+            $this->remove($srcLocation);
+
+            return;
+        }
+
         rename(
             $srcLocation->path(),
             $destPath->path()
