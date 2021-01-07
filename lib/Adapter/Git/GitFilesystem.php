@@ -8,7 +8,6 @@ use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Filesystem\Domain\CopyReport;
 use Phpactor\Filesystem\Domain\Exception\NotSupported;
-use RuntimeException;
 use SplFileInfo;
 use Symfony\Component\Process\Process;
 
