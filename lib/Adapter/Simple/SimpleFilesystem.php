@@ -55,18 +55,7 @@ class SimpleFilesystem implements Filesystem
         $destPath = FilePath::fromUnknown($destPath);
 
         $this->makeDirectoryIfNotExists((string) $destPath);
-
-        if ($srcLocation->isDirectory()) {
-            $this->copyDirectory($srcLocation, $destPath);
-            $this->remove($srcLocation);
-
-            return;
-        }
-
-        rename(
-            $srcLocation->path(),
-            $destPath->path()
-        );
+        $this->filesystem->rename($srcLocation->__toString(), $destPath->__toString());
     }
 
     public function copy($srcLocation, $destPath): CopyReport
@@ -79,11 +68,7 @@ class SimpleFilesystem implements Filesystem
         }
 
         $this->makeDirectoryIfNotExists((string) $destPath);
-
-        copy(
-            $srcLocation->path(),
-            $destPath->path()
-        );
+        $this->filesystem->copy($srcLocation->__toString(), $destPath->__toString());
 
         return CopyReport::fromSrcAndDestFiles(
             FileList::fromFilePaths([ $srcLocation ]),
@@ -124,13 +109,13 @@ class SimpleFilesystem implements Filesystem
         return file_exists($path);
     }
 
-    private function makeDirectoryIfNotExists($destPath)
+    private function makeDirectoryIfNotExists(string $destPath): void
     {
         if (file_exists(dirname($destPath))) {
             return;
         }
 
-        mkdir(dirname($destPath), 0777, true);
+        $this->filesystem->mkdir(dirname($destPath), 0777);
     }
 
     private function copyDirectory(FilePath $srcLocation, FilePath $destPath): CopyReport
@@ -148,9 +133,8 @@ class SimpleFilesystem implements Filesystem
                 continue;
             }
 
-            $this->makeDirectoryIfNotExists($filePath);
+            $this->filesystem->copy($file, $filePath);
 
-            copy($file, $filePath);
             $srcFiles[] = FilePath::fromString($file);
             $destFiles[] = FilePath::fromString($filePath);
         }

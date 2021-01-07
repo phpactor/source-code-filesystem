@@ -26,16 +26,6 @@ parameters:
 			path: lib/Adapter/Simple/SimpleFileListProvider.php
 
 		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:makeDirectoryIfNotExists\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Simple/SimpleFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:makeDirectoryIfNotExists\\(\\) has parameter \\$destPath with no typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Simple/SimpleFilesystem.php
-
-		-
 			message: "#^Property Phpactor\\\\Filesystem\\\\Domain\\\\ChainFileListProvider\\:\\:\\$providers has no typehint specified\\.$#"
 			count: 1
 			path: lib/Domain/ChainFileListProvider.php
