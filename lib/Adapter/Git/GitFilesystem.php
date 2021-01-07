@@ -9,6 +9,8 @@ use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Filesystem\Domain\CopyReport;
 use Phpactor\Filesystem\Domain\Exception\NotSupported;
 use RuntimeException;
+use SplFileInfo;
+use Symfony\Component\Process\Process;
 
 class GitFilesystem extends SimpleFilesystem
 {
@@ -27,48 +29,57 @@ class GitFilesystem extends SimpleFilesystem
         }
     }
 
+    /**
+     * @return FileList<SplFileInfo>
+     */
     public function fileList(): FileList
     {
-        // list all files (tracked and non-tracked) but ignore those in .gitignore
-        $gitFiles = $this->exec('ls-files --cached --others --exclude-standard');
+        $gitFiles = $this->exec([
+            'ls-files',
+            '--cached',
+            '--others',
+            '--exclude-standard'
+        ]);
         $files = [];
 
-        foreach ($gitFiles as $gitFile) {
-            $files[] = new \SplFileInfo((string) $this->path->makeAbsoluteFromString($gitFile));
+        foreach (explode("\n", $gitFiles) as $gitFile) {
+            $files[] = new SplFileInfo((string) $this->path->makeAbsoluteFromString($gitFile));
         }
 
         return FileList::fromIterator(new \ArrayIterator($files));
     }
 
-    public function remove($path)
+    public function remove($path): void
     {
         $path = FilePath::fromUnknown($path);
         if (false === $this->trackedByGit($path)) {
-            return parent::remove($path);
-        }
-
-        if ($path->isDirectory()) {
-            $this->exec(sprintf('rm -rf %s', $path->path()));
+            parent::remove($path);
             return;
         }
 
-        $this->exec(sprintf('rm -f %s', $path->path()));
+        if ($path->isDirectory()) {
+            $this->exec(['rm', '-r', '-f', $path->path()]);
+            return;
+        }
+
+        $this->exec(['rm', '-f', $path->path()]);
     }
 
-    public function move($srcPath, $destPath)
+    public function move($srcPath, $destPath): void
     {
         $srcPath = FilePath::fromUnknown($srcPath);
         $destPath = FilePath::fromUnknown($destPath);
 
         if (false === $this->trackedByGit($srcPath)) {
-            return parent::move($srcPath, $destPath);
+            parent::move($srcPath, $destPath);
+            return;
         }
 
-        $this->exec(sprintf(
-            'mv %s %s',
+        $this->exec([
+            'mv',
             $srcPath->path(),
             $destPath->path()
-        ));
+        ]);
     }
 
     public function copy($srcPath, $destPath): CopyReport
@@ -76,7 +87,7 @@ class GitFilesystem extends SimpleFilesystem
         $srcPath = FilePath::fromUnknown($srcPath);
         $destPath = FilePath::fromUnknown($destPath);
         $list = parent::copy($srcPath, $destPath);
-        $this->exec(sprintf('add %s', $destPath->__toString()));
+        $this->exec(['add', $destPath->__toString()]);
 
         return $list;
     }
@@ -86,33 +97,29 @@ class GitFilesystem extends SimpleFilesystem
         return $this->path->makeAbsoluteFromString($path);
     }
 
-    private function exec($command)
+    /**
+     * @param array<string> $cmd
+     */
+    private function exec(array $cmd): string
     {
-        $current = getcwd();
+        $process = new Process(array_merge(['git'], $cmd), $this->path);
+        $process->run();
 
-        if (false === $current) {
-            throw new RuntimeException('Could not determine cwd');
-        }
-
-        chdir((string) $this->path);
-        exec(sprintf('git %s 2>&1', $command), $output, $return);
-        chdir($current);
-
-        if ($return !== 0) {
+        if ($process->getExitCode() !== 0) {
             throw new \InvalidArgumentException(sprintf(
-                'Could not execute git command "git %s", exit code "%s", output "%s"',
-                $command,
-                $return,
-                implode(PHP_EOL, $output)
+                'Could not execute git command "%s", exit code "%s", output "%s"',
+                implode(' ', $cmd),
+                $process->getExitCode(),
+                $process->getOutput()
             ));
         }
 
-        return $output;
+        return $process->getOutput();
     }
 
-    private function trackedByGit(FilePath $file)
+    private function trackedByGit(FilePath $file): bool
     {
-        $out = $this->exec(sprintf('ls-files %s', (string) $file));
+        $out = $this->exec(['ls-files', (string) $file]);
 
         return false === empty($out);
     }

@@ -5,9 +5,12 @@ namespace Phpactor\Filesystem\Tests\Unit\Domain;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class MappedFilesystemRegistryTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var Filesystem
      */

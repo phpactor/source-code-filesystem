@@ -7,10 +7,13 @@ use Phpactor\Filesystem\Domain\FileListProvider;
 use Phpactor\Filesystem\Domain\ChainFileListProvider;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FileList;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ChainFileListProviderTest extends TestCase
 {
-    public function testChainFileListProvider()
+    use ProphecyTrait;
+
+    public function testChainFileListProvider(): void
     {
         $provider1 = $this->prophesize(FileListProvider::class);
         $provider2 = $this->prophesize(FileListProvider::class);
