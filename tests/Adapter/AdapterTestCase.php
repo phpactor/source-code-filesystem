@@ -34,6 +34,14 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->assertFalse(file_exists($file->path()));
     }
 
+    public function testRemoveDirectory()
+    {
+        $file = $this->filesystem()->createPath('src/Hello');
+        $this->assertTrue(file_exists($file->path()));
+        $this->filesystem()->remove($file);
+        $this->assertFalse(file_exists($file->path()));
+    }
+
     public function testMove()
     {
         $srcLocation = $this->filesystem()->createPath('src/Hello/Goodbye.php');
@@ -42,6 +50,20 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->filesystem()->move($srcLocation, $destLocation);
         $this->assertTrue(file_exists($destLocation->path()));
         $this->assertFalse(file_exists($srcLocation->path()));
+    }
+
+
+    public function testMoveDirectory()
+    {
+        $srcLocation = $this->filesystem()->createPath('src/Hello');
+        $destLocation = $this->filesystem()->createPath('src/Goodbye');
+
+        $this->filesystem()->move($srcLocation, $destLocation);
+        $this->assertTrue(file_exists($destLocation->path()));
+        $this->assertFalse(file_exists($srcLocation->path()));
+
+        $testFile = $this->filesystem()->createPath('src/Goodbye/Goodbye.php');
+        $this->assertTrue(file_exists($testFile->path()));
     }
 
     public function testCopy()

@@ -47,6 +47,11 @@ class GitFilesystem extends SimpleFilesystem
             return parent::remove($path);
         }
 
+        if ($path->isDirectory()) {
+            $this->exec(sprintf('rm -rf %s', $path->path()));
+            return;
+        }
+
         $this->exec(sprintf('rm -f %s', $path->path()));
     }
 
