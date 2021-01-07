@@ -26,43 +26,54 @@ class GitFilesystemTest extends AdapterTestCase
     /**
      * It sohuld throw an exception if the cwd does not have a .git folder.
      */
-    public function testNoGitFolder()
+    public function testNoGitFolder(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('The cwd does not seem to be');
-        return new GitFilesystem(FilePath::fromString(__DIR__));
+        new GitFilesystem(FilePath::fromString(__DIR__));
     }
 
     /**
      * It should fallback to simple filesystem if file is not under VC.
      */
-    public function testMoveNonVersionedFile()
+    public function testMoveNonVersionedFile(): void
     {
         touch($this->workspacePath() . '/Test.php');
-        $this->filesystem()->move(FilePath::fromString($this->workspacePath() . '/Test.php'), FilePath::fromString($this->workspacePath() . '/Foobar.php'));
+        $this->filesystem()->move(
+            FilePath::fromString($this->workspacePath() . '/Test.php'),
+            FilePath::fromString($this->workspacePath() . '/Foobar.php')
+        );
+        self::assertFileExists($this->workspacePath() . '/Foobar.php');
+        self::assertFileDoesNotExist($this->workspacePath() . '/Test.php');
     }
 
-    public function testMoveNonVersionedFileToNonExistingDirectory()
+    public function testMoveNonVersionedFileToNonExistingDirectory(): void
     {
         touch($this->workspacePath() . '/Test.php');
-        $this->filesystem()->move(FilePath::fromString($this->workspacePath() . '/Test.php'), FilePath::fromString($this->workspacePath() . '/NotExisting/Foobar.php'));
+        $this->filesystem()->move(
+            FilePath::fromString($this->workspacePath() . '/Test.php'),
+            FilePath::fromString($this->workspacePath() . '/NotExisting/Foobar.php')
+        );
+        self::assertFileDoesNotExist($this->workspacePath() . '/Test.php');
+        self::assertFileExists($this->workspacePath() . '/NotExisting/Foobar.php');
     }
     /**
      * It should fallback to simple filesystem if file is not under VC.
      */
-    public function testRemoveNonVersionedFile()
+    public function testRemoveNonVersionedFile(): void
     {
         touch($this->workspacePath() . '/Test.php');
         $this->filesystem()->remove(FilePath::fromString($this->workspacePath() . '/Test.php'));
+        self::assertFileDoesNotExist($this->workspacePath() . '/Test.php');
     }
 
     /**
      * It lists untracked files
      */
-    public function testListUntracked()
+    public function testListUntracked(): void
     {
         $path = $this->workspacePath() . '/Test.php';
         touch($path);
-        $this->assertTrue($this->filesystem()->fileList()->contains(FilePath::fromString($path)));
+        self::assertTrue($this->filesystem()->fileList()->contains(FilePath::fromString($path)));
     }
 }

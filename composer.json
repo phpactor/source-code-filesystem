@@ -11,15 +11,17 @@
     "require": {
         "php": "^7.3",
         "webmozart/glob": "^4.1",
-        "webmozart/path-util": "^2.3"
+        "webmozart/path-util": "^2.3",
+        "symfony/process": "^4.0||^5.0",
+        "symfony/filesystem": "^4.2 || ^5.0"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.0",
         "friendsofphp/php-cs-fixer": "^2.17",
         "phpstan/phpstan": "~0.12.0",
         "phpunit/phpunit": "^9.0",
-        "symfony/filesystem": "^4.2 || ^5.0",
-        "phpspec/prophecy-phpunit": "^2.0"
+        "phpspec/prophecy-phpunit": "^2.0",
+        "symfony/var-dumper": "^5.2"
     },
     "extra": {
         "branch-alias": {

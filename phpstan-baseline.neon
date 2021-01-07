@@ -11,48 +11,8 @@ parameters:
 			path: lib/Adapter/Composer/ComposerFileListProvider.php
 
 		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Composer\\\\ComposerFilesystem\\:\\:__construct\\(\\) has parameter \\$path with no typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Composer/ComposerFilesystem.php
-
-		-
-			message: "#^Property Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:\\$path has no typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Git/GitFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:__construct\\(\\) has parameter \\$path with no typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Git/GitFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:fileList\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
-			count: 1
-			path: lib/Adapter/Git/GitFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:remove\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Git/GitFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:move\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Git/GitFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:exec\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Git/GitFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:exec\\(\\) has parameter \\$command with no typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Git/GitFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Git\\\\GitFilesystem\\:\\:trackedByGit\\(\\) has no return typehint specified\\.$#"
-			count: 1
+			message: "#^Cannot call method makeAbsoluteFromString\\(\\) on Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\|string\\.$#"
+			count: 2
 			path: lib/Adapter/Git/GitFilesystem.php
 
 		-
@@ -64,46 +24,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFileListProvider\\:\\:createFileIterator\\(\\) return type has no value type specified in iterable type Iterator\\.$#"
 			count: 1
 			path: lib/Adapter/Simple/SimpleFileListProvider.php
-
-		-
-			message: "#^Property Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:\\$path has no typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Simple/SimpleFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:__construct\\(\\) has parameter \\$path with no typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Simple/SimpleFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:fileList\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
-			count: 1
-			path: lib/Adapter/Simple/SimpleFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:remove\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Simple/SimpleFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:move\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Simple/SimpleFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:writeContents\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Simple/SimpleFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:makeDirectoryIfNotExists\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Simple/SimpleFilesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\:\\:makeDirectoryIfNotExists\\(\\) has parameter \\$destPath with no typehint specified\\.$#"
-			count: 1
-			path: lib/Adapter/Simple/SimpleFilesystem.php
 
 		-
 			message: "#^Property Phpactor\\\\Filesystem\\\\Domain\\\\ChainFileListProvider\\:\\:\\$providers has no typehint specified\\.$#"
@@ -309,26 +229,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:path\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: lib/Domain/FilePath.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\Filesystem\\:\\:fileList\\(\\) return type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
-			count: 1
-			path: lib/Domain/Filesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\Filesystem\\:\\:move\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: lib/Domain/Filesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\Filesystem\\:\\:remove\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: lib/Domain/Filesystem.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\Filesystem\\:\\:writeContents\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: lib/Domain/Filesystem.php
 
 		-
 			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilesystemRegistry\\:\\:has\\(\\) has no return typehint specified\\.$#"

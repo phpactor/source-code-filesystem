@@ -6,9 +6,12 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Filesystem\Domain\FallbackFilesystemRegistry;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class FallbackFilesystemRegistryTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var ObjectProphecy|FilesystemRegistry
      */
