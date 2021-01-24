@@ -6,6 +6,7 @@ use RuntimeException;
 use SplFileInfo;
 use Webmozart\PathUtil\Path;
 use \sprintf;
+use InvalidArgumentException;
 
 final class FilePath
 {
@@ -14,13 +15,18 @@ final class FilePath
     private function __construct(string $path)
     {
         if (false === Path::isAbsolute($path)) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'File path must be absolute, but %s given',
                 $path
             ));
         }
 
         $this->path = $path;
+    }
+
+    public function __toString()
+    {
+        return $this->path;
     }
 
     public static function fromString(string $string): FilePath
@@ -92,7 +98,7 @@ final class FilePath
 
     public function asSplFileInfo()
     {
-        return new \SplFileInfo($this->path());
+        return new SplFileInfo($this->path());
     }
 
     public function makeAbsoluteFromString(string $path)
@@ -144,11 +150,6 @@ final class FilePath
     }
 
     public function path()
-    {
-        return $this->path;
-    }
-
-    public function __toString()
     {
         return $this->path;
     }

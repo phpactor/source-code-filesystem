@@ -29,7 +29,7 @@ class FallbackFilesystemRegistryTest extends TestCase
         $this->filesystem1 = $this->prophesize(Filesystem::class);
     }
 
-    public function testDecoration()
+    public function testDecoration(): void
     {
         $this->innerRegistry->names()->willReturn([ 'one' ]);
         $this->innerRegistry->has('foo')->willReturn(true);
@@ -40,7 +40,7 @@ class FallbackFilesystemRegistryTest extends TestCase
         $this->assertSame($this->filesystem1->reveal(), $this->registry->get('foo'));
     }
 
-    public function testFallback()
+    public function testFallback(): void
     {
         $this->innerRegistry->has('foo')->willReturn(false);
         $this->innerRegistry->get('bar')->willReturn($this->filesystem1->reveal());

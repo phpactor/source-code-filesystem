@@ -7,13 +7,15 @@ use Iterator;
 use RegexIterator;
 use SplFileInfo;
 use Webmozart\Glob\Glob;
+use ArrayIterator;
+use Closure;
 
-class FileList implements \Iterator
+class FileList implements Iterator
 {
     private $iterator;
     private $key = 0;
 
-    private function __construct(\Iterator $iterator)
+    private function __construct(Iterator $iterator)
     {
         $this->iterator = $iterator;
     }
@@ -21,7 +23,7 @@ class FileList implements \Iterator
     /**
      * @return FileList<SplFileInfo>
      */
-    public static function fromIterator(\Iterator $iterator): self
+    public static function fromIterator(Iterator $iterator): self
     {
         return new self($iterator);
     }
@@ -33,10 +35,10 @@ class FileList implements \Iterator
     {
         $files = [];
         foreach ($filePaths as $filePath) {
-            $files[] = new \SplFileInfo($filePath);
+            $files[] = new SplFileInfo($filePath);
         }
 
-        return new self(new \ArrayIterator($files));
+        return new self(new ArrayIterator($files));
     }
 
     /**
@@ -113,7 +115,7 @@ class FileList implements \Iterator
         )));
     }
 
-    public function filter(\Closure $closure): self
+    public function filter(Closure $closure): self
     {
         return new self(new CallbackFilterIterator($this->iterator, $closure));
     }
@@ -125,7 +127,7 @@ class FileList implements \Iterator
         }));
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->iterator->rewind();
     }
@@ -142,7 +144,7 @@ class FileList implements \Iterator
         return $this->key++;
     }
 
-    public function next()
+    public function next(): void
     {
         $this->iterator->next();
     }

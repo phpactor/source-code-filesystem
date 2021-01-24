@@ -16,18 +16,7 @@ class ComposerFilesystemTest extends AdapterTestCase
         exec('composer dumpautoload  2> /dev/null');
     }
 
-    protected function filesystem(): Filesystem
-    {
-        static $classLoader;
-
-        if (!$classLoader) {
-            $classLoader = require 'vendor/autoload.php';
-        }
-
-        return new ComposerFilesystem(FilePath::fromString($this->workspacePath()), $classLoader);
-    }
-
-    public function testClassmap()
+    public function testClassmap(): void
     {
         $fileList = $this->filesystem()->fileList();
         $location = $this->filesystem()->createPath('src/Hello/Goodbye.php');
@@ -37,5 +26,16 @@ class ComposerFilesystemTest extends AdapterTestCase
         foreach ($fileList as $file) {
             $this->assertInstanceOf(FilePath::class, $file);
         }
+    }
+
+    protected function filesystem(): Filesystem
+    {
+        static $classLoader;
+
+        if (!$classLoader) {
+            $classLoader = require 'vendor/autoload.php';
+        }
+
+        return new ComposerFilesystem(FilePath::fromString($this->workspacePath()), $classLoader);
     }
 }

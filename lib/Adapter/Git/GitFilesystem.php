@@ -10,6 +10,8 @@ use Phpactor\Filesystem\Domain\CopyReport;
 use Phpactor\Filesystem\Domain\Exception\NotSupported;
 use SplFileInfo;
 use Symfony\Component\Process\Process;
+use ArrayIterator;
+use InvalidArgumentException;
 
 class GitFilesystem extends SimpleFilesystem
 {
@@ -45,7 +47,7 @@ class GitFilesystem extends SimpleFilesystem
             $files[] = new SplFileInfo((string) $this->path->makeAbsoluteFromString($gitFile));
         }
 
-        return FileList::fromIterator(new \ArrayIterator($files));
+        return FileList::fromIterator(new ArrayIterator($files));
     }
 
     public function remove($path): void
@@ -105,7 +107,7 @@ class GitFilesystem extends SimpleFilesystem
         $process->run();
 
         if ($process->getExitCode() !== 0) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Could not execute git command "%s", exit code "%s", output "%s"',
                 implode(' ', $cmd),
                 $process->getExitCode(),

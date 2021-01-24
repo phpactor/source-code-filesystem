@@ -5,13 +5,14 @@ namespace Phpactor\Filesystem\Tests\Unit\Domain;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath;
+use SplFileInfo;
 
 class FileListTest extends TestCase
 {
     /**
      * @testdox It returns true if it contains a file path.
      */
-    public function testContains()
+    public function testContains(): void
     {
         $list = FileList::fromFilePaths([
             FilePath::fromString('/Foo/Bar.php'),
@@ -24,7 +25,7 @@ class FileListTest extends TestCase
     /**
      * @testdox It returns files within a path
      */
-    public function testWithin()
+    public function testWithin(): void
     {
         $list = FileList::fromFilePaths([
             FilePath::fromString('/Foo/Bar.php'),
@@ -46,7 +47,7 @@ class FileListTest extends TestCase
     /**
      * It returns all files with given name (including extension).
      */
-    public function testNamed()
+    public function testNamed(): void
     {
         $list = FileList::fromFilePaths([
             FilePath::fromString('/Foo/Bar.php'),
@@ -65,7 +66,7 @@ class FileListTest extends TestCase
         );
     }
 
-    public function testCallback()
+    public function testCallback(): void
     {
         $list = FileList::fromFilePaths([
             FilePath::fromString('/Foo/Bar.php'),
@@ -80,13 +81,13 @@ class FileListTest extends TestCase
 
         $this->assertEquals(
             array_values(iterator_to_array($expected)),
-            array_values(iterator_to_array($list->filter(function (\SplFileInfo $file) {
+            array_values(iterator_to_array($list->filter(function (SplFileInfo $file) {
                 return $file->getFileName() == 'Bar.php';
             })))
         );
     }
 
-    public function testExisting()
+    public function testExisting(): void
     {
         $list = FileList::fromFilePaths([
             FilePath::fromString(__FILE__),
@@ -102,7 +103,7 @@ class FileListTest extends TestCase
         );
     }
 
-    public function testExcludesFilesMatchingPatterns()
+    public function testExcludesFilesMatchingPatterns(): void
     {
         $list = FileList::fromFilePaths([
             FilePath::fromString('/vendor/foo/bar/tests/bartest.php'),
@@ -116,7 +117,7 @@ class FileListTest extends TestCase
         ]));
     }
 
-    public function testIncldesFilesMatchingPatterns()
+    public function testIncldesFilesMatchingPatterns(): void
     {
         $list = FileList::fromFilePaths([
             FilePath::fromString('/vendor/foo/bar/tests/bartest.php'),

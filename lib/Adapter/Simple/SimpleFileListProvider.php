@@ -6,6 +6,9 @@ use FilesystemIterator;
 use Phpactor\Filesystem\Domain\FileListProvider;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath;
+use Iterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 final class SimpleFileListProvider implements FileListProvider
 {
@@ -34,7 +37,7 @@ final class SimpleFileListProvider implements FileListProvider
         );
     }
 
-    private function createFileIterator(string $path): \Iterator
+    private function createFileIterator(string $path): Iterator
     {
         $path = $path ? $this->path->makeAbsoluteFromString($path) : $this->path->path();
         $flags = FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS;
@@ -43,8 +46,8 @@ final class SimpleFileListProvider implements FileListProvider
             $flags = $flags | FilesystemIterator::FOLLOW_SYMLINKS;
         }
 
-        $files = new \RecursiveDirectoryIterator($path, $flags);
-        $files = new \RecursiveIteratorIterator($files);
+        $files = new RecursiveDirectoryIterator($path, $flags);
+        $files = new RecursiveIteratorIterator($files);
 
         return $files;
     }

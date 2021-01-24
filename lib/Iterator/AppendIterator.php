@@ -11,7 +11,7 @@ use Iterator;
  * https://bugs.php.net/bug.php?id=75155&edit=2
  * https://3v4l.org/Hnti2
  */
-class AppendIterator implements \Iterator
+class AppendIterator implements Iterator
 {
     private $iterators = [];
     private $index = 0;
@@ -25,7 +25,7 @@ class AppendIterator implements \Iterator
      * @return void
      * @since 5.1.0
      */
-    public function append(\Iterator $iterator)
+    public function append(Iterator $iterator): void
     {
         $this->iterators[] = $iterator;
     }
@@ -36,7 +36,7 @@ class AppendIterator implements \Iterator
      * @return void
      * @since 5.1.0
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->index = 0;
         foreach ($this->iterators as $iterator) {
@@ -87,7 +87,7 @@ class AppendIterator implements \Iterator
      * @return void
      * @since 5.1.0
      */
-    public function next()
+    public function next(): void
     {
         $iterator = $this->iterators[$this->index];
         $next = $iterator->next();

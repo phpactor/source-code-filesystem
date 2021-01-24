@@ -14,9 +14,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->loadProject();
     }
 
-    abstract protected function filesystem(): Filesystem;
-
-    public function testFind()
+    public function testFind(): void
     {
         $fileList = $this->filesystem()->fileList();
         $this->assertTrue($fileList->contains($this->filesystem()->createPath('src/Foobar.php')));
@@ -26,7 +24,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->assertTrue($foo);
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         $file = $this->filesystem()->createPath('src/Hello/Goodbye.php');
         $this->assertTrue(file_exists($file->path()));
@@ -34,7 +32,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->assertFalse(file_exists($file->path()));
     }
 
-    public function testRemoveDirectory()
+    public function testRemoveDirectory(): void
     {
         $file = $this->filesystem()->createPath('src/Hello');
         $this->assertTrue(file_exists($file->path()));
@@ -42,7 +40,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->assertFalse(file_exists($file->path()));
     }
 
-    public function testMove()
+    public function testMove(): void
     {
         $srcLocation = $this->filesystem()->createPath('src/Hello/Goodbye.php');
         $destLocation = $this->filesystem()->createPath('src/Hello/Hello.php');
@@ -53,7 +51,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
     }
 
 
-    public function testMoveDirectory()
+    public function testMoveDirectory(): void
     {
         $srcLocation = $this->filesystem()->createPath('src/Hello');
         $destLocation = $this->filesystem()->createPath('src/Goodbye');
@@ -66,7 +64,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->assertTrue(file_exists($testFile->path()));
     }
 
-    public function testCopy()
+    public function testCopy(): void
     {
         $srcLocation = $this->filesystem()->createPath('src/Hello/Goodbye.php');
         $destLocation = $this->filesystem()->createPath('src/Hello/Hello.php');
@@ -76,7 +74,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->assertTrue(file_exists($srcLocation->path()));
     }
 
-    public function testExists()
+    public function testExists(): void
     {
         $path = $this->filesystem()->createPath('src/Hello/Goodbye.php');
         $this->assertTrue($this->filesystem()->exists($path));
@@ -85,7 +83,7 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->assertFalse($this->filesystem()->exists($path));
     }
 
-    public function testCopyRecursive()
+    public function testCopyRecursive(): void
     {
         $srcLocation = $this->filesystem()->createPath('src');
         $destLocation = $this->filesystem()->createPath('src/AAAn');
@@ -99,11 +97,13 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->assertCount(2, $list->destFiles());
     }
 
-    public function testWriteGet()
+    public function testWriteGet(): void
     {
         $path = $this->filesystem()->createPath('src/Hello/Goodbye.php');
 
         $this->filesystem()->writeContents($path, 'foo');
         $this->assertEquals('foo', $this->filesystem()->getContents($path));
     }
+
+    abstract protected function filesystem(): Filesystem;
 }

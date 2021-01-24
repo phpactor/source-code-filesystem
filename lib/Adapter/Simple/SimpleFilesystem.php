@@ -10,6 +10,8 @@ use Symfony\Component\Filesystem\Filesystem as SymfonyFilesystem;
 use Webmozart\PathUtil\Path;
 use Phpactor\Filesystem\Domain\FileListProvider;
 use Phpactor\Filesystem\Domain\CopyReport;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 class SimpleFilesystem implements Filesystem
 {
@@ -120,9 +122,9 @@ class SimpleFilesystem implements Filesystem
 
     private function copyDirectory(FilePath $srcLocation, FilePath $destPath): CopyReport
     {
-        $iterator = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($srcLocation->path(), \RecursiveDirectoryIterator::SKIP_DOTS),
-            \RecursiveIteratorIterator::SELF_FIRST
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($srcLocation->path(), RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST
         );
 
         $destFiles = [];

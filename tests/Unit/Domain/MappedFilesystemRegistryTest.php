@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
 use Prophecy\PhpUnit\ProphecyTrait;
+use InvalidArgumentException;
 
 class MappedFilesystemRegistryTest extends TestCase
 {
@@ -21,7 +22,7 @@ class MappedFilesystemRegistryTest extends TestCase
         $this->filesystem = $this->prophesize(Filesystem::class);
     }
 
-    public function testRetrievesFilesystems()
+    public function testRetrievesFilesystems(): void
     {
         $registry = $this->createRegistry([
             'foobar' => $this->filesystem->reveal()
@@ -32,7 +33,7 @@ class MappedFilesystemRegistryTest extends TestCase
         $this->assertEquals($this->filesystem->reveal(), $filesystem);
     }
 
-    public function testHasFilesystem()
+    public function testHasFilesystem(): void
     {
         $registry = $this->createRegistry([
             'foobar' => $this->filesystem->reveal()
@@ -42,9 +43,9 @@ class MappedFilesystemRegistryTest extends TestCase
         $this->assertFalse($registry->has('barbar'));
     }
 
-    public function testExceptionOnNotFound()
+    public function testExceptionOnNotFound(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown filesystem "barfoo"');
         $registry = $this->createRegistry([
             'foobar' => $this->filesystem->reveal()

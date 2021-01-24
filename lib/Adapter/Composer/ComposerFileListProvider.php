@@ -8,6 +8,11 @@ use Composer\Autoload\ClassLoader;
 use Phpactor\Filesystem\Domain\FileListProvider;
 use Phpactor\Filesystem\Iterator\AppendIterator;
 use Webmozart\PathUtil\Path;
+use SplFileInfo;
+use ArrayIterator;
+use Iterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 class ComposerFileListProvider implements FileListProvider
 {
@@ -47,7 +52,7 @@ class ComposerFileListProvider implements FileListProvider
                         continue;
                     }
 
-                    $files[$path] = new \SplFileInfo($path);
+                    $files[$path] = new SplFileInfo($path);
                     continue;
                 }
 
@@ -72,17 +77,17 @@ class ComposerFileListProvider implements FileListProvider
         }
 
         if ($files) {
-            $appendIterator->append(new \ArrayIterator(array_values($files)));
+            $appendIterator->append(new ArrayIterator(array_values($files)));
         }
 
         return FileList::fromIterator($appendIterator);
     }
 
-    private function createFileIterator(string $path): \Iterator
+    private function createFileIterator(string $path): Iterator
     {
         $path = $path ? $this->path->makeAbsoluteFromString($path) : $this->path->path();
-        $files = new \RecursiveDirectoryIterator($path);
-        $files = new \RecursiveIteratorIterator($files);
+        $files = new RecursiveDirectoryIterator($path);
+        $files = new RecursiveIteratorIterator($files);
 
         return $files;
     }

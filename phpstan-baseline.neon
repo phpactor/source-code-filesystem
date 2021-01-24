@@ -41,11 +41,6 @@ parameters:
 			path: lib/Domain/ChainFileListProvider.php
 
 		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\ChainFileListProvider\\:\\:add\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: lib/Domain/ChainFileListProvider.php
-
-		-
 			message: "#^Property Phpactor\\\\Filesystem\\\\Domain\\\\CopyReport\\:\\:\\$srcFiles type has no value type specified in iterable type Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\.$#"
 			count: 1
 			path: lib/Domain/CopyReport.php
@@ -257,11 +252,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\MappedFilesystemRegistry\\:\\:names\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Domain/MappedFilesystemRegistry.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\MappedFilesystemRegistry\\:\\:add\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: lib/Domain/MappedFilesystemRegistry.php
 
