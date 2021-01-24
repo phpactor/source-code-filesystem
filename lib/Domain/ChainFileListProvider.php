@@ -25,7 +25,7 @@ class ChainFileListProvider implements FileListProvider
         return FileList::fromIterator($iterator);
     }
 
-    private function add(FileListProvider $provider)
+    private function add(FileListProvider $provider): void
     {
         $this->providers[] = $provider;
     }

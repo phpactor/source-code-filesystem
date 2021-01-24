@@ -7,6 +7,7 @@ use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Tests\Adapter\AdapterTestCase;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Filesystem\Domain\Cwd;
+use RuntimeException;
 
 class GitFilesystemTest extends AdapterTestCase
 {
@@ -18,17 +19,12 @@ class GitFilesystemTest extends AdapterTestCase
         exec('git add *');
     }
 
-    protected function filesystem(): Filesystem
-    {
-        return new GitFilesystem(FilePath::fromString($this->workspacePath()));
-    }
-
     /**
      * It sohuld throw an exception if the cwd does not have a .git folder.
      */
     public function testNoGitFolder(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('The cwd does not seem to be');
         new GitFilesystem(FilePath::fromString(__DIR__));
     }
@@ -75,5 +71,10 @@ class GitFilesystemTest extends AdapterTestCase
         $path = $this->workspacePath() . '/Test.php';
         touch($path);
         self::assertTrue($this->filesystem()->fileList()->contains(FilePath::fromString($path)));
+    }
+
+    protected function filesystem(): Filesystem
+    {
+        return new GitFilesystem(FilePath::fromString($this->workspacePath()));
     }
 }

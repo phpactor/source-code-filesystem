@@ -38,7 +38,7 @@ class MappedFilesystemRegistry implements FilesystemRegistry
         return array_keys($this->filesystems);
     }
 
-    private function add(string $name, Filesystem $filesystem)
+    private function add(string $name, Filesystem $filesystem): void
     {
         $this->filesystems[$name] = $filesystem;
     }
