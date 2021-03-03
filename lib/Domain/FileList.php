@@ -110,7 +110,7 @@ class FileList implements Iterator
     public function named(string $name): self
     {
         return new self(new RegexIterator($this->iterator, sprintf(
-            '{/%s.*$}',
+            '{/%s$}',
             preg_quote($name)
         )));
     }
