@@ -45,11 +45,15 @@ class FileListTest extends TestCase
     }
 
     /**
-     * It returns all files with given name (including extension).
+     * It returns all PHP files with given name (including extension).
      */
     public function testNamed(): void
     {
         $list = FileList::fromFilePaths([
+            FilePath::fromString('/reports/Foo/Bar.php.html'),
+            FilePath::fromString('/reports/Foo/Foo.php.html'),
+            FilePath::fromString('/reports/Boo/Bar.php.html'),
+            FilePath::fromString('/reports/Foo.php.html'),
             FilePath::fromString('/Foo/Bar.php'),
             FilePath::fromString('/Foo/Foo.php'),
             FilePath::fromString('/Boo/Bar.php'),
