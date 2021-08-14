@@ -153,4 +153,21 @@ class FileList implements Iterator
     {
         return $this->iterator->valid();
     }
+
+    public function containingString(string $string)
+    {
+        return $this->filter(function (SplFileInfo $info) use ($string) {
+            $h = @fopen($info->getPathname(), 'r');
+            if (false === $h) {
+                return false;
+            }
+            while (false !== $line = fgets($h)) {
+                if (false !== strpos($line, $string)) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
+    }
 }

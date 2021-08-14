@@ -5,10 +5,16 @@ namespace Phpactor\Filesystem\Tests\Unit\Domain;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Tests\IntegrationTestCase;
 use SplFileInfo;
 
-class FileListTest extends TestCase
+class FileListTest extends IntegrationTestCase
 {
+    protected function setUp(): void 
+    {
+        $this->workspace()->reset();
+    }
+
     /**
      * @testdox It returns true if it contains a file path.
      */
@@ -133,5 +139,33 @@ class FileListTest extends TestCase
         self::assertCount(2, $list->excludePatterns([
             '/vendor/**/tests/*',
         ]));
+    }
+
+    public function testContainingString(): void
+    {
+        $this->workspace()->put('one', 'one two three');
+        $this->workspace()->put('two', 'four five six');
+
+        $list = FileList::fromFilePaths([
+            FilePath::fromString($this->workspace()->path('one')),
+            FilePath::fromString($this->workspace()->path('two'))
+        ]);
+
+        self::assertCount(2, $list);
+        self::assertCount(1, $list->containingString('one'));
+        self::assertCount(1, $list->containingString('two'));
+        self::assertCount(1, $list->containingString('four'));
+        self::assertCount(0, $list->containingString('seven'));
+    }
+
+    public function testContainingStringFileNotExisting(): void
+    {
+        $list = FileList::fromFilePaths([
+            FilePath::fromString($this->workspace()->path('one')),
+            FilePath::fromString($this->workspace()->path('two'))
+        ]);
+
+        self::assertCount(2, $list);
+        self::assertCount(0, $list->containingString('one'));
     }
 }
