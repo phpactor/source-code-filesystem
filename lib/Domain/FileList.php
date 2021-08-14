@@ -154,7 +154,10 @@ class FileList implements Iterator
         return $this->iterator->valid();
     }
 
-    public function containingString(string $string)
+    /**
+     * @return self<SplFileInfo>
+     */
+    public function containingString(string $string): self
     {
         return $this->filter(function (SplFileInfo $info) use ($string) {
             $h = @fopen($info->getPathname(), 'r');

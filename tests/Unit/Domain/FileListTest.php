@@ -2,7 +2,6 @@
 
 namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Tests\IntegrationTestCase;
@@ -10,7 +9,7 @@ use SplFileInfo;
 
 class FileListTest extends IntegrationTestCase
 {
-    protected function setUp(): void 
+    protected function setUp(): void
     {
         $this->workspace()->reset();
     }
