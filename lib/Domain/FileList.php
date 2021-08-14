@@ -160,17 +160,13 @@ class FileList implements Iterator
     public function containingString(string $string): self
     {
         return $this->filter(function (SplFileInfo $info) use ($string) {
-            $h = @fopen($info->getPathname(), 'r');
-            if (false === $h) {
+            $contents = @file_get_contents($info->getPathname());
+
+            if (false === $contents) {
                 return false;
             }
-            while (false !== $line = fgets($h)) {
-                if (false !== strpos($line, $string)) {
-                    return true;
-                }
-            }
 
-            return false;
+            return false !== strpos($contents, $string);
         });
     }
 }
