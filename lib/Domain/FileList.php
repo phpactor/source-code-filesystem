@@ -155,7 +155,7 @@ class FileList implements Iterator
     }
 
     /**
-     * @return self<SplFileInfo>
+     * @return self<FilePath>
      */
     public function containingString(string $string): self
     {
